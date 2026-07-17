@@ -936,3 +936,15 @@ main{background:#f8eedd}
 /* --- Menu section: tighter top gap below the ticker --- */
 #menu{padding-top:56px}
 @media (max-width:620px){#menu{padding-top:44px}}
+
+/* --- Ticker: mathematically exact seamless cycle ---
+   flex gap gives 14 gaps for 15 items, so translating -1/3 of the
+   track lands 12px short of a copy boundary (visible jump each loop).
+   Per-item margins make each copy exactly 1/3 of the track. */
+.marquee-track{gap:0}
+.marquee-track span{margin-right:36px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.marquee-track{animation-duration:20s}
+
+/* --- About slide 4 (School): small photos sit in front of the big one --- */
+.collage.v3 .collage-photo.one{z-index:3}
