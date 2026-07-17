@@ -944,7 +944,7 @@ main{background:#f8eedd}
 .marquee-track{gap:0}
 .marquee-track span{margin-right:36px}
 @keyframes marquee{to{transform:translateX(-50%)}}
-.marquee-track{animation-duration:20s}
+.marquee-track{animation-duration:23s}
 
 /* --- About slide 4 (School): small photos sit in front of the big one --- */
 .collage.v3 .collage-photo.one{z-index:3}
