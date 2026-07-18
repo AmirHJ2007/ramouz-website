@@ -948,3 +948,20 @@ main{background:#f8eedd}
 
 /* --- About slide 4 (School): small photos sit in front of the big one --- */
 .collage.v3 .collage-photo.one{z-index:3}
+
+/* --- Phone header: language switcher clusters right, next to the burger --- */
+@media (max-width:980px){
+  .site-header{justify-content:flex-start;gap:12px}
+  .brand{margin-right:auto}
+}
+@media (max-width:620px){
+  .site-header{gap:8px}
+}
+
+/* --- Menu->gallery tear on phones: same de-squeeze as the hero tear --- */
+@media (max-width:620px){
+  .menu-paint{width:260%;right:auto;height:64px}
+}
+@media (min-width:621px) and (max-width:980px){
+  .menu-paint{width:160%;height:76px}
+}
