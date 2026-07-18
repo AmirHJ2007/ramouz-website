@@ -965,3 +965,7 @@ main{background:#f8eedd}
 @media (min-width:621px) and (max-width:980px){
   .menu-paint{width:160%;height:76px}
 }
+
+/* --- Contact link lands a bit deeper into the section --- */
+#contact{scroll-margin-top:60px}
+@media (max-width:620px){#contact{scroll-margin-top:44px}}
