@@ -389,6 +389,12 @@
     .login-submit:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(209,155,100,.4)}
     .login-submit:active{transform:scale(.98)}
     .login-submit:disabled{opacity:.6;cursor:wait;transform:none}
+    .login-back{
+      display:block;text-align:center;margin-top:18px;text-decoration:none;
+      font-size:13px;font-weight:700;color:var(--dim);
+      transition:color .25s ease;
+    }
+    .login-back:hover{color:var(--gold)}
 
     @media (max-width:420px){
       .rf-line{grid-template-columns:1fr 92px}
@@ -422,6 +428,7 @@
       <input id="adm-pass" type="password" autocomplete="current-password" required />
       <p class="login-err" data-login-err></p>
       <button type="submit" class="login-submit">Sign in</button>
+      <a class="login-back" href="index.html">&larr; Back to the site</a>
     </form>
   </div>
 
