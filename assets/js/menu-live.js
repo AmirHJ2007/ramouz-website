@@ -6,12 +6,18 @@ const SUPABASE_URL = 'https://waibybqjhzddpfhzrisx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhaWJ5YnFqaHpkZHBmaHpyaXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzODg4ODYsImV4cCI6MjA5OTk2NDg4Nn0.zufjm2J4F4mePJhd072hoXh5vLqfXNVuPFEN1BbKs3k';
 
 (async () => {
+  // reveal the menu (fetched or fallback) and let the loader proceed
+  const menuDone = () => {
+    document.body.classList.add('menu-ready');
+    window.dispatchEvent(new Event('ramouz:menu-done'));
+  };
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.info('[menu-live] Supabase not configured; using the static menu.');
+    menuDone();
     return;
   }
   const accordion = document.querySelector('[data-menu-accordion]');
-  if (!accordion) return;
+  if (!accordion) { menuDone(); return; }
 
   const CAT_SLUGS = {
     'Coffee Base': 'coffee-base',
@@ -38,10 +44,11 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     cats = await res.json();
   } catch (err) {
-    console.warn('[menu-live] fetch failed, keeping static menu:', err);
+    console.warn('[menu-live] fetch failed, falling back to static menu:', err);
+    menuDone();
     return;
   }
-  if (!Array.isArray(cats) || !cats.length) return;
+  if (!Array.isArray(cats) || !cats.length) { menuDone(); return; }
 
   let html = '';
   let totalItems = 0;
@@ -62,16 +69,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
           rows += `<li class="menu-subhead">${esc(sub.name)}</li>`;
           lastSub = sub.name;
         }
-        const img = item.image_url
-          ? `<img src="${esc(item.image_url)}" alt="${esc(item.name)}" width="56" height="56" loading="lazy" onerror="this.remove()">`
-          : '';
+        const img = `<img src="${esc(item.image_url || 'assets/images/logo.png')}" alt="${esc(item.name)}" width="56" height="56" loading="lazy" onerror="this.remove()">`;
+        const thumbCls = item.image_url ? 'mi-thumb' : 'mi-thumb mi-thumb--brand';
         const desc = item.description ? `<p class="mi-desc">${esc(item.description)}</p>` : '';
         const variants = (item.variants || []).sort(bySort);
         const picker = variants.length
           ? `<span class="mi-picker"><select class="mi-select" aria-label="${esc(item.name)} options">${variants.map(v => `<option>${esc(v.name)}</option>`).join('')}</select>${CHEVRON}</span>`
           : '';
         const price = Number(item.price).toFixed(3);
-        rows += `<li class="menu-item"><span class="mi-thumb">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span><span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
+        rows += `<li class="menu-item"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span><span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
       });
 
       html += `<div class="menu-accordion-item" data-cat="${esc(catSlug)}" data-box="${esc(secSlug)}">`
@@ -85,11 +91,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         + `</div>`;
     });
   });
-  if (!totalItems) return;
+  if (!totalItems) { menuDone(); return; }
 
   accordion.innerHTML = html;
 
   // keep the "82 items, all prices in OMR" subtitle honest
   const subtitle = document.querySelector('#menu .section-heading p:not(.eyebrow)');
   if (subtitle) subtitle.textContent = subtitle.textContent.replace(/^\d+/, String(totalItems));
+  menuDone();
 })();

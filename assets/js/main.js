@@ -13,6 +13,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 const loaderVideo = loader?.querySelector('video');
 let pageReady = false;
 let videoDone = !loaderVideo;
+let menuDone = false;
 let heroStarted = false;
 const startHero = () => {
   if (heroStarted) return;
@@ -20,8 +21,17 @@ const startHero = () => {
   loader?.classList.add('hidden');
   document.body.classList.add('hero-in');
 };
-const tryStartHero = () => { if (pageReady && videoDone) startHero(); };
+const tryStartHero = () => { if (pageReady && videoDone && menuDone) startHero(); };
 window.addEventListener('load', () => { pageReady = true; tryStartHero(); });
+// the loader also waits for the live menu, but never more than 4s
+window.addEventListener('ramouz:menu-done', () => { menuDone = true; tryStartHero(); }, { once: true });
+setTimeout(() => {
+  if (!menuDone) {
+    menuDone = true;
+    document.body.classList.add('menu-ready');
+    tryStartHero();
+  }
+}, 4000);
 if (loaderVideo) {
   loaderVideo.muted = true;
   loaderVideo.play?.().catch(() => {});

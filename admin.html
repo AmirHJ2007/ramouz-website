@@ -12,98 +12,216 @@
   <style>
     *{box-sizing:border-box}
     :root{
-      --bg-0:#0b1020; --bg-1:#131426; --cream:#fff8ef; --sand:#d19b64; --gold:#f0c38d;
-      --line:rgba(240,195,141,.22); --dim:rgba(255,248,239,.55);
+      --bg-0:#0b1020; --bg-1:#131426; --bg-2:#1a1428;
+      --cream:#fff8ef; --sand:#d19b64; --gold:#f0c38d; --gold-hi:#f6d9ac;
+      --line:rgba(240,195,141,.22); --line-soft:rgba(255,248,239,.06);
+      --dim:rgba(255,248,239,.55); --dim-2:rgba(255,248,239,.38);
+      --ease:cubic-bezier(.22,.9,.3,1);
+      --spring:cubic-bezier(.34,1.56,.64,1);
     }
+    html{scrollbar-color:rgba(209,155,100,.4) transparent}
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-thumb{background:rgba(209,155,100,.3);border-radius:99px;border:3px solid var(--bg-0)}
     body{
-      margin:0;min-height:100svh;padding:0 0 80px;
+      margin:0;min-height:100svh;padding:0 0 90px;
       font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:var(--cream);
       background:
-        radial-gradient(900px 500px at 50% -5%,rgba(209,155,100,.13),transparent 60%),
-        linear-gradient(170deg,var(--bg-0),var(--bg-1) 60%,#1a1428);
+        radial-gradient(1100px 600px at 15% -10%,rgba(209,155,100,.14),transparent 55%),
+        radial-gradient(900px 600px at 95% 15%,rgba(110,90,160,.12),transparent 55%),
+        radial-gradient(700px 500px at 50% 110%,rgba(142,161,91,.07),transparent 60%),
+        linear-gradient(170deg,var(--bg-0),var(--bg-1) 55%,var(--bg-2));
+      background-attachment:fixed;
     }
+    button{font:inherit}
+    :focus-visible{outline:2px solid var(--sand);outline-offset:2px;border-radius:6px}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes popIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+    @keyframes rowIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes goldShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    @keyframes savePulse{0%{box-shadow:0 10px 26px rgba(209,155,100,.3),0 0 0 0 rgba(240,195,141,.55)}70%{box-shadow:0 10px 26px rgba(209,155,100,.3),0 0 0 12px rgba(240,195,141,0)}100%{box-shadow:0 10px 26px rgba(209,155,100,.3),0 0 0 0 rgba(240,195,141,0)}}
+    @keyframes notePop{0%{opacity:0;transform:scale(.6)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+
+    /* ============ top bar ============ */
     .topbar{
-      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;
+      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
       padding:14px clamp(16px,4vw,40px);
-      background:rgba(11,16,32,.86);backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--line);
+      background:rgba(11,16,32,.78);backdrop-filter:blur(20px) saturate(1.3);
+      border-bottom:1px solid transparent;
+      border-image:linear-gradient(90deg,transparent,rgba(240,195,141,.4),transparent) 1;
     }
     .topbar .brand{
-      font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:26px;
-      background:linear-gradient(100deg,#c98a45 10%,#f6d9ac 45%,#e0ad71 65%,#c98a45 90%);
+      font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:27px;
+      background:linear-gradient(100deg,#c98a45 10%,var(--gold-hi) 40%,#e0ad71 60%,#f9e6c5 75%,#c98a45 90%);
+      background-size:220% 100%;
       -webkit-background-clip:text;background-clip:text;color:transparent;
+      animation:goldShimmer 5s ease-in-out infinite;
     }
     .topbar .tag{
       font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
       color:var(--bg-0);background:linear-gradient(135deg,var(--sand),var(--gold));
-      padding:5px 10px;border-radius:999px;
+      padding:5px 11px;border-radius:999px;box-shadow:0 4px 14px rgba(209,155,100,.35);
     }
-    .topbar a.back{
-      margin-left:auto;color:var(--dim);font-size:13px;font-weight:700;text-decoration:none;
-      border:1px solid var(--line);border-radius:999px;padding:8px 16px;transition:.25s;
+    .topbar .spacer{margin-left:auto}
+    .save-btn{
+      display:none;align-items:center;gap:8px;border:0;cursor:pointer;
+      font-weight:800;font-size:13px;color:var(--bg-0);
+      background:linear-gradient(135deg,var(--sand),var(--gold));
+      padding:10px 20px;border-radius:999px;
+      transition:transform .25s var(--spring);
+      animation:savePulse 1.8s ease-out 2;
     }
-    .topbar a.back:hover{color:var(--cream);border-color:var(--gold)}
-    .wrap{max-width:880px;margin:0 auto;padding:34px clamp(14px,4vw,28px) 0}
-    .summary{color:var(--dim);font-size:14px;margin:0 0 26px}
+    .save-btn.show{display:inline-flex}
+    .save-btn:hover{transform:translateY(-2px) scale(1.03)}
+    .save-btn:active{transform:scale(.97)}
+    .save-btn:disabled{opacity:.6;cursor:wait;transform:none}
+    .save-note{font-size:12.5px;font-weight:800;color:#9fd6a9;display:none}
+    .save-note.show{display:inline;animation:notePop .45s var(--spring) both}
+    .topbar a.back,.signout-btn{
+      color:var(--dim);font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;
+      border:1px solid var(--line);border-radius:999px;padding:8px 16px;background:transparent;
+      transition:color .25s ease,border-color .25s ease,background .25s ease,transform .25s ease;
+    }
+    .topbar a.back:hover{color:var(--cream);border-color:var(--gold);transform:translateY(-1px)}
+    .signout-btn:hover{color:#e08f8f;border-color:rgba(224,110,110,.5);transform:translateY(-1px)}
+
+    /* ============ layout ============ */
+    .wrap{max-width:900px;margin:0 auto;padding:38px clamp(14px,4vw,28px) 0}
+    .summary{color:var(--dim);font-size:14px;margin:0 0 30px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;animation:fadeUp .5s var(--ease) both}
     .summary strong{color:var(--gold)}
-
-    .category{margin:0 0 40px}
-    .cat-head{
-      display:flex;align-items:center;gap:14px;margin:0 0 14px;
-      font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:900;color:var(--sand);
+    .stat{
+      display:inline-flex;align-items:baseline;gap:6px;font-size:12.5px;font-weight:700;color:var(--dim);
+      background:rgba(255,248,239,.045);border:1px solid var(--line-soft);
+      border-radius:999px;padding:6px 14px;
     }
-    .cat-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
-    .cat-head .n{color:var(--dim);letter-spacing:.05em;font-weight:700;text-transform:none;font-size:12px}
+    .stat b{font-size:15px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}
+    .summary-hint{font-size:12px;color:var(--dim-2);margin-left:2px}
 
+    .category{margin:0 0 46px;animation:fadeUp .6s var(--ease) both}
+    .category:nth-child(2){animation-delay:.06s}
+    .category:nth-child(3){animation-delay:.12s}
+    .category:nth-child(4){animation-delay:.18s}
+    .category:nth-child(5){animation-delay:.24s}
+    .cat-head{
+      display:flex;align-items:center;gap:14px;margin:0 0 16px;
+      font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:900;color:var(--sand);
+    }
+    .cat-head::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--sand)}
+    .cat-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+    .cat-head .n{color:var(--dim-2);letter-spacing:.05em;font-weight:700;text-transform:none;font-size:12px}
+
+    /* ============ section cards ============ */
     .section{
-      border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:0 0 14px;
-      background:rgba(255,248,239,.028);
+      border:1px solid var(--line);border-radius:22px;overflow:hidden;margin:0 0 16px;
+      background:linear-gradient(170deg,rgba(255,248,239,.045),rgba(255,248,239,.015));
+      transition:border-color .35s ease,box-shadow .35s ease,transform .35s var(--ease);
+    }
+    .section:hover{border-color:rgba(240,195,141,.4);transform:translateY(-2px);box-shadow:0 16px 44px rgba(0,0,0,.35)}
+    .section.open{
+      border-color:rgba(240,195,141,.45);
+      box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(224,173,113,.07);
     }
     .sec-head{
-      width:100%;display:flex;align-items:center;gap:12px;padding:15px 18px;
-      background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;text-align:left;
+      width:100%;display:flex;align-items:center;gap:13px;padding:16px 18px;
+      background:transparent;border:0;color:inherit;cursor:pointer;text-align:left;
+      transition:background .3s ease;
     }
     .sec-head:hover{background:rgba(240,195,141,.05)}
     .sec-icon{
-      display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:11px;
+      display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:13px;
       background:linear-gradient(135deg,rgba(240,195,141,.2),rgba(209,155,100,.12));
-      border:1px solid rgba(240,195,141,.3);color:#f0c38d;
+      border:1px solid rgba(240,195,141,.3);color:var(--gold);
+      transition:transform .45s var(--spring),background .3s ease,color .3s ease,box-shadow .3s ease;
     }
-    .sec-icon svg{width:18px;height:18px}
+    .sec-icon svg{width:19px;height:19px}
+    .section.open .sec-icon{
+      background:linear-gradient(135deg,#e0ad71,#c98a45);color:#231303;
+      transform:scale(1.08) rotate(-6deg);box-shadow:0 0 24px rgba(224,173,113,.4);
+    }
     .cat-tea-matcha .sec-icon{
       background:linear-gradient(135deg,rgba(142,161,91,.28),rgba(142,161,91,.12));
       border-color:rgba(163,184,110,.4);color:#c4d49a;
+    }
+    .cat-tea-matcha .section.open .sec-icon,.cat-tea-matcha.section.open .sec-icon{
+      background:linear-gradient(135deg,#9db273,#6e8143);color:#131a08;box-shadow:0 0 24px rgba(142,161,91,.4);
     }
     .cat-cold .sec-icon{
       background:linear-gradient(135deg,rgba(143,185,214,.26),rgba(110,162,196,.12));
       border-color:rgba(143,185,214,.4);color:#a8cbe2;
     }
-    .sec-title{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:19px}
-    .sec-count{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim)}
-    .sec-chev{width:26px;height:26px;display:grid;place-items:center;border-radius:50%;
-      border:1px solid var(--line);color:var(--gold);transition:transform .4s cubic-bezier(.22,.9,.3,1);flex:none}
+    .cat-cold.section.open .sec-icon{
+      background:linear-gradient(135deg,#8fb9d6,#4c7d9c);color:#0a1620;box-shadow:0 0 24px rgba(110,162,196,.4);
+    }
+    .cat-fit .sec-icon{
+      background:linear-gradient(135deg,rgba(125,191,168,.26),rgba(87,164,136,.12));
+      border-color:rgba(125,191,168,.4);color:#9fd8c2;
+    }
+    .cat-fit.section.open .sec-icon{
+      background:linear-gradient(135deg,#7dbfa8,#3d8069);color:#0b1a14;box-shadow:0 0 24px rgba(87,164,136,.4);
+    }
+    .sec-title{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:20px;letter-spacing:-.01em}
+    .sec-count{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim-2)}
+    .sec-chev{
+      width:28px;height:28px;display:grid;place-items:center;border-radius:50%;flex:none;
+      border:1px solid var(--line);color:var(--gold);
+      transition:transform .5s var(--spring),background .3s ease;
+    }
     .sec-chev svg{width:13px;height:13px}
-    .section.open .sec-chev{transform:rotate(180deg)}
+    .section.open .sec-chev{transform:rotate(180deg) scale(1.08);background:rgba(240,195,141,.1)}
     .sec-body{display:none;border-top:1px solid var(--line)}
     .section.open .sec-body{display:block}
+    .section.open .sec-body .row{animation:rowIn .45s var(--ease) both}
+    .section.open .sec-body .row:nth-child(1){animation-delay:.03s}
+    .section.open .sec-body .row:nth-child(2){animation-delay:.07s}
+    .section.open .sec-body .row:nth-child(3){animation-delay:.11s}
+    .section.open .sec-body .row:nth-child(4){animation-delay:.15s}
+    .section.open .sec-body .row:nth-child(5){animation-delay:.19s}
+    .section.open .sec-body .row:nth-child(6){animation-delay:.23s}
+    .section.open .sec-body .row:nth-child(7){animation-delay:.27s}
+    .section.open .sec-body .row:nth-child(8){animation-delay:.31s}
 
     .subhead{
-      display:flex;align-items:center;gap:10px;padding:12px 18px 4px;
-      font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--sand);
+      display:flex;align-items:center;gap:10px;padding:14px 18px 4px;
+      font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:900;color:var(--sand);
     }
     .subhead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 
-    .row{display:flex;align-items:center;gap:12px;padding:11px 18px}
-    .row + .row{border-top:1px solid rgba(255,248,239,.05)}
-    .thumb{
-      width:46px;height:46px;flex:none;border-radius:10px;overflow:hidden;
-      background:linear-gradient(150deg,#2a2337,#1a1c2e);
+    /* ============ item rows ============ */
+    .row{
+      display:flex;align-items:center;gap:10px;padding:12px 18px 12px 10px;background:transparent;
+      transition:background .25s ease;
     }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .row:hover{background:rgba(240,195,141,.045)}
+    .row + .row{border-top:1px solid var(--line-soft)}
+    .row.dragging{
+      background:rgba(240,195,141,.1);border-radius:14px;
+      box-shadow:0 14px 36px rgba(0,0,0,.45),0 0 0 1px rgba(240,195,141,.35);
+      position:relative;z-index:5;
+    }
+    .grip{
+      width:28px;height:38px;flex:none;display:grid;place-items:center;
+      color:rgba(255,248,239,.3);cursor:grab;touch-action:none;border-radius:9px;
+      transition:color .25s ease,background .25s ease;
+    }
+    .grip:hover{color:var(--gold);background:rgba(240,195,141,.09)}
+    .row.dragging .grip{cursor:grabbing;color:var(--gold)}
+    .grip svg{width:14px;height:14px}
+    .thumb{
+      width:48px;height:48px;flex:none;border-radius:12px;overflow:hidden;
+      background:linear-gradient(150deg,#2a2337,#1a1c2e);
+      box-shadow:inset 0 0 0 1px rgba(255,248,239,.07);
+      transition:transform .35s var(--spring),box-shadow .3s ease;
+    }
+    .row:hover .thumb{transform:scale(1.06);box-shadow:inset 0 0 0 1px rgba(240,195,141,.35),0 6px 18px rgba(0,0,0,.35)}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+    .thumb-brand img{object-fit:contain;padding:6px}
     .row-main{flex:1;min-width:0}
     .row-top{display:flex;align-items:baseline;gap:10px}
-    .item-name{font-weight:800;font-size:14.5px}
-    .dots{flex:1;min-width:0;border-bottom:1px dotted rgba(240,195,141,.3);transform:translateY(-3px)}
+    .item-name{font-weight:800;font-size:14.5px;transition:color .25s ease}
+    .row:hover .item-name{color:var(--gold-hi)}
+    .dots{flex:1;min-width:0;border-bottom:1px dotted rgba(240,195,141,.28);transform:translateY(-3px);transition:border-color .25s ease}
+    .row:hover .dots{border-color:rgba(240,195,141,.6)}
     .price{font-weight:900;font-size:14px;color:var(--gold);font-variant-numeric:tabular-nums;flex-shrink:0}
     .desc{margin:3px 0 0;font-size:12.5px;line-height:1.55;color:var(--dim)}
     .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
@@ -112,10 +230,174 @@
       background:rgba(209,155,100,.12);border:1px solid rgba(209,155,100,.3);
       border-radius:999px;padding:2.5px 9px;
     }
+    .row-off{opacity:.45}
+    .chip-off{color:#e08f8f;background:rgba(224,110,110,.12);border-color:rgba(224,110,110,.35);flex-shrink:0}
+
+    /* ============ action buttons ============ */
+    .edit-btn{
+      width:29px;height:29px;flex:none;display:grid;place-items:center;align-self:center;
+      border:1px solid var(--line-soft);border-radius:9px;background:transparent;
+      color:rgba(255,248,239,.4);cursor:pointer;
+      transition:color .25s ease,border-color .25s ease,background .25s ease,transform .25s var(--spring);
+    }
+    .edit-btn:hover{color:var(--gold);border-color:var(--gold);background:rgba(240,195,141,.08);transform:scale(1.1)}
+    .edit-btn:active{transform:scale(.94)}
+    .edit-btn svg{width:13px;height:13px}
+    .del-btn:hover{color:#e08f8f;border-color:rgba(224,110,110,.5);background:rgba(224,110,110,.08)}
+    .sec-edit{margin-left:2px}
+
+    /* ============ forms ============ */
+    .row-form{display:grid;gap:10px;padding:6px 0;animation:fadeUp .35s var(--ease) both}
+    .rf-line{display:grid;grid-template-columns:1fr 112px;gap:10px}
+    .row-form input,.row-form textarea,.sec-form input{
+      width:100%;font:inherit;font-size:13.5px;color:var(--cream);
+      background:rgba(255,248,239,.055);border:1px solid var(--line);border-radius:11px;
+      padding:9px 12px;outline:none;resize:vertical;
+      transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;
+    }
+    .row-form input:focus,.row-form textarea:focus,.sec-form input:focus{
+      border-color:var(--gold);background:rgba(255,248,239,.08);
+      box-shadow:0 0 0 3px rgba(240,195,141,.15);
+    }
+    .rf-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--dim);cursor:pointer}
+    .rf-check input{width:auto;accent-color:var(--sand);transform:scale(1.15)}
+    .rf-actions{display:flex;gap:8px}
+    .rf-actions button{
+      border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 20px;border-radius:999px;
+      transition:transform .25s var(--spring),opacity .2s ease;
+    }
+    .rf-actions button:hover{transform:translateY(-1px)}
+    .rf-actions button:active{transform:scale(.96)}
+    .rf-save{color:var(--bg-0);background:linear-gradient(135deg,var(--sand),var(--gold));box-shadow:0 8px 22px rgba(209,155,100,.28)}
+    .rf-save:disabled{opacity:.6;cursor:wait;transform:none}
+    .rf-cancel{color:var(--dim);background:rgba(255,248,239,.07)}
+    .rf-cancel:hover{color:var(--cream)}
+    .rf-confirm{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 0;animation:fadeUp .3s var(--ease) both}
+    .rf-confirm-msg{font-size:13.5px;font-weight:700;color:#e0a6a6}
+    .rf-confirm button{border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 20px;border-radius:999px;transition:transform .25s var(--spring)}
+    .rf-confirm button:hover{transform:translateY(-1px)}
+    .rf-del{color:#fff;background:linear-gradient(135deg,#c85555,#a03737);box-shadow:0 8px 22px rgba(200,85,85,.3)}
+    .rf-del:disabled{opacity:.6;cursor:wait}
+
+    .row-add{padding:14px 18px;border-top:1px solid var(--line-soft)}
+    .add-wrap{padding:12px 18px 16px;border-top:1px solid var(--line-soft)}
+    .add-sec-wrap{margin:0 0 14px}
+    .add-btn{
+      width:100%;border:1px dashed rgba(240,195,141,.35);border-radius:14px;cursor:pointer;
+      background:transparent;color:var(--gold);font-weight:800;font-size:13px;
+      padding:11px;transition:background .3s ease,border-color .3s ease,transform .25s var(--spring),box-shadow .3s ease;
+    }
+    .add-btn:hover{
+      background:rgba(240,195,141,.07);border-color:var(--gold);border-style:solid;
+      transform:translateY(-1px);box-shadow:0 8px 24px rgba(209,155,100,.15);
+    }
+    .add-btn:active{transform:scale(.99)}
+
+    .sec-form{
+      display:grid;gap:12px;padding:16px 18px;border-top:1px solid var(--line);
+      background:rgba(240,195,141,.045);animation:fadeUp .35s var(--ease) both;
+    }
+    .sec-form-title{margin:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--sand)}
+    .icon-grid{display:flex;gap:8px;flex-wrap:wrap}
+    .icon-opt{
+      width:42px;height:42px;display:grid;place-items:center;cursor:pointer;
+      border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--gold);
+      transition:border-color .25s ease,background .25s ease,transform .25s var(--spring),box-shadow .25s ease;
+    }
+    .icon-opt svg{width:19px;height:19px}
+    .icon-opt:hover{border-color:var(--gold);transform:translateY(-2px) scale(1.05)}
+    .icon-opt.selected{
+      background:linear-gradient(135deg,var(--sand),var(--gold));color:var(--bg-0);
+      border-color:transparent;box-shadow:0 8px 20px rgba(209,155,100,.35);transform:scale(1.05);
+    }
+
+    /* ============ photo field + crop ============ */
+    .rf-photo{display:flex;align-items:center;gap:12px}
+    .rf-photo-prev{width:54px;height:54px}
+    .rf-photo-prev img{width:100%;height:100%;object-fit:cover}
+    .rf-photo-btn{
+      display:inline-block;cursor:pointer;font-size:12.5px;font-weight:800;color:var(--gold);
+      border:1px dashed rgba(240,195,141,.4);border-radius:999px;padding:9px 18px;
+      transition:border-color .25s ease,background .25s ease,transform .25s var(--spring);
+    }
+    .rf-photo-btn:hover{border-color:var(--gold);background:rgba(240,195,141,.07);transform:translateY(-1px)}
+    .crop-overlay{
+      position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;
+      background:rgba(5,8,16,.85);backdrop-filter:blur(10px);
+      animation:overlayIn .3s ease both;
+    }
+    .crop-card{
+      width:min(370px,100%);padding:24px;border-radius:24px;
+      background:linear-gradient(170deg,#141528,#1b1530);
+      border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.55);
+      animation:popIn .45s var(--spring) both;
+    }
+    .crop-title{margin:0 0 14px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--sand)}
+    .crop-stage{
+      position:relative;width:100%;aspect-ratio:1;overflow:hidden;border-radius:16px;
+      border:2px solid var(--gold);cursor:grab;touch-action:none;background:#0b1020;
+      box-shadow:0 0 0 1px rgba(240,195,141,.2),0 0 40px rgba(224,173,113,.12);
+    }
+    .crop-stage:active{cursor:grabbing}
+    .crop-stage img{position:absolute;top:0;left:0;max-width:none;user-select:none;-webkit-user-drag:none}
+    .crop-zoom{width:100%;margin:18px 0 16px;accent-color:var(--sand)}
+    .crop-actions{justify-content:flex-end}
+
+    /* ============ login ============ */
+    .signout-btn[hidden]{display:none}
+    .login-overlay{
+      position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:20px;
+      background:
+        radial-gradient(800px 500px at 50% 20%,rgba(209,155,100,.14),transparent 60%),
+        radial-gradient(600px 450px at 85% 85%,rgba(110,90,160,.12),transparent 55%),
+        linear-gradient(170deg,var(--bg-0),var(--bg-1) 60%,var(--bg-2));
+    }
+    .login-overlay.show{display:grid;animation:overlayIn .4s ease both}
+    .login-card{
+      width:min(370px,100%);padding:38px 30px;border-radius:26px;
+      background:rgba(255,248,239,.04);backdrop-filter:blur(14px);
+      border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.5);
+      animation:popIn .55s var(--spring) .1s both;
+    }
+    .login-card h2{
+      margin:0 0 4px;font-family:"Playfair Display",Georgia,serif;font-style:italic;
+      font-weight:600;font-size:30px;
+      background:linear-gradient(100deg,#c98a45 10%,var(--gold-hi) 40%,#e0ad71 60%,#f9e6c5 75%,#c98a45 90%);
+      background-size:220% 100%;
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      animation:goldShimmer 5s ease-in-out infinite;
+    }
+    .login-card p{margin:0 0 24px;font-size:13px;color:var(--dim)}
+    .login-card label{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--dim);margin:0 0 6px}
+    .login-card input{
+      width:100%;font:inherit;font-size:15px;color:var(--cream);
+      background:rgba(255,248,239,.06);border:1px solid var(--line);border-radius:13px;
+      padding:12px 15px;margin-bottom:15px;outline:none;
+      transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;
+    }
+    .login-card input:focus{border-color:var(--gold);background:rgba(255,248,239,.09);box-shadow:0 0 0 3px rgba(240,195,141,.15)}
+    .login-err{color:#e08f8f;font-size:13px;font-weight:700;margin:0 0 12px;display:none}
+    .login-err.show{display:block;animation:fadeUp .3s ease both}
+    .login-submit{
+      width:100%;border:0;cursor:pointer;font-weight:800;font-size:15px;
+      padding:13px;border-radius:999px;color:var(--bg-0);
+      background:linear-gradient(135deg,var(--sand),var(--gold));
+      box-shadow:0 14px 34px rgba(209,155,100,.3);
+      transition:transform .25s var(--spring),box-shadow .3s ease;
+    }
+    .login-submit:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(209,155,100,.4)}
+    .login-submit:active{transform:scale(.98)}
+    .login-submit:disabled{opacity:.6;cursor:wait;transform:none}
+
     @media (max-width:420px){
-      .thumb{width:40px;height:40px}
-      .item-name{font-size:13.5px}
-      .row,.sec-head{padding-left:14px;padding-right:14px}
+      .rf-line{grid-template-columns:1fr 92px}
+      .topbar{gap:8px}
+      .topbar .brand{font-size:23px}
+      .thumb{width:44px;height:44px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important}
     }
   </style>
 </head>
@@ -123,18 +405,39 @@
   <header class="topbar">
     <span class="brand">Ramouz</span>
     <span class="tag">Admin</span>
+    <span class="spacer"></span>
+    <span class="save-note" data-save-note>Saved ✓</span>
+    <button type="button" class="save-btn" data-save-btn>Save order</button>
+    <button type="button" class="signout-btn" data-signout hidden>Sign out</button>
     <a class="back" href="index.html">&larr; Back to site</a>
   </header>
+
+  <div class="login-overlay" data-login>
+    <form class="login-card" data-login-form>
+      <h2>Ramouz Admin</h2>
+      <p>Sign in to manage the menu.</p>
+      <label for="adm-email">Email</label>
+      <input id="adm-email" type="email" autocomplete="username" required />
+      <label for="adm-pass">Password</label>
+      <input id="adm-pass" type="password" autocomplete="current-password" required />
+      <p class="login-err" data-login-err></p>
+      <button type="submit" class="login-submit">Sign in</button>
+    </form>
+  </div>
 
   <main class="wrap">
     <p class="summary" data-summary></p>
     <div data-menu-root></div>
   </main>
 
-  <script src="assets/js/menu-data.js"></script>
   <script>
+    const SUPABASE_URL = 'https://waibybqjhzddpfhzrisx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhaWJ5YnFqaHpkZHBmaHpyaXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzODg4ODYsImV4cCI6MjA5OTk2NDg4Nn0.zufjm2J4F4mePJhd072hoXh5vLqfXNVuPFEN1BbKs3k';
+
     const root = document.querySelector('[data-menu-root]');
-    const data = window.MENU_DATA || [];
+    const summaryEl = document.querySelector('[data-summary]');
+    const saveBtn = document.querySelector('[data-save-btn]');
+    const saveNote = document.querySelector('[data-save-note]');
 
     const el = (tag, cls, text) => {
       const n = document.createElement(tag);
@@ -143,72 +446,945 @@
       return n;
     };
 
-    let sectionCount = 0, itemCount = 0;
+    const CAT_SLUGS = {
+      'Coffee Base': 'coffee-base',
+      'Tea & Matcha': 'tea-matcha',
+      'Cold & Refreshing': 'cold',
+      'Bites': 'bites',
+      'Fit': 'fit',
+    };
+    const bySort = (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0);
 
-    data.forEach(cat => {
-      const catBox = el('section', 'category');
-      const head = el('h2', 'cat-head', cat.name + ' ');
-      const n = el('span', 'n', cat.sections.reduce((a, s) => a + s.items.length, 0) + ' items');
-      head.appendChild(n);
-      catBox.appendChild(head);
+    async function loadMenu() {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/categories?select=*,sections(*,subsections(*),items(*,variants(*)))`,
+        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const cats = await res.json();
+      return cats.sort(bySort).map(cat => ({
+        id: cat.id,
+        name: cat.name,
+        slug: CAT_SLUGS[cat.name] || cat.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        sections: (cat.sections || []).sort(bySort).map(sec => {
+          const subs = new Map((sec.subsections || []).map(s => [s.id, s.name]));
+          return {
+            id: sec.id,
+            name: sec.name,
+            icon: sec.icon,
+            sort: sec.sort_order ?? 0,
+            items: (sec.items || []).sort(bySort).map(item => ({
+              id: item.id,
+              name: item.name,
+              price: Number(item.price).toFixed(3),
+              desc: item.description,
+              img: item.image_url,
+              sort: item.sort_order ?? 0,
+              subsection: item.subsection_id != null ? subs.get(item.subsection_id) : null,
+              variants: (item.variants || []).sort(bySort).map(v => v.name),
+              available: item.is_available !== false,
+            })),
+          };
+        }),
+      }));
+    }
 
-      cat.sections.forEach(sec => {
-        sectionCount++;
-        const secBox = el('div', 'section cat-' + cat.slug);
-        const secHead = el('button', 'sec-head');
-        secHead.type = 'button';
-        if (sec.icon) {
-          const ico = el('span', 'sec-icon');
-          ico.innerHTML = sec.icon;
-          secHead.appendChild(ico);
+    /* ---------- drag to reorder (pointer events: mouse + touch) ---------- */
+    const GRIP_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="5" r="1.7"/><circle cx="15" cy="5" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="19" r="1.7"/><circle cx="15" cy="19" r="1.7"/></svg>';
+    let drag = null;
+
+    // contiguous rows around this one, not crossing Sweet/Savoury dividers
+    const dragGroup = (row) => {
+      const group = [row];
+      for (let n = row.previousElementSibling; n && n.classList.contains('row'); n = n.previousElementSibling) group.unshift(n);
+      for (let n = row.nextElementSibling; n && n.classList.contains('row'); n = n.nextElementSibling) group.push(n);
+      return group;
+    };
+
+    function startDrag(e, row) {
+      e.preventDefault();
+      drag = { row, body: row.parentElement };
+      row.classList.add('dragging');
+      window.addEventListener('pointermove', moveDrag);
+      window.addEventListener('pointerup', endDrag, { once: true });
+    }
+    function moveDrag(e) {
+      if (!drag) return;
+      const { row } = drag;
+      for (const sib of dragGroup(row)) {
+        if (sib === row) continue;
+        const r = sib.getBoundingClientRect();
+        if (e.clientY < r.top + r.height / 2) {
+          if (sib.previousElementSibling !== row) row.parentElement.insertBefore(row, sib);
+          return;
         }
-        secHead.appendChild(el('span', 'sec-title', sec.name));
-        secHead.appendChild(el('span', 'sec-count', sec.items.length + ' items'));
-        const chev = el('span', 'sec-chev');
-        chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
-        secHead.appendChild(chev);
-        secHead.addEventListener('click', () => secBox.classList.toggle('open'));
-        secBox.appendChild(secHead);
+      }
+      const group = dragGroup(row);
+      const last = group[group.length - 1];
+      if (last !== row) row.parentElement.insertBefore(row, last.nextElementSibling);
+    }
+    function endDrag() {
+      if (!drag) return;
+      drag.row.classList.remove('dragging');
+      drag.body.dataset.dirty = '1';
+      drag = null;
+      window.removeEventListener('pointermove', moveDrag);
+      saveBtn.classList.add('show');
+      saveNote.classList.remove('show');
+    }
 
-        const body = el('div', 'sec-body');
-        let lastSub = null;
-        sec.items.forEach(item => {
-          itemCount++;
-          if (item.subsection && item.subsection !== lastSub) {
-            body.appendChild(el('div', 'subhead', item.subsection));
-            lastSub = item.subsection;
-          }
-          const row = el('div', 'row');
-          const thumb = el('span', 'thumb');
-          const img = document.createElement('img');
-          img.src = item.img; img.alt = ''; img.loading = 'lazy';
-          img.onerror = () => img.remove();
-          thumb.appendChild(img);
-          row.appendChild(thumb);
+    /* ---------- item rows: display + inline edit ---------- */
+    const EDIT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>';
+    const TRASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
 
-          const main = el('div', 'row-main');
-          const top = el('div', 'row-top');
-          top.appendChild(el('span', 'item-name', item.name));
-          top.appendChild(el('span', 'dots'));
-          top.appendChild(el('span', 'price', item.price));
-          main.appendChild(top);
-          if (item.desc) main.appendChild(el('p', 'desc', item.desc));
-          if (item.variants.length) {
-            const chips = el('div', 'chips');
-            item.variants.forEach(v => chips.appendChild(el('span', 'chip', v)));
-            main.appendChild(chips);
-          }
-          row.appendChild(main);
-          body.appendChild(row);
-        });
-        secBox.appendChild(body);
-        catBox.appendChild(secBox);
-      });
-      root.appendChild(catBox);
+    const TOKEN_KEY = 'ramouz_admin_token';
+    const REFRESH_KEY = 'ramouz_admin_refresh';
+    const TOKEN_AT_KEY = 'ramouz_admin_token_at';
+    const restHeaders = () => ({
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${sessionStorage.getItem(TOKEN_KEY) || SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation',
     });
 
-    document.querySelector('[data-summary]').innerHTML =
-      `<strong>${data.length}</strong> categories · <strong>${sectionCount}</strong> sections · <strong>${itemCount}</strong> items — mirrored from the live site.`;
+    const storeSession = (data) => {
+      sessionStorage.setItem(TOKEN_KEY, data.access_token);
+      if (data.refresh_token) sessionStorage.setItem(REFRESH_KEY, data.refresh_token);
+      sessionStorage.setItem(TOKEN_AT_KEY, String(Date.now()));
+    };
+
+    // renew the session token before it expires (Supabase tokens last 1h)
+    async function ensureFreshToken() {
+      if (!sessionStorage.getItem(TOKEN_KEY)) return;
+      const age = Date.now() - Number(sessionStorage.getItem(TOKEN_AT_KEY) || 0);
+      if (age < 45 * 60 * 1000) return;
+      const rt = sessionStorage.getItem(REFRESH_KEY);
+      let ok = false;
+      if (rt) {
+        try {
+          const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+            method: 'POST',
+            headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refresh_token: rt }),
+          });
+          if (res.ok) { storeSession(await res.json()); ok = true; }
+        } catch (e) { /* fall through */ }
+      }
+      if (!ok) {
+        [TOKEN_KEY, REFRESH_KEY, TOKEN_AT_KEY].forEach(k => sessionStorage.removeItem(k));
+        document.querySelector('[data-login]').classList.add('show');
+        throw new Error('Session expired — please sign in again.');
+      }
+    }
+
+    /* ---------- image upload: compress client-side, store in Supabase Storage ---------- */
+    const BUCKET = 'menu-images';
+
+    async function compressImage(file, maxDim = 1200, quality = 0.85) {
+      try {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, maxDim / Math.max(bitmap.width, bitmap.height));
+        const w = Math.round(bitmap.width * scale);
+        const h = Math.round(bitmap.height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', quality));
+        if (blob) return blob;
+      } catch (e) { /* fall through: upload the original file */ }
+      return file;
+    }
+
+    async function uploadImage(file) {
+      await ensureFreshToken();
+      const blob = await compressImage(file);
+      const key = `items/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${key}`, {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${sessionStorage.getItem(TOKEN_KEY) || SUPABASE_ANON_KEY}`,
+          'Content-Type': 'image/jpeg',
+          'x-upsert': 'true',
+        },
+        body: blob,
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || 'Photo upload failed — check the storage bucket and policies.');
+      }
+      return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${key}`;
+    }
+
+    // best-effort cleanup of a replaced/orphaned photo; old repo-path images are skipped
+    const STORAGE_PUBLIC_PREFIX = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/`;
+    async function deleteStorageImage(url) {
+      if (!url || !url.startsWith(STORAGE_PUBLIC_PREFIX)) return;
+      const key = url.slice(STORAGE_PUBLIC_PREFIX.length);
+      try {
+        await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${key}`, {
+          method: 'DELETE',
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${sessionStorage.getItem(TOKEN_KEY) || SUPABASE_ANON_KEY}`,
+          },
+        });
+      } catch (e) {
+        console.warn('[admin] could not delete old image:', e);
+      }
+    }
+
+    /* ---------- crop picker: choose the square shown as the thumbnail ---------- */
+    function cropImage(file) {
+      return new Promise((resolve) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(file); }; // undecodable: use as-is
+        img.onload = () => {
+          const overlay = el('div', 'crop-overlay');
+          const card = el('div', 'crop-card');
+          card.appendChild(el('p', 'crop-title', 'Position the photo'));
+          const stage = el('div', 'crop-stage');
+          const pic = document.createElement('img');
+          pic.src = url; pic.alt = ''; pic.draggable = false;
+          stage.appendChild(pic);
+          card.appendChild(stage);
+          const zoom = el('input', 'crop-zoom');
+          zoom.type = 'range';
+          card.appendChild(zoom);
+          const actions = el('div', 'rf-actions crop-actions');
+          const okB = el('button', 'rf-save', 'Use photo');
+          okB.type = 'button';
+          const cancelB = el('button', 'rf-cancel', 'Cancel');
+          cancelB.type = 'button';
+          actions.appendChild(okB);
+          actions.appendChild(cancelB);
+          card.appendChild(actions);
+          overlay.appendChild(card);
+          document.body.appendChild(overlay);
+
+          const V = stage.clientWidth;
+          const minScale = V / Math.min(img.naturalWidth, img.naturalHeight);
+          let scale = minScale, tx = 0, ty = 0;
+
+          const clamp = () => {
+            tx = Math.min(0, Math.max(V - img.naturalWidth * scale, tx));
+            ty = Math.min(0, Math.max(V - img.naturalHeight * scale, ty));
+          };
+          const paint = () => {
+            pic.style.width = `${img.naturalWidth * scale}px`;
+            pic.style.transform = `translate(${tx}px,${ty}px)`;
+          };
+          // start centered
+          tx = (V - img.naturalWidth * scale) / 2;
+          ty = (V - img.naturalHeight * scale) / 2;
+          paint();
+
+          zoom.min = '0'; zoom.max = '100'; zoom.value = '0';
+          zoom.addEventListener('input', () => {
+            const next = minScale * (1 + (Number(zoom.value) / 100) * 3);
+            // keep the viewport centre anchored while zooming
+            const cx = (V / 2 - tx) / scale;
+            const cy = (V / 2 - ty) / scale;
+            scale = next;
+            tx = V / 2 - cx * scale;
+            ty = V / 2 - cy * scale;
+            clamp(); paint();
+          });
+
+          let dragFrom = null;
+          stage.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            dragFrom = { x: e.clientX - tx, y: e.clientY - ty };
+            stage.setPointerCapture(e.pointerId);
+          });
+          stage.addEventListener('pointermove', (e) => {
+            if (!dragFrom) return;
+            tx = e.clientX - dragFrom.x;
+            ty = e.clientY - dragFrom.y;
+            clamp(); paint();
+          });
+          stage.addEventListener('pointerup', () => { dragFrom = null; });
+
+          const close = (result) => {
+            overlay.remove();
+            URL.revokeObjectURL(url);
+            resolve(result);
+          };
+          cancelB.addEventListener('click', () => close(null));
+          okB.addEventListener('click', () => {
+            const OUT = 900;
+            const canvas = document.createElement('canvas');
+            canvas.width = OUT; canvas.height = OUT;
+            canvas.getContext('2d').drawImage(
+              img,
+              -tx / scale, -ty / scale, V / scale, V / scale,
+              0, 0, OUT, OUT
+            );
+            canvas.toBlob((blob) => close(blob || file), 'image/jpeg', 0.88);
+          });
+        };
+        img.src = url;
+      });
+    }
+
+    // photo field used by both the edit and add forms
+    function photoField(currentUrl) {
+      const wrap = el('div', 'rf-photo');
+      const preview = el('span', 'thumb rf-photo-prev');
+      const setPrev = (url) => {
+        preview.textContent = '';
+        if (url) {
+          const im = document.createElement('img');
+          im.src = url; im.alt = '';
+          preview.appendChild(im);
+        }
+      };
+      setPrev(currentUrl);
+      const pick = el('label', 'rf-photo-btn', currentUrl ? 'Change photo' : 'Add photo');
+      const input = el('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.hidden = true;
+      let pending = null;
+      input.addEventListener('change', async () => {
+        const file = input.files[0];
+        input.value = '';
+        if (!file) return;
+        const cropped = await cropImage(file);
+        if (!cropped) return; // cancelled in the crop dialog
+        pending = cropped;
+        setPrev(URL.createObjectURL(pending));
+        pick.textContent = 'Photo selected ✓';
+        pick.appendChild(input);
+      });
+      pick.appendChild(input);
+      wrap.appendChild(preview);
+      wrap.appendChild(pick);
+      return { wrap, get file() { return pending; } };
+    }
+
+    const flashNote = (text) => {
+      saveNote.textContent = text;
+      saveNote.classList.add('show');
+      setTimeout(() => saveNote.classList.remove('show'), 3000);
+    };
+
+    const refreshCount = (body) => {
+      const n = body.querySelectorAll('.row').length;
+      const countEl = body.parentElement.querySelector('.sec-count');
+      if (countEl) countEl.textContent = `${n} item${n === 1 ? '' : 's'}`;
+    };
+
+    function confirmDelete(item, row) {
+      const main = row.querySelector('.row-main');
+      const panel = el('div', 'row-main rf-confirm');
+      const msg = el('span', 'rf-confirm-msg');
+      msg.textContent = `Delete “${item.name}”?`;
+      const delB = el('button', 'rf-del', 'Delete');
+      delB.type = 'button';
+      const cancelB = el('button', 'rf-cancel', 'Cancel');
+      cancelB.type = 'button';
+      cancelB.addEventListener('click', () => panel.replaceWith(main));
+      panel.appendChild(msg);
+      panel.appendChild(delB);
+      panel.appendChild(cancelB);
+
+      delB.addEventListener('click', async () => {
+        delB.disabled = true; delB.textContent = 'Deleting…';
+        try {
+          await ensureFreshToken();
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/items?id=eq.${item.id}`, {
+            method: 'DELETE', headers: restHeaders(),
+          });
+          const gone = await res.json();
+          if (!res.ok || !Array.isArray(gone) || !gone.length) {
+            throw new Error('Delete was rejected — did you run the policy SQL in Supabase?');
+          }
+          const body = row.parentElement;
+          row.remove();
+          refreshCount(body);
+          deleteStorageImage(item.img);
+          flashNote('Deleted ✓');
+        } catch (err) {
+          console.error('[admin] delete failed:', err);
+          alert(err.message || 'Deleting failed — please try again.');
+          panel.replaceWith(main);
+        }
+      });
+
+      main.replaceWith(panel);
+    }
+
+    function enterAdd(sec, body, addWrap) {
+      if (body.querySelector('.row-add')) return;
+      const form = el('form', 'row-add row-form');
+
+      const nameIn = el('input');
+      nameIn.required = true; nameIn.placeholder = 'Name';
+      const priceIn = el('input');
+      priceIn.type = 'number'; priceIn.step = '0.001'; priceIn.min = '0';
+      priceIn.required = true; priceIn.placeholder = 'Price (OMR)';
+      const descIn = el('textarea');
+      descIn.rows = 2; descIn.placeholder = 'Description (optional)';
+
+      const checkWrap = el('label', 'rf-check');
+      const availIn = el('input');
+      availIn.type = 'checkbox'; availIn.checked = true;
+      checkWrap.appendChild(availIn);
+      checkWrap.appendChild(document.createTextNode('Show on the website'));
+
+      const rowLine = el('div', 'rf-line');
+      rowLine.appendChild(nameIn);
+      rowLine.appendChild(priceIn);
+      form.appendChild(rowLine);
+      form.appendChild(descIn);
+      const photo = photoField(null);
+      form.appendChild(photo.wrap);
+      form.appendChild(checkWrap);
+
+      const actions = el('div', 'rf-actions');
+      const saveB = el('button', 'rf-save', 'Add item');
+      saveB.type = 'submit';
+      const cancelB = el('button', 'rf-cancel', 'Cancel');
+      cancelB.type = 'button';
+      cancelB.addEventListener('click', () => form.remove());
+      actions.appendChild(saveB);
+      actions.appendChild(cancelB);
+      form.appendChild(actions);
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const price = parseFloat(priceIn.value);
+        if (!nameIn.value.trim() || !(price >= 0)) return;
+        saveB.disabled = true; saveB.textContent = 'Adding…';
+        try {
+          const nextSort = Math.max(0, ...sec.items.map(i => i.sort || 0)) + 10;
+          const payload = {
+            section_id: sec.id,
+            name: nameIn.value.trim(),
+            description: descIn.value.trim() || null,
+            price: price,
+            is_available: availIn.checked,
+            sort_order: nextSort,
+          };
+          if (photo.file) {
+            saveB.textContent = 'Uploading photo…';
+            payload.image_url = await uploadImage(photo.file);
+            saveB.textContent = 'Adding…';
+          }
+          await ensureFreshToken();
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/items`, {
+            method: 'POST', headers: restHeaders(), body: JSON.stringify(payload),
+          });
+          const created = await res.json();
+          if (!res.ok || !Array.isArray(created) || !created.length) {
+            throw new Error('Adding was rejected — did you run the policy SQL in Supabase?');
+          }
+          const item = {
+            id: created[0].id,
+            name: payload.name,
+            price: price.toFixed(3),
+            desc: payload.description,
+            img: payload.image_url || null,
+            sort: nextSort,
+            subsection: null,
+            variants: [],
+            available: payload.is_available,
+          };
+          sec.items.push(item);
+          form.remove();
+          body.insertBefore(makeRow(item), addWrap);
+          refreshCount(body);
+          flashNote('Added ✓');
+        } catch (err) {
+          console.error('[admin] add failed:', err);
+          alert(err.message || 'Adding failed — please try again.');
+          saveB.disabled = false; saveB.textContent = 'Add item';
+        }
+      });
+
+      body.insertBefore(form, addWrap);
+      nameIn.focus();
+    }
+
+    function makeRow(item) {
+      const row = el('div', 'row' + (item.available ? '' : ' row-off'));
+      row.dataset.id = item.id;
+
+      const grip = el('span', 'grip');
+      grip.innerHTML = GRIP_SVG;
+      grip.addEventListener('pointerdown', (e) => startDrag(e, row));
+      row.appendChild(grip);
+
+      const thumb = el('span', 'thumb' + (item.img ? '' : ' thumb-brand'));
+      const img = document.createElement('img');
+      img.src = item.img || 'assets/images/logo.png';
+      img.alt = ''; img.loading = 'lazy';
+      img.onerror = () => img.remove();
+      thumb.appendChild(img);
+      row.appendChild(thumb);
+
+      row.appendChild(buildMain(item, row));
+      return row;
+    }
+
+    function buildMain(item, row) {
+      const main = el('div', 'row-main');
+      const top = el('div', 'row-top');
+      top.appendChild(el('span', 'item-name', item.name));
+      top.appendChild(el('span', 'dots'));
+      top.appendChild(el('span', 'price', item.price));
+      if (!item.available) top.appendChild(el('span', 'chip chip-off', 'hidden'));
+      const editBtn = el('button', 'edit-btn');
+      editBtn.type = 'button';
+      editBtn.title = 'Edit item';
+      editBtn.innerHTML = EDIT_SVG;
+      editBtn.addEventListener('click', () => enterEdit(item, row));
+      top.appendChild(editBtn);
+      const delBtn = el('button', 'edit-btn del-btn');
+      delBtn.type = 'button';
+      delBtn.title = 'Delete item';
+      delBtn.innerHTML = TRASH_SVG;
+      delBtn.addEventListener('click', () => confirmDelete(item, row));
+      top.appendChild(delBtn);
+      main.appendChild(top);
+      if (item.desc) main.appendChild(el('p', 'desc', item.desc));
+      if (item.variants.length) {
+        const chips = el('div', 'chips');
+        item.variants.forEach(v => chips.appendChild(el('span', 'chip', v)));
+        main.appendChild(chips);
+      }
+      return main;
+    }
+
+    function enterEdit(item, row) {
+      const main = row.querySelector('.row-main');
+      const form = el('form', 'row-main row-form');
+
+      const nameIn = el('input');
+      nameIn.value = item.name; nameIn.required = true; nameIn.placeholder = 'Name';
+      const priceIn = el('input');
+      priceIn.type = 'number'; priceIn.step = '0.001'; priceIn.min = '0';
+      priceIn.value = item.price; priceIn.required = true; priceIn.placeholder = 'Price (OMR)';
+      const descIn = el('textarea');
+      descIn.value = item.desc || ''; descIn.rows = 2; descIn.placeholder = 'Description (optional)';
+
+      const checkWrap = el('label', 'rf-check');
+      const availIn = el('input');
+      availIn.type = 'checkbox'; availIn.checked = item.available;
+      checkWrap.appendChild(availIn);
+      checkWrap.appendChild(document.createTextNode('Show on the website'));
+
+      const rowLine = el('div', 'rf-line');
+      rowLine.appendChild(nameIn);
+      rowLine.appendChild(priceIn);
+      form.appendChild(rowLine);
+      form.appendChild(descIn);
+      const photo = photoField(item.img);
+      form.appendChild(photo.wrap);
+      form.appendChild(checkWrap);
+
+      const actions = el('div', 'rf-actions');
+      const saveB = el('button', 'rf-save', 'Save');
+      saveB.type = 'submit';
+      const cancelB = el('button', 'rf-cancel', 'Cancel');
+      cancelB.type = 'button';
+      cancelB.addEventListener('click', () => form.replaceWith(buildMain(item, row)));
+      actions.appendChild(saveB);
+      actions.appendChild(cancelB);
+      form.appendChild(actions);
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const price = parseFloat(priceIn.value);
+        if (!nameIn.value.trim() || !(price >= 0)) return;
+        saveB.disabled = true; saveB.textContent = 'Saving…';
+        try {
+          const payload = {
+            name: nameIn.value.trim(),
+            description: descIn.value.trim() || null,
+            price: price,
+            is_available: availIn.checked,
+          };
+          if (photo.file) {
+            saveB.textContent = 'Uploading photo…';
+            payload.image_url = await uploadImage(photo.file);
+            saveB.textContent = 'Saving…';
+          }
+          await ensureFreshToken();
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/items?id=eq.${item.id}`, {
+            method: 'PATCH',
+            headers: restHeaders(),
+            body: JSON.stringify(payload),
+          });
+          const updated = await res.json();
+          if (!res.ok || !Array.isArray(updated) || !updated.length) {
+            throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
+          }
+          item.name = payload.name;
+          item.desc = payload.description;
+          item.price = price.toFixed(3);
+          item.available = payload.is_available;
+          if (payload.image_url) {
+            deleteStorageImage(item.img);
+            item.img = payload.image_url;
+            const thumb = row.querySelector('.thumb');
+            thumb.textContent = '';
+            const im = document.createElement('img');
+            im.src = item.img; im.alt = '';
+            thumb.appendChild(im);
+          }
+          row.classList.toggle('row-off', !item.available);
+          form.replaceWith(buildMain(item, row));
+          saveNote.classList.add('show');
+          setTimeout(() => saveNote.classList.remove('show'), 3000);
+        } catch (err) {
+          console.error('[admin] item save failed:', err);
+          alert(err.message || 'Saving failed — please try again.');
+          saveB.disabled = false; saveB.textContent = 'Save';
+        }
+      });
+
+      main.replaceWith(form);
+      nameIn.focus();
+    }
+
+    /* ---------- sections: build, edit, add ---------- */
+    const SECTION_ICONS = [
+      { label: 'Coffee', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>' },
+      { label: 'Tea', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>' },
+      { label: 'Cup', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg>' },
+      { label: 'Croissant', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.6 13.11 5.79-3.21c1.89-1.05 4.79 1.78 3.71 3.71l-3.22 5.81C8.8 23.16.79 15.23 4.6 13.11Z"/><path d="m10.5 9.5-1-2.29C9.2 6.48 8.8 6 8 6H4.5C2.79 6 2 6.5 2 8.5a7.71 7.71 0 0 0 2 4.83"/><path d="M8 6c0-1.55.24-4-2-4-2 0-2.5 2.17-2.5 4"/><path d="m14.5 13.5 2.29 1c.73.3 1.21.7 1.21 1.5v3.5c0 1.71-.5 2.5-2.5 2.5a7.71 7.71 0 0 1-4.83-2"/><path d="M18 16c1.55 0 4-.24 4 2 0 2-2.17 2.5-4 2.5"/></svg>' },
+      { label: 'Dessert', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>' },
+      { label: 'Hot', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>' },
+      { label: 'Iced', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="2" x2="12" y2="22"/><path d="m17 5-5 3-5-3"/><path d="m17 19-5-3-5 3"/><line x1="2" y1="12" x2="22" y2="12"/><path d="m5 7 3 5-3 5"/><path d="m19 7-3 5 3 5"/></svg>' },
+      { label: 'Glass', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.2 22H8.8a2 2 0 0 1-2-1.79L5 3h14l-1.81 17.21A2 2 0 0 1 15.2 22Z"/><path d="M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0"/></svg>' },
+      { label: 'Ice cream', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 11 4.08 10.35a1 1 0 0 0 1.84 0L17 11"/><path d="M17 7A5 5 0 0 0 7 7"/><path d="M17 7a2 2 0 0 1 0 4H7a2 2 0 0 1 0-4"/></svg>' },
+      { label: 'Cake', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/></svg>' },
+      { label: 'Salad', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="m13 12 4-4"/><path d="M10.9 7.25A4 4 0 0 0 4 10c0 .73.2 1.41.54 2"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7"/></svg>' },
+      { label: 'Milk', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg>' },
+      { label: 'Fit', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>' },
+    ];
+
+    function iconPicker(initialSvg) {
+      const grid = el('div', 'icon-grid');
+      let selected = initialSvg || SECTION_ICONS[2].svg;
+      SECTION_ICONS.forEach(ic => {
+        const b = el('button', 'icon-opt');
+        b.type = 'button';
+        b.title = ic.label;
+        b.innerHTML = ic.svg;
+        if (ic.svg === selected) b.classList.add('selected');
+        b.addEventListener('click', () => {
+          selected = ic.svg;
+          grid.querySelectorAll('.icon-opt').forEach(o => o.classList.toggle('selected', o === b));
+        });
+        grid.appendChild(b);
+      });
+      return { grid, get value() { return selected; } };
+    }
+
+    function sectionForm({ title, initial, submitLabel, onSubmit, onCancel }) {
+      const form = el('form', 'sec-form');
+      form.appendChild(el('p', 'sec-form-title', title));
+      const nameIn = el('input');
+      nameIn.required = true; nameIn.placeholder = 'Section name';
+      nameIn.value = initial?.name || '';
+      form.appendChild(nameIn);
+      const picker = iconPicker(initial?.icon);
+      form.appendChild(picker.grid);
+      const actions = el('div', 'rf-actions');
+      const saveB = el('button', 'rf-save', submitLabel);
+      saveB.type = 'submit';
+      const cancelB = el('button', 'rf-cancel', 'Cancel');
+      cancelB.type = 'button';
+      cancelB.addEventListener('click', onCancel);
+      actions.appendChild(saveB);
+      actions.appendChild(cancelB);
+      form.appendChild(actions);
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!nameIn.value.trim()) return;
+        saveB.disabled = true; saveB.textContent = 'Saving…';
+        try {
+          await onSubmit({ name: nameIn.value.trim(), icon: picker.value });
+        } catch (err) {
+          console.error('[admin] section save failed:', err);
+          alert(err.message || 'Saving failed — please try again.');
+          saveB.disabled = false; saveB.textContent = submitLabel;
+        }
+      });
+      setTimeout(() => nameIn.focus(), 0);
+      return form;
+    }
+
+    function makeSection(cat, sec) {
+      const secBox = el('div', 'section cat-' + cat.slug);
+      const secHead = el('button', 'sec-head');
+      secHead.type = 'button';
+      const ico = el('span', 'sec-icon');
+      if (sec.icon) ico.innerHTML = sec.icon;
+      secHead.appendChild(ico);
+      const titleEl = el('span', 'sec-title', sec.name);
+      secHead.appendChild(titleEl);
+      secHead.appendChild(el('span', 'sec-count', sec.items.length + ' items'));
+
+      const secEdit = el('span', 'edit-btn sec-edit');
+      secEdit.title = 'Edit section';
+      secEdit.innerHTML = EDIT_SVG;
+      secEdit.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (secBox.querySelector('.sec-form')) return;
+        const form = sectionForm({
+          title: 'Edit section',
+          initial: sec,
+          submitLabel: 'Save',
+          onCancel: () => form.remove(),
+          onSubmit: async ({ name, icon }) => {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/sections?id=eq.${sec.id}`, {
+              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, icon }),
+            });
+            const updated = await res.json();
+            if (!res.ok || !Array.isArray(updated) || !updated.length) {
+              throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
+            }
+            sec.name = name;
+            sec.icon = icon;
+            titleEl.textContent = name;
+            ico.innerHTML = icon;
+            form.remove();
+            flashNote('Saved ✓');
+          },
+        });
+        secHead.after(form);
+      });
+      secHead.appendChild(secEdit);
+
+      const secDel = el('span', 'edit-btn del-btn sec-edit');
+      secDel.title = 'Delete section';
+      secDel.innerHTML = TRASH_SVG;
+      secDel.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (secBox.querySelector('.sec-form, .sec-confirm')) return;
+        const n = secBox.querySelectorAll('.sec-body .row').length;
+        const panel = el('div', 'sec-form sec-confirm');
+        const msg = el('p', 'rf-confirm-msg');
+        msg.textContent = n
+          ? `Delete “${sec.name}” and the ${n} item${n === 1 ? '' : 's'} inside it? This cannot be undone.`
+          : `Delete “${sec.name}”? This cannot be undone.`;
+        const actions = el('div', 'rf-actions');
+        const delB = el('button', 'rf-del', 'Delete section');
+        delB.type = 'button';
+        const cancelB = el('button', 'rf-cancel', 'Cancel');
+        cancelB.type = 'button';
+        cancelB.addEventListener('click', () => panel.remove());
+        actions.appendChild(delB);
+        actions.appendChild(cancelB);
+        panel.appendChild(msg);
+        panel.appendChild(actions);
+
+        delB.addEventListener('click', async () => {
+          delB.disabled = true; delB.textContent = 'Deleting…';
+          try {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/sections?id=eq.${sec.id}`, {
+              method: 'DELETE', headers: restHeaders(),
+            });
+            const gone = await res.json();
+            if (!res.ok || !Array.isArray(gone) || !gone.length) {
+              throw new Error('Delete was rejected — did you run the policy SQL in Supabase?');
+            }
+            cat.sections.splice(cat.sections.indexOf(sec), 1);
+            secBox.remove();
+            sec.items.forEach(i => deleteStorageImage(i.img));
+            flashNote('Deleted ✓');
+          } catch (err) {
+            console.error('[admin] section delete failed:', err);
+            alert(err.message || 'Deleting failed — please try again.');
+            panel.remove();
+          }
+        });
+
+        secHead.after(panel);
+      });
+      secHead.appendChild(secDel);
+
+      const chev = el('span', 'sec-chev');
+      chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+      secHead.appendChild(chev);
+      secHead.addEventListener('click', () => secBox.classList.toggle('open'));
+      secBox.appendChild(secHead);
+
+      const body = el('div', 'sec-body');
+      let lastSub = null;
+      sec.items.forEach(item => {
+        if (item.subsection && item.subsection !== lastSub) {
+          body.appendChild(el('div', 'subhead', item.subsection));
+          lastSub = item.subsection;
+        }
+        body.appendChild(makeRow(item));
+      });
+      const addWrap = el('div', 'add-wrap');
+      const addBtn = el('button', 'add-btn', '+ Add item');
+      addBtn.type = 'button';
+      addBtn.addEventListener('click', () => enterAdd(sec, body, addWrap));
+      addWrap.appendChild(addBtn);
+      body.appendChild(addWrap);
+      secBox.appendChild(body);
+      return secBox;
+    }
+
+    /* ---------- render ---------- */
+    function render(data) {
+      root.textContent = '';
+      let sectionCount = 0, itemCount = 0;
+
+      data.forEach(cat => {
+        const catBox = el('section', 'category');
+        const head = el('h2', 'cat-head', cat.name + ' ');
+        head.appendChild(el('span', 'n', cat.sections.reduce((a, s) => a + s.items.length, 0) + ' items'));
+        catBox.appendChild(head);
+
+        cat.sections.forEach(sec => {
+          sectionCount++;
+          itemCount += sec.items.length;
+          catBox.appendChild(makeSection(cat, sec));
+        });
+
+        const addSecWrap = el('div', 'add-sec-wrap');
+        const addSecBtn = el('button', 'add-btn', '+ Add section');
+        addSecBtn.type = 'button';
+        addSecBtn.addEventListener('click', () => {
+          if (addSecWrap.querySelector('.sec-form')) return;
+          const form = sectionForm({
+            title: `New section in ${cat.name}`,
+            initial: null,
+            submitLabel: 'Add section',
+            onCancel: () => form.remove(),
+            onSubmit: async ({ name, icon }) => {
+              const nextSort = Math.max(0, ...cat.sections.map(s => s.sort || 0)) + 10;
+              await ensureFreshToken();
+              const res = await fetch(`${SUPABASE_URL}/rest/v1/sections`, {
+                method: 'POST', headers: restHeaders(),
+                body: JSON.stringify({ category_id: cat.id, name, icon, sort_order: nextSort }),
+              });
+              const created = await res.json();
+              if (!res.ok || !Array.isArray(created) || !created.length) {
+                throw new Error('Adding was rejected — did you run the policy SQL in Supabase?');
+              }
+              const sec = { id: created[0].id, name, icon, sort: nextSort, items: [] };
+              cat.sections.push(sec);
+              form.remove();
+              catBox.insertBefore(makeSection(cat, sec), addSecWrap);
+              flashNote('Added ✓');
+            },
+          });
+          addSecWrap.appendChild(form);
+        });
+        addSecWrap.appendChild(addSecBtn);
+        catBox.appendChild(addSecWrap);
+        root.appendChild(catBox);
+      });
+
+      summaryEl.innerHTML =
+        `<span class="stat"><b>${data.length}</b> categories</span>`
+        + `<span class="stat"><b>${sectionCount}</b> sections</span>`
+        + `<span class="stat"><b>${itemCount}</b> items</span>`
+        + `<span class="summary-hint">Live from the database — drag the dots to reorder items.</span>`;
+    }
+
+    /* ---------- save ---------- */
+    async function saveOrder() {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving…';
+      try {
+        const bodies = [...document.querySelectorAll('.sec-body[data-dirty]')];
+        for (const body of bodies) {
+          const rows = [...body.querySelectorAll('.row')];
+          for (let i = 0; i < rows.length; i++) {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/items?id=eq.${rows[i].dataset.id}`, {
+              method: 'PATCH',
+              headers: restHeaders(),
+              body: JSON.stringify({ sort_order: (i + 1) * 10 }),
+            });
+            const updated = await res.json();
+            if (!res.ok || !Array.isArray(updated) || !updated.length) {
+              throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
+            }
+          }
+          delete body.dataset.dirty;
+        }
+        saveBtn.classList.remove('show');
+        saveNote.classList.add('show');
+        setTimeout(() => saveNote.classList.remove('show'), 3000);
+      } catch (err) {
+        console.error('[admin] save failed:', err);
+        alert(err.message || 'Saving failed — please try again.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save order';
+      }
+    }
+    saveBtn.addEventListener('click', saveOrder);
+
+    /* ---------- auth gate + boot ---------- */
+    const loginOverlay = document.querySelector('[data-login]');
+    const loginForm = document.querySelector('[data-login-form]');
+    const loginErr = document.querySelector('[data-login-err]');
+    const signoutBtn = document.querySelector('[data-signout]');
+
+    function boot() {
+      loginOverlay.classList.remove('show');
+      signoutBtn.hidden = false;
+      summaryEl.textContent = 'Loading menu…';
+      loadMenu()
+        .then(render)
+        .catch(err => {
+          console.error('[admin] menu fetch failed:', err);
+          summaryEl.textContent = 'Could not load the menu from the database — check your connection and reload.';
+        });
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginErr.classList.remove('show');
+      const submitB = loginForm.querySelector('.login-submit');
+      submitB.disabled = true;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('adm-email').value.trim(),
+            password: document.getElementById('adm-pass').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error_description || data.msg || 'Sign in failed');
+        storeSession(data);
+        document.getElementById('adm-pass').value = '';
+        boot();
+      } catch (err) {
+        loginErr.textContent = err.message;
+        loginErr.classList.add('show');
+      } finally {
+        submitB.disabled = false;
+      }
+    });
+
+    signoutBtn.addEventListener('click', () => {
+      [TOKEN_KEY, REFRESH_KEY, TOKEN_AT_KEY].forEach(k => sessionStorage.removeItem(k));
+      location.reload();
+    });
+
+    if (sessionStorage.getItem(TOKEN_KEY)) {
+      boot();
+    } else {
+      loginOverlay.classList.add('show');
+    }
   </script>
 </body>
 </html>

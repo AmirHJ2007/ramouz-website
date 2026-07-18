@@ -348,6 +348,15 @@ body.js .about-slide .slide-text>*{opacity:0;transform:translateY(16px)}body.js 
   border-color:rgba(168,203,226,.6);color:#0a1620;
   box-shadow:0 0 26px rgba(110,162,196,.45);
 }
+.signatures .menu-accordion-item[data-cat="fit"] .acc-icon{
+  background:linear-gradient(135deg,rgba(125,191,168,.26),rgba(87,164,136,.12));
+  border-color:rgba(125,191,168,.4);color:#9fd8c2;
+}
+.signatures .menu-accordion-item[data-cat="fit"].open .acc-icon{
+  background:linear-gradient(135deg,#7dbfa8,#3d8069);
+  border-color:rgba(159,216,194,.6);color:#0b1a14;
+  box-shadow:0 0 26px rgba(87,164,136,.45);
+}
 
 /* --- Mobile & motion safety --- */
 @media (max-width:620px){
@@ -969,6 +978,10 @@ main{background:#f8eedd}
 @media (min-width:621px) and (max-width:980px){
   .menu-paint{width:160%;height:76px}
 }
+
+/* --- Menu stays hidden until the live data has rendered (menu-live.js) --- */
+body.js:not(.menu-ready) [data-menu-accordion]{opacity:0}
+body.menu-ready [data-menu-accordion]{opacity:1;transition:opacity .45s ease}
 
 /* --- Contact link lands a bit deeper into the section --- */
 #contact{scroll-margin-top:60px}
