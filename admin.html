@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ramouz — Admin</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box}
+    :root{
+      --bg-0:#0b1020; --bg-1:#131426; --cream:#fff8ef; --sand:#d19b64; --gold:#f0c38d;
+      --line:rgba(240,195,141,.22); --dim:rgba(255,248,239,.55);
+    }
+    body{
+      margin:0;min-height:100svh;padding:0 0 80px;
+      font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:var(--cream);
+      background:
+        radial-gradient(900px 500px at 50% -5%,rgba(209,155,100,.13),transparent 60%),
+        linear-gradient(170deg,var(--bg-0),var(--bg-1) 60%,#1a1428);
+    }
+    .topbar{
+      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;
+      padding:14px clamp(16px,4vw,40px);
+      background:rgba(11,16,32,.86);backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar .brand{
+      font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:26px;
+      background:linear-gradient(100deg,#c98a45 10%,#f6d9ac 45%,#e0ad71 65%,#c98a45 90%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .topbar .tag{
+      font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+      color:var(--bg-0);background:linear-gradient(135deg,var(--sand),var(--gold));
+      padding:5px 10px;border-radius:999px;
+    }
+    .topbar a.back{
+      margin-left:auto;color:var(--dim);font-size:13px;font-weight:700;text-decoration:none;
+      border:1px solid var(--line);border-radius:999px;padding:8px 16px;transition:.25s;
+    }
+    .topbar a.back:hover{color:var(--cream);border-color:var(--gold)}
+    .wrap{max-width:880px;margin:0 auto;padding:34px clamp(14px,4vw,28px) 0}
+    .summary{color:var(--dim);font-size:14px;margin:0 0 26px}
+    .summary strong{color:var(--gold)}
+
+    .category{margin:0 0 40px}
+    .cat-head{
+      display:flex;align-items:center;gap:14px;margin:0 0 14px;
+      font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:900;color:var(--sand);
+    }
+    .cat-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+    .cat-head .n{color:var(--dim);letter-spacing:.05em;font-weight:700;text-transform:none;font-size:12px}
+
+    .section{
+      border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:0 0 14px;
+      background:rgba(255,248,239,.028);
+    }
+    .sec-head{
+      width:100%;display:flex;align-items:center;gap:12px;padding:15px 18px;
+      background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;text-align:left;
+    }
+    .sec-head:hover{background:rgba(240,195,141,.05)}
+    .sec-icon{
+      display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:11px;
+      background:linear-gradient(135deg,rgba(240,195,141,.2),rgba(209,155,100,.12));
+      border:1px solid rgba(240,195,141,.3);color:#f0c38d;
+    }
+    .sec-icon svg{width:18px;height:18px}
+    .cat-tea-matcha .sec-icon{
+      background:linear-gradient(135deg,rgba(142,161,91,.28),rgba(142,161,91,.12));
+      border-color:rgba(163,184,110,.4);color:#c4d49a;
+    }
+    .cat-cold .sec-icon{
+      background:linear-gradient(135deg,rgba(143,185,214,.26),rgba(110,162,196,.12));
+      border-color:rgba(143,185,214,.4);color:#a8cbe2;
+    }
+    .sec-title{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:19px}
+    .sec-count{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim)}
+    .sec-chev{width:26px;height:26px;display:grid;place-items:center;border-radius:50%;
+      border:1px solid var(--line);color:var(--gold);transition:transform .4s cubic-bezier(.22,.9,.3,1);flex:none}
+    .sec-chev svg{width:13px;height:13px}
+    .section.open .sec-chev{transform:rotate(180deg)}
+    .sec-body{display:none;border-top:1px solid var(--line)}
+    .section.open .sec-body{display:block}
+
+    .subhead{
+      display:flex;align-items:center;gap:10px;padding:12px 18px 4px;
+      font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--sand);
+    }
+    .subhead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+    .row{display:flex;align-items:center;gap:12px;padding:11px 18px}
+    .row + .row{border-top:1px solid rgba(255,248,239,.05)}
+    .thumb{
+      width:46px;height:46px;flex:none;border-radius:10px;overflow:hidden;
+      background:linear-gradient(150deg,#2a2337,#1a1c2e);
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .row-main{flex:1;min-width:0}
+    .row-top{display:flex;align-items:baseline;gap:10px}
+    .item-name{font-weight:800;font-size:14.5px}
+    .dots{flex:1;min-width:0;border-bottom:1px dotted rgba(240,195,141,.3);transform:translateY(-3px)}
+    .price{font-weight:900;font-size:14px;color:var(--gold);font-variant-numeric:tabular-nums;flex-shrink:0}
+    .desc{margin:3px 0 0;font-size:12.5px;line-height:1.55;color:var(--dim)}
+    .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+    .chip{
+      font-size:10.5px;font-weight:800;letter-spacing:.02em;color:var(--gold);
+      background:rgba(209,155,100,.12);border:1px solid rgba(209,155,100,.3);
+      border-radius:999px;padding:2.5px 9px;
+    }
+    @media (max-width:420px){
+      .thumb{width:40px;height:40px}
+      .item-name{font-size:13.5px}
+      .row,.sec-head{padding-left:14px;padding-right:14px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand">Ramouz</span>
+    <span class="tag">Admin</span>
+    <a class="back" href="index.html">&larr; Back to site</a>
+  </header>
+
+  <main class="wrap">
+    <p class="summary" data-summary></p>
+    <div data-menu-root></div>
+  </main>
+
+  <script src="assets/js/menu-data.js"></script>
+  <script>
+    const root = document.querySelector('[data-menu-root]');
+    const data = window.MENU_DATA || [];
+
+    const el = (tag, cls, text) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+
+    let sectionCount = 0, itemCount = 0;
+
+    data.forEach(cat => {
+      const catBox = el('section', 'category');
+      const head = el('h2', 'cat-head', cat.name + ' ');
+      const n = el('span', 'n', cat.sections.reduce((a, s) => a + s.items.length, 0) + ' items');
+      head.appendChild(n);
+      catBox.appendChild(head);
+
+      cat.sections.forEach(sec => {
+        sectionCount++;
+        const secBox = el('div', 'section cat-' + cat.slug);
+        const secHead = el('button', 'sec-head');
+        secHead.type = 'button';
+        if (sec.icon) {
+          const ico = el('span', 'sec-icon');
+          ico.innerHTML = sec.icon;
+          secHead.appendChild(ico);
+        }
+        secHead.appendChild(el('span', 'sec-title', sec.name));
+        secHead.appendChild(el('span', 'sec-count', sec.items.length + ' items'));
+        const chev = el('span', 'sec-chev');
+        chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+        secHead.appendChild(chev);
+        secHead.addEventListener('click', () => secBox.classList.toggle('open'));
+        secBox.appendChild(secHead);
+
+        const body = el('div', 'sec-body');
+        let lastSub = null;
+        sec.items.forEach(item => {
+          itemCount++;
+          if (item.subsection && item.subsection !== lastSub) {
+            body.appendChild(el('div', 'subhead', item.subsection));
+            lastSub = item.subsection;
+          }
+          const row = el('div', 'row');
+          const thumb = el('span', 'thumb');
+          const img = document.createElement('img');
+          img.src = item.img; img.alt = ''; img.loading = 'lazy';
+          img.onerror = () => img.remove();
+          thumb.appendChild(img);
+          row.appendChild(thumb);
+
+          const main = el('div', 'row-main');
+          const top = el('div', 'row-top');
+          top.appendChild(el('span', 'item-name', item.name));
+          top.appendChild(el('span', 'dots'));
+          top.appendChild(el('span', 'price', item.price));
+          main.appendChild(top);
+          if (item.desc) main.appendChild(el('p', 'desc', item.desc));
+          if (item.variants.length) {
+            const chips = el('div', 'chips');
+            item.variants.forEach(v => chips.appendChild(el('span', 'chip', v)));
+            main.appendChild(chips);
+          }
+          row.appendChild(main);
+          body.appendChild(row);
+        });
+        secBox.appendChild(body);
+        catBox.appendChild(secBox);
+      });
+      root.appendChild(catBox);
+    });
+
+    document.querySelector('[data-summary]').innerHTML =
+      `<strong>${data.length}</strong> categories · <strong>${sectionCount}</strong> sections · <strong>${itemCount}</strong> items — mirrored from the live site.`;
+  </script>
+</body>
+</html>

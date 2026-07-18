@@ -23,6 +23,8 @@ const startHero = () => {
 const tryStartHero = () => { if (pageReady && videoDone) startHero(); };
 window.addEventListener('load', () => { pageReady = true; tryStartHero(); });
 if (loaderVideo) {
+  loaderVideo.muted = true;
+  loaderVideo.play?.().catch(() => {});
   let lastT = 0;
   loaderVideo.addEventListener('timeupdate', () => {
     const d = loaderVideo.duration;
@@ -74,6 +76,37 @@ if (heroContent && !reducedMotion) {
 
 menuToggle?.addEventListener('click', () => nav?.classList.toggle('open'));
 nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+// Gentle JS-driven glide for in-page links — Safari's native smooth scroll is too fast
+const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+let glideRaf = 0;
+const glideTo = targetY => {
+  cancelAnimationFrame(glideRaf);
+  const startY = window.scrollY;
+  const dist = targetY - startY;
+  if (!dist) return;
+  const duration = Math.min(1400, 550 + Math.abs(dist) * 0.22);
+  const t0 = performance.now();
+  const step = now => {
+    const p = Math.min(1, (now - t0) / duration);
+    window.scrollTo({ top: startY + dist * easeInOutCubic(p), behavior: 'instant' });
+    if (p < 1) glideRaf = requestAnimationFrame(step);
+  };
+  glideRaf = requestAnimationFrame(step);
+};
+['wheel', 'touchstart'].forEach(ev =>
+  window.addEventListener(ev, () => cancelAnimationFrame(glideRaf), { passive: true })
+);
+document.addEventListener('click', e => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link || reducedMotion) return;
+  const target = document.querySelector(link.getAttribute('href'));
+  if (!target) return;
+  e.preventDefault();
+  const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+  glideTo(target.getBoundingClientRect().top + window.scrollY - offset);
+  history.pushState(null, '', link.getAttribute('href'));
+});
 
 const langSelect = document.querySelector('[data-lang-select]');
 const langTrigger = document.querySelector('[data-lang-trigger]');
@@ -143,36 +176,38 @@ const closeAccordionItem = (item) => {
   if (body) body.style.maxHeight = '0px';
 };
 
+// Delegated so the menu keeps working after being re-rendered from Supabase
 document.querySelectorAll('[data-menu-accordion]').forEach(accordion => {
-  const items = [...accordion.querySelectorAll('.menu-accordion-item')];
-  items.forEach(item => {
-    const head = item.querySelector('.menu-accordion-head');
+  accordion.addEventListener('click', (e) => {
+    const head = e.target.closest('.menu-accordion-head');
+    if (!head) return;
+    const item = head.closest('.menu-accordion-item');
     const body = item.querySelector('.menu-accordion-body');
-    head?.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      if (isOpen) {
-        closeAccordionItem(item);
-      } else {
-        item.classList.add('open');
-        head.setAttribute('aria-expanded', 'true');
-        if (body) body.style.maxHeight = `${body.scrollHeight}px`;
-      }
-    });
+    if (item.classList.contains('open')) {
+      closeAccordionItem(item);
+    } else {
+      item.classList.add('open');
+      head.setAttribute('aria-expanded', 'true');
+      if (body) body.style.maxHeight = `${body.scrollHeight}px`;
+    }
+  });
+  accordion.addEventListener('animationend', (e) => {
+    const item = e.target.closest?.('.menu-accordion-item');
+    if (item) item.style.animation = '';
   });
 });
 
 const menuTabs = document.querySelectorAll('.menu-tab');
-const menuBoxes = document.querySelectorAll('.menu-accordion-item');
+const getMenuBoxes = () => document.querySelectorAll('.menu-accordion-item');
 const menuPanelCount = document.querySelector('.menu-book .panel-count');
 const menuPanelTitle = document.querySelector('.menu-book .panel-title');
 const menuTitleByCat = { all: 'Full menu', 'coffee-base': 'Coffee Base', 'tea-matcha': 'Tea & Matcha', cold: 'Cold & Refreshing', bites: 'Bites', fit: 'Fit' };
-menuBoxes.forEach(item => item.addEventListener('animationend', () => { item.style.animation = ''; }));
 
 function applyMenuFilter(filter) {
   document.querySelectorAll('.menu-accordion-item.open').forEach(closeAccordionItem);
   let shown = 0;
   let itemTotal = 0;
-  menuBoxes.forEach(item => {
+  getMenuBoxes().forEach(item => {
     const show = filter === 'all' || item.dataset.cat === filter;
     item.classList.toggle('hidden', !show);
     if (show) {
@@ -210,7 +245,7 @@ const menuSearchInput = document.querySelector('[data-menu-search]');
 const menuSearchClear = document.querySelector('[data-search-clear]');
 const menuEmpty = document.querySelector('[data-menu-empty]');
 const menuEmptyQuery = document.querySelector('[data-menu-empty-query]');
-if (menuSearchInput && menuSearchClear && menuTabs.length && menuBoxes.length) {
+if (menuSearchInput && menuSearchClear && menuTabs.length && getMenuBoxes().length) {
   let preSearchTab = null;
 
   const openBoxForSearch = (item) => {
@@ -236,7 +271,7 @@ if (menuSearchInput && menuSearchClear && menuTabs.length && menuBoxes.length) {
 
     if (!query) {
       if (menuEmpty) menuEmpty.hidden = true;
-      menuBoxes.forEach(box => {
+      getMenuBoxes().forEach(box => {
         box.querySelectorAll('.menu-item').forEach(li => li.classList.remove('hidden'));
       });
       const restoreTab = preSearchTab || document.querySelector('.menu-tab[data-cat="all"]');
@@ -252,7 +287,7 @@ if (menuSearchInput && menuSearchClear && menuTabs.length && menuBoxes.length) {
     setActiveTab(document.querySelector('.menu-tab[data-cat="all"]'));
 
     let visibleItems = 0;
-    menuBoxes.forEach(box => {
+    getMenuBoxes().forEach(box => {
       let boxMatch = false;
       box.querySelectorAll('.menu-item').forEach(li => {
         const name = li.querySelector('.mi-name')?.textContent || '';
