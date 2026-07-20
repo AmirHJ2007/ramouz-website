@@ -207,6 +207,11 @@
     .grip:hover{color:var(--gold);background:rgba(240,195,141,.09)}
     .row.dragging .grip{cursor:grabbing;color:var(--gold)}
     .grip svg{width:14px;height:14px}
+    .grip-sm{width:24px;height:30px;margin-right:-4px}
+    .grip-sm svg{width:12px;height:12px}
+    .section.dragging{box-shadow:0 18px 48px rgba(0,0,0,.5),0 0 0 1px rgba(240,195,141,.4);opacity:.95}
+    .category.dragging{opacity:.92}
+    .category.dragging .cat-head{color:var(--gold)}
     .thumb{
       width:48px;height:48px;flex:none;border-radius:12px;overflow:hidden;
       background:linear-gradient(150deg,#2a2337,#1a1c2e);
@@ -282,6 +287,31 @@
     .row-add{padding:14px 18px;border-top:1px solid var(--line-soft)}
     .add-wrap{padding:12px 18px 16px;border-top:1px solid var(--line-soft)}
     .add-sec-wrap{margin:0 0 14px}
+    .add-cat-wrap{margin:6px 0 60px}
+    .cat-form{
+      border:1px solid var(--line);border-radius:18px;margin:0 0 16px;
+      background:linear-gradient(170deg,rgba(240,195,141,.06),rgba(255,248,239,.02));
+    }
+    .cat-name{margin-right:2px}
+    .emoji-opt{font-size:19px;line-height:1}
+    .emoji-grid{max-height:150px;overflow-y:auto;padding:2px}
+    .cat-color-row{gap:10px}
+    .cat-color{
+      inline-size:44px;block-size:30px;padding:2px;border:1px solid var(--line);
+      border-radius:8px;background:transparent;cursor:pointer;
+    }
+    .cat-color:disabled{opacity:.35;cursor:default}
+    .section.has-tint .sec-icon{
+      background:linear-gradient(135deg,color-mix(in srgb,var(--cat-tint) 28%,transparent),color-mix(in srgb,var(--cat-tint) 12%,transparent));
+      border-color:color-mix(in srgb,var(--cat-tint) 42%,transparent);
+      color:color-mix(in srgb,var(--cat-tint) 60%,#fff8ef);
+    }
+    .section.has-tint.open .sec-icon{
+      background:linear-gradient(135deg,color-mix(in srgb,var(--cat-tint) 80%,#fff),color-mix(in srgb,var(--cat-tint) 78%,#000));
+      border-color:color-mix(in srgb,var(--cat-tint) 55%,#fff);
+      color:#0b1020;
+      box-shadow:0 0 24px color-mix(in srgb,var(--cat-tint) 45%,transparent);
+    }
     .add-btn{
       width:100%;border:1px dashed rgba(240,195,141,.35);border-radius:14px;cursor:pointer;
       background:transparent;color:var(--gold);font-weight:800;font-size:13px;
@@ -402,6 +432,68 @@
       .topbar .brand{font-size:23px}
       .thumb{width:44px;height:44px}
     }
+    /* ============ toolbar: search + expand all ============ */
+    .admin-toolbar{display:flex;gap:10px;margin:0 0 26px;animation:fadeUp .5s var(--ease) both}
+    .admin-search-wrap{position:relative;flex:1;max-width:420px}
+    .admin-search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--dim-2);pointer-events:none}
+    .admin-search{
+      width:100%;font:inherit;font-size:13.5px;color:var(--cream);
+      background:rgba(255,248,239,.055);border:1px solid var(--line);border-radius:999px;
+      padding:10px 16px 10px 38px;outline:none;
+      transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;
+    }
+    .admin-search:focus{border-color:var(--gold);background:rgba(255,248,239,.08);box-shadow:0 0 0 3px rgba(240,195,141,.14)}
+    .admin-search::placeholder{color:var(--dim-2)}
+    .expand-btn{
+      border:1px solid var(--line);border-radius:999px;background:transparent;cursor:pointer;
+      color:var(--dim);font-weight:700;font-size:13px;padding:9px 18px;flex:none;
+      transition:color .25s ease,border-color .25s ease,transform .2s var(--spring);
+    }
+    .expand-btn:hover{color:var(--gold);border-color:var(--gold);transform:translateY(-1px)}
+    .row-hidden,.search-hidden{display:none!important}
+
+    /* ============ toasts ============ */
+    .toast-wrap{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:80;
+      display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;
+    }
+    .toast{
+      font-size:13.5px;font-weight:800;padding:11px 22px;border-radius:999px;
+      opacity:0;transform:translateY(14px) scale(.92);
+      transition:opacity .3s var(--ease),transform .35s var(--spring);
+      box-shadow:0 16px 44px rgba(0,0,0,.45);backdrop-filter:blur(10px);
+    }
+    .toast.in{opacity:1;transform:translateY(0) scale(1)}
+    .toast-ok{color:var(--bg-0);background:linear-gradient(135deg,#a8d5b0,#7fc08c)}
+    .toast-err{color:#fff;background:linear-gradient(135deg,#c85555,#a03737)}
+
+    /* ============ loading skeletons ============ */
+    @keyframes skelPulse{0%,100%{opacity:.5}50%{opacity:1}}
+    .skel-card{
+      display:flex;align-items:center;gap:13px;padding:16px 18px;margin:0 0 16px;
+      border:1px solid var(--line-soft);border-radius:22px;
+      background:rgba(255,248,239,.03);animation:skelPulse 1.6s ease-in-out infinite;
+    }
+    .skel-card:nth-child(2){animation-delay:.2s}
+    .skel-card:nth-child(3){animation-delay:.4s}
+    .skel-card:nth-child(4){animation-delay:.6s}
+    .skel{background:rgba(255,248,239,.09);border-radius:10px}
+    .skel-icon{width:40px;height:40px;border-radius:13px}
+    .skel-title{width:32%;height:18px}
+    .skel-count{width:56px;height:12px;margin-left:auto}
+
+    /* ============ list-change animations ============ */
+    .row-out{
+      height:0!important;opacity:0;padding-top:0!important;padding-bottom:0!important;
+      overflow:hidden;transition:all .3s ease;
+    }
+    .sec-out{opacity:0;transform:scale(.97);transition:opacity .3s ease,transform .3s ease}
+    @keyframes rowFlash{from{background:rgba(240,195,141,.3)}to{background:transparent}}
+    .row-new{animation:rowIn .4s var(--ease) both,rowFlash 1.6s ease .4s both}
+    .empty-note{
+      margin:0;padding:16px 18px 4px;font-size:13px;color:var(--dim-2);font-style:italic;
+    }
+
     @media (prefers-reduced-motion:reduce){
       *,*::before,*::after{animation:none!important;transition:none!important}
     }
@@ -472,6 +564,9 @@
       return cats.sort(bySort).map(cat => ({
         id: cat.id,
         name: cat.name,
+        sort: cat.sort_order ?? 0,
+        emoji: cat.emoji || '',
+        color: cat.color || null,
         slug: CAT_SLUGS[cat.name] || cat.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         sections: (cat.sections || []).sort(bySort).map(sec => {
           const subs = new Map((sec.subsections || []).map(s => [s.id, s.name]));
@@ -500,6 +595,23 @@
     const GRIP_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="5" r="1.7"/><circle cx="15" cy="5" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="19" r="1.7"/><circle cx="15" cy="19" r="1.7"/></svg>';
     let drag = null;
 
+    function flipInsert(moved, doInsert) {
+      const parent = moved.parentElement;
+      const sibs = [...parent.children].filter(n => n !== moved);
+      const before = new Map(sibs.map(n => [n, n.getBoundingClientRect().top]));
+      doInsert();
+      sibs.forEach(n => {
+        const d = before.get(n) - n.getBoundingClientRect().top;
+        if (!d) return;
+        n.style.transition = 'none';
+        n.style.transform = `translateY(${d}px)`;
+        requestAnimationFrame(() => {
+          n.style.transition = 'transform .28s cubic-bezier(.22,.9,.3,1)';
+          n.style.transform = '';
+        });
+      });
+    }
+
     // contiguous rows around this one, not crossing Sweet/Savoury dividers
     const dragGroup = (row) => {
       const group = [row];
@@ -522,14 +634,42 @@
         if (sib === row) continue;
         const r = sib.getBoundingClientRect();
         if (e.clientY < r.top + r.height / 2) {
-          if (sib.previousElementSibling !== row) row.parentElement.insertBefore(row, sib);
+          if (sib.previousElementSibling !== row) flipInsert(row, () => row.parentElement.insertBefore(row, sib));
           return;
         }
       }
       const group = dragGroup(row);
       const last = group[group.length - 1];
-      if (last !== row) row.parentElement.insertBefore(row, last.nextElementSibling);
+      if (last !== row) flipInsert(row, () => row.parentElement.insertBefore(row, last.nextElementSibling));
     }
+    function startBoxDrag(e, box, selector, onDrop) {
+      e.preventDefault();
+      const parent = box.parentElement;
+      box.classList.add('dragging');
+      const move = (ev) => {
+        const sibs = [...parent.children].filter(n => n !== box && n.matches(selector));
+        for (const sib of sibs) {
+          const r = sib.getBoundingClientRect();
+          if (ev.clientY < r.top + r.height / 2) {
+            if (sib.previousElementSibling !== box) flipInsert(box, () => parent.insertBefore(box, sib));
+            return;
+          }
+        }
+        const all = [...parent.children].filter(n => n.matches(selector));
+        const last = all[all.length - 1];
+        if (last !== box) flipInsert(box, () => parent.insertBefore(box, last.nextElementSibling));
+      };
+      const up = () => {
+        box.classList.remove('dragging');
+        window.removeEventListener('pointermove', move);
+        onDrop();
+        saveBtn.classList.add('show');
+        saveNote.classList.remove('show');
+      };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up, { once: true });
+    }
+
     function endDrag() {
       if (!drag) return;
       drag.row.classList.remove('dragging');
@@ -771,11 +911,26 @@
       return { wrap, get file() { return pending; } };
     }
 
-    const flashNote = (text) => {
-      saveNote.textContent = text;
-      saveNote.classList.add('show');
-      setTimeout(() => saveNote.classList.remove('show'), 3000);
-    };
+    const toastWrap = el('div', 'toast-wrap');
+    document.body.appendChild(toastWrap);
+    function toast(msg, type = 'ok') {
+      const t = el('div', 'toast ' + (type === 'err' ? 'toast-err' : 'toast-ok'), msg);
+      toastWrap.appendChild(t);
+      requestAnimationFrame(() => t.classList.add('in'));
+      setTimeout(() => {
+        t.classList.remove('in');
+        setTimeout(() => t.remove(), 350);
+      }, type === 'err' ? 4500 : 2400);
+    }
+    const flashNote = (text) => { toast(text); updateStats(); };
+
+    function updateStats() {
+      const chips = summaryEl.querySelectorAll('.stat b');
+      if (chips.length !== 3) return;
+      chips[0].textContent = document.querySelectorAll('.category').length;
+      chips[1].textContent = document.querySelectorAll('.section').length;
+      chips[2].textContent = document.querySelectorAll('.sec-body .row').length;
+    }
 
     const refreshCount = (body) => {
       const n = body.querySelectorAll('.row').length;
@@ -809,13 +964,15 @@
             throw new Error('Delete was rejected — did you run the policy SQL in Supabase?');
           }
           const body = row.parentElement;
-          row.remove();
-          refreshCount(body);
+          row.style.height = row.offsetHeight + 'px';
+          void row.offsetHeight;
+          row.classList.add('row-out');
+          setTimeout(() => { row.remove(); refreshCount(body); updateStats(); }, 320);
           deleteStorageImage(item.img);
           flashNote('Deleted ✓');
         } catch (err) {
           console.error('[admin] delete failed:', err);
-          alert(err.message || 'Deleting failed — please try again.');
+          toast(err.message || 'Deleting failed — please try again.', 'err');
           panel.replaceWith(main);
         }
       });
@@ -901,12 +1058,15 @@
           };
           sec.items.push(item);
           form.remove();
-          body.insertBefore(makeRow(item), addWrap);
+          body.querySelector('.empty-note')?.remove();
+          const newRow = makeRow(item);
+          newRow.classList.add('row-new');
+          body.insertBefore(newRow, addWrap);
           refreshCount(body);
           flashNote('Added ✓');
         } catch (err) {
           console.error('[admin] add failed:', err);
-          alert(err.message || 'Adding failed — please try again.');
+          toast(err.message || 'Adding failed — please try again.', 'err');
           saveB.disabled = false; saveB.textContent = 'Add item';
         }
       });
@@ -918,6 +1078,7 @@
     function makeRow(item) {
       const row = el('div', 'row' + (item.available ? '' : ' row-off'));
       row.dataset.id = item.id;
+      row.dataset.search = `${item.name} ${item.desc || ''}`.toLowerCase();
 
       const grip = el('span', 'grip');
       grip.innerHTML = GRIP_SVG;
@@ -1031,6 +1192,7 @@
           }
           item.name = payload.name;
           item.desc = payload.description;
+          row.dataset.search = `${item.name} ${item.desc || ''}`.toLowerCase();
           item.price = price.toFixed(3);
           item.available = payload.is_available;
           if (payload.image_url) {
@@ -1048,7 +1210,7 @@
           setTimeout(() => saveNote.classList.remove('show'), 3000);
         } catch (err) {
           console.error('[admin] item save failed:', err);
-          alert(err.message || 'Saving failed — please try again.');
+          toast(err.message || 'Saving failed — please try again.', 'err');
           saveB.disabled = false; saveB.textContent = 'Save';
         }
       });
@@ -1118,7 +1280,7 @@
           await onSubmit({ name: nameIn.value.trim(), icon: picker.value });
         } catch (err) {
           console.error('[admin] section save failed:', err);
-          alert(err.message || 'Saving failed — please try again.');
+          toast(err.message || 'Saving failed — please try again.', 'err');
           saveB.disabled = false; saveB.textContent = submitLabel;
         }
       });
@@ -1128,8 +1290,22 @@
 
     function makeSection(cat, sec) {
       const secBox = el('div', 'section cat-' + cat.slug);
+      secBox.dataset.id = sec.id;
+      if (cat.color) {
+        secBox.classList.add('has-tint');
+        secBox.style.setProperty('--cat-tint', cat.color);
+      }
       const secHead = el('button', 'sec-head');
       secHead.type = 'button';
+      const secGrip = el('span', 'grip grip-sm');
+      secGrip.innerHTML = GRIP_SVG;
+      secGrip.title = 'Drag to reorder sections';
+      secGrip.addEventListener('click', (e) => e.stopPropagation());
+      secGrip.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        startBoxDrag(e, secBox, '.section', () => { secBox.parentElement.dataset.dirtySecs = '1'; });
+      });
+      secHead.appendChild(secGrip);
       const ico = el('span', 'sec-icon');
       if (sec.icon) ico.innerHTML = sec.icon;
       secHead.appendChild(ico);
@@ -1204,12 +1380,13 @@
               throw new Error('Delete was rejected — did you run the policy SQL in Supabase?');
             }
             cat.sections.splice(cat.sections.indexOf(sec), 1);
-            secBox.remove();
+            secBox.classList.add('sec-out');
+            setTimeout(() => { secBox.remove(); updateStats(); }, 300);
             sec.items.forEach(i => deleteStorageImage(i.img));
             flashNote('Deleted ✓');
           } catch (err) {
             console.error('[admin] section delete failed:', err);
-            alert(err.message || 'Deleting failed — please try again.');
+            toast(err.message || 'Deleting failed — please try again.', 'err');
             panel.remove();
           }
         });
@@ -1225,6 +1402,7 @@
       secBox.appendChild(secHead);
 
       const body = el('div', 'sec-body');
+      if (!sec.items.length) body.appendChild(el('p', 'empty-note', 'No items yet — use “+ Add item” below.'));
       let lastSub = null;
       sec.items.forEach(item => {
         if (item.subsection && item.subsection !== lastSub) {
@@ -1244,56 +1422,322 @@
     }
 
     /* ---------- render ---------- */
-    function render(data) {
+    const CATEGORY_EMOJIS = ['☕','🍵','🧊','🥐','💪','🍰','🧁','🍩','🍪','🍫','🍦','🥞','🥤','🧋','🍹','🥛','🥗','🍓','🫐','🍋','🌿','🔥','❄️','🍽️'];
+
+    function emojiPicker(initial) {
+      const grid = el('div', 'icon-grid emoji-grid');
+      const options = CATEGORY_EMOJIS.slice();
+      if (initial && !options.includes(initial)) options.unshift(initial);
+      let selected = initial || '🍽️';
+      options.forEach(em => {
+        const b = el('button', 'icon-opt emoji-opt', em);
+        b.type = 'button';
+        if (em === selected) b.classList.add('selected');
+        b.addEventListener('click', () => {
+          selected = em;
+          grid.querySelectorAll('.emoji-opt').forEach(o => o.classList.toggle('selected', o === b));
+        });
+        grid.appendChild(b);
+      });
+      return { grid, get value() { return selected; } };
+    }
+
+    // small name-only form used for category rename and create
+    function catForm({ title, initial, submitLabel, onSubmit, onCancel }) {
+      const form = el('form', 'sec-form cat-form');
+      form.appendChild(el('p', 'sec-form-title', title));
+      const nameIn = el('input');
+      nameIn.required = true; nameIn.placeholder = 'Category name';
+      nameIn.value = initial?.name || '';
+      form.appendChild(nameIn);
+      const emoji = emojiPicker(initial?.emoji || '');
+      form.appendChild(emoji.grid);
+
+      const colorRow = el('label', 'rf-check cat-color-row');
+      const colorOn = el('input');
+      colorOn.type = 'checkbox'; colorOn.checked = !!initial?.color;
+      const colorIn = el('input', 'cat-color');
+      colorIn.type = 'color'; colorIn.value = initial?.color || '#d19b64';
+      colorIn.disabled = !colorOn.checked;
+      colorOn.addEventListener('change', () => { colorIn.disabled = !colorOn.checked; });
+      colorRow.appendChild(colorOn);
+      colorRow.appendChild(document.createTextNode('Custom icon colour'));
+      colorRow.appendChild(colorIn);
+      form.appendChild(colorRow);
+
+      const actions = el('div', 'rf-actions');
+      const saveB = el('button', 'rf-save', submitLabel);
+      saveB.type = 'submit';
+      const cancelB = el('button', 'rf-cancel', 'Cancel');
+      cancelB.type = 'button';
+      cancelB.addEventListener('click', onCancel);
+      actions.appendChild(saveB);
+      actions.appendChild(cancelB);
+      form.appendChild(actions);
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!nameIn.value.trim()) return;
+        saveB.disabled = true; saveB.textContent = 'Saving…';
+        try {
+          await onSubmit({
+            name: nameIn.value.trim(),
+            emoji: emoji.value,
+            color: colorOn.checked ? colorIn.value : null,
+          });
+        } catch (err) {
+          console.error('[admin] category save failed:', err);
+          toast(err.message || 'Saving failed — please try again.', 'err');
+          saveB.disabled = false; saveB.textContent = submitLabel;
+        }
+      });
+      setTimeout(() => nameIn.focus(), 0);
+      return form;
+    }
+
+    let MENU = [];
+
+    function makeCategory(cat) {
+      const catBox = el('section', 'category');
+      catBox.dataset.id = cat.id;
+      const head = el('h2', 'cat-head');
+      const catGrip = el('span', 'grip grip-sm');
+      catGrip.innerHTML = GRIP_SVG;
+      catGrip.title = 'Drag to reorder categories';
+      catGrip.addEventListener('pointerdown', (e) => {
+        startBoxDrag(e, catBox, '.category', () => { root.dataset.dirtyCats = '1'; });
+      });
+      head.appendChild(catGrip);
+      const nameSpan = el('span', 'cat-name', (cat.emoji ? cat.emoji + ' ' : '') + cat.name);
+      head.appendChild(nameSpan);
+
+      const catEdit = el('span', 'edit-btn sec-edit');
+      catEdit.title = 'Rename category';
+      catEdit.innerHTML = EDIT_SVG;
+      catEdit.addEventListener('click', () => {
+        if (catBox.querySelector('.cat-form, .cat-confirm')) return;
+        const form = catForm({
+          title: 'Edit category',
+          initial: cat,
+          submitLabel: 'Save',
+          onCancel: () => form.remove(),
+          onSubmit: async ({ name, emoji, color }) => {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/categories?id=eq.${cat.id}`, {
+              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, emoji, color }),
+            });
+            const updated = await res.json();
+            if (!res.ok || !Array.isArray(updated) || !updated.length) {
+              throw new Error('Update was rejected — sign in again and retry.');
+            }
+            cat.name = name;
+            cat.emoji = emoji || '';
+            cat.color = color;
+            catBox.replaceWith(makeCategory(cat));
+            flashNote('Saved ✓');
+          },
+        });
+        head.after(form);
+      });
+      head.appendChild(catEdit);
+
+      const catDel = el('span', 'edit-btn del-btn');
+      catDel.title = 'Delete category';
+      catDel.innerHTML = TRASH_SVG;
+      catDel.addEventListener('click', () => {
+        if (catBox.querySelector('.cat-form, .cat-confirm')) return;
+        const nSecs = cat.sections.length;
+        const nItems = cat.sections.reduce((a, s) => a + s.items.length, 0);
+        const panel = el('div', 'sec-form cat-form cat-confirm');
+        const msg = el('p', 'rf-confirm-msg');
+        msg.textContent = nSecs
+          ? `Delete “${cat.name}” with its ${nSecs} section${nSecs === 1 ? '' : 's'} and ${nItems} item${nItems === 1 ? '' : 's'}? This cannot be undone.`
+          : `Delete “${cat.name}”? This cannot be undone.`;
+        const actions = el('div', 'rf-actions');
+        const delB = el('button', 'rf-del', 'Delete category');
+        delB.type = 'button';
+        const cancelB = el('button', 'rf-cancel', 'Cancel');
+        cancelB.type = 'button';
+        cancelB.addEventListener('click', () => panel.remove());
+        actions.appendChild(delB);
+        actions.appendChild(cancelB);
+        panel.appendChild(msg);
+        panel.appendChild(actions);
+        delB.addEventListener('click', async () => {
+          delB.disabled = true; delB.textContent = 'Deleting…';
+          try {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/categories?id=eq.${cat.id}`, {
+              method: 'DELETE', headers: restHeaders(),
+            });
+            const gone = await res.json();
+            if (!res.ok || !Array.isArray(gone) || !gone.length) {
+              throw new Error('Delete was rejected — sign in again and retry.');
+            }
+            MENU.splice(MENU.indexOf(cat), 1);
+            catBox.classList.add('sec-out');
+            setTimeout(() => { catBox.remove(); updateStats(); }, 300);
+            cat.sections.forEach(s => s.items.forEach(i => deleteStorageImage(i.img)));
+            flashNote('Deleted ✓');
+          } catch (err) {
+            console.error('[admin] category delete failed:', err);
+            toast(err.message || 'Deleting failed — please try again.', 'err');
+            panel.remove();
+          }
+        });
+        head.after(panel);
+      });
+      head.appendChild(catDel);
+
+      head.appendChild(el('span', 'n', cat.sections.reduce((a, s) => a + s.items.length, 0) + ' items'));
+      catBox.appendChild(head);
+
+      cat.sections.forEach(sec => catBox.appendChild(makeSection(cat, sec)));
+
+      const addSecWrap = el('div', 'add-sec-wrap');
+      const addSecBtn = el('button', 'add-btn', '+ Add section');
+      addSecBtn.type = 'button';
+      addSecBtn.addEventListener('click', () => {
+        if (addSecWrap.querySelector('.sec-form')) return;
+        const form = sectionForm({
+          title: `New section in ${cat.name}`,
+          initial: null,
+          submitLabel: 'Add section',
+          onCancel: () => form.remove(),
+          onSubmit: async ({ name, icon }) => {
+            const nextSort = Math.max(0, ...cat.sections.map(s => s.sort || 0)) + 10;
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/sections`, {
+              method: 'POST', headers: restHeaders(),
+              body: JSON.stringify({ category_id: cat.id, name, icon, sort_order: nextSort }),
+            });
+            const created = await res.json();
+            if (!res.ok || !Array.isArray(created) || !created.length) {
+              throw new Error('Adding was rejected — did you run the policy SQL in Supabase?');
+            }
+            const sec = { id: created[0].id, name, icon, sort: nextSort, items: [] };
+            cat.sections.push(sec);
+            form.remove();
+            catBox.insertBefore(makeSection(cat, sec), addSecWrap);
+            flashNote('Added ✓');
+          },
+        });
+        addSecWrap.appendChild(form);
+      });
+      addSecWrap.appendChild(addSecBtn);
+      catBox.appendChild(addSecWrap);
+      return catBox;
+    }
+
+    function runAdminSearch(raw) {
+      const q = raw.trim().toLowerCase();
+      document.querySelectorAll('.category').forEach(catBox => {
+        let catHits = 0;
+        catBox.querySelectorAll('.section').forEach(secBox => {
+          let hits = 0;
+          secBox.querySelectorAll('.row').forEach(row => {
+            const match = !q || (row.dataset.search || '').includes(q);
+            row.classList.toggle('row-hidden', !match);
+            if (match) hits++;
+          });
+          secBox.classList.toggle('search-hidden', !!q && !hits);
+          if (q && hits) secBox.classList.add('open');
+          catHits += hits;
+        });
+        catBox.classList.toggle('search-hidden', !!q && !catHits);
+      });
+      document.querySelectorAll('.add-cat-wrap, .add-sec-wrap').forEach(w =>
+        w.classList.toggle('search-hidden', !!q));
+    }
+
+    function buildToolbar() {
+      if (document.querySelector('.admin-toolbar')) return;
+      const bar = el('div', 'admin-toolbar');
+      const box = el('div', 'admin-search-wrap');
+      box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>';
+      const search = el('input', 'admin-search');
+      search.type = 'search';
+      search.placeholder = 'Search items…';
+      search.addEventListener('input', () => runAdminSearch(search.value));
+      box.appendChild(search);
+      const expandB = el('button', 'expand-btn', 'Expand all');
+      expandB.type = 'button';
+      expandB.addEventListener('click', () => {
+        const open = expandB.dataset.open === '1';
+        document.querySelectorAll('.section').forEach(sec => sec.classList.toggle('open', !open));
+        expandB.dataset.open = open ? '' : '1';
+        expandB.textContent = open ? 'Expand all' : 'Collapse all';
+      });
+      bar.appendChild(box);
+      bar.appendChild(expandB);
+      summaryEl.after(bar);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const cancels = document.querySelectorAll('.rf-cancel');
+      if (cancels.length) cancels[cancels.length - 1].click();
+    });
+
+    function renderSkeleton() {
       root.textContent = '';
+      for (let i = 0; i < 4; i++) {
+        const sk = el('div', 'skel-card');
+        sk.innerHTML = '<span class="skel skel-icon"></span><span class="skel skel-title"></span><span class="skel skel-count"></span>';
+        root.appendChild(sk);
+      }
+    }
+
+    function render(data) {
+      MENU = data;
+      root.textContent = '';
+      buildToolbar();
       let sectionCount = 0, itemCount = 0;
 
       data.forEach(cat => {
-        const catBox = el('section', 'category');
-        const head = el('h2', 'cat-head', cat.name + ' ');
-        head.appendChild(el('span', 'n', cat.sections.reduce((a, s) => a + s.items.length, 0) + ' items'));
-        catBox.appendChild(head);
-
         cat.sections.forEach(sec => {
           sectionCount++;
           itemCount += sec.items.length;
-          catBox.appendChild(makeSection(cat, sec));
         });
-
-        const addSecWrap = el('div', 'add-sec-wrap');
-        const addSecBtn = el('button', 'add-btn', '+ Add section');
-        addSecBtn.type = 'button';
-        addSecBtn.addEventListener('click', () => {
-          if (addSecWrap.querySelector('.sec-form')) return;
-          const form = sectionForm({
-            title: `New section in ${cat.name}`,
-            initial: null,
-            submitLabel: 'Add section',
-            onCancel: () => form.remove(),
-            onSubmit: async ({ name, icon }) => {
-              const nextSort = Math.max(0, ...cat.sections.map(s => s.sort || 0)) + 10;
-              await ensureFreshToken();
-              const res = await fetch(`${SUPABASE_URL}/rest/v1/sections`, {
-                method: 'POST', headers: restHeaders(),
-                body: JSON.stringify({ category_id: cat.id, name, icon, sort_order: nextSort }),
-              });
-              const created = await res.json();
-              if (!res.ok || !Array.isArray(created) || !created.length) {
-                throw new Error('Adding was rejected — did you run the policy SQL in Supabase?');
-              }
-              const sec = { id: created[0].id, name, icon, sort: nextSort, items: [] };
-              cat.sections.push(sec);
-              form.remove();
-              catBox.insertBefore(makeSection(cat, sec), addSecWrap);
-              flashNote('Added ✓');
-            },
-          });
-          addSecWrap.appendChild(form);
-        });
-        addSecWrap.appendChild(addSecBtn);
-        catBox.appendChild(addSecWrap);
-        root.appendChild(catBox);
+        root.appendChild(makeCategory(cat));
       });
+
+      const addCatWrap = el('div', 'add-cat-wrap');
+      const addCatBtn = el('button', 'add-btn', '+ Add category');
+      addCatBtn.type = 'button';
+      addCatBtn.addEventListener('click', () => {
+        if (addCatWrap.querySelector('.cat-form')) return;
+        const form = catForm({
+          title: 'New category',
+          initial: null,
+          submitLabel: 'Add category',
+          onCancel: () => form.remove(),
+          onSubmit: async ({ name, emoji, color }) => {
+            const nextSort = Math.max(0, ...MENU.map(c => c.sort || 0)) + 10;
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/categories`, {
+              method: 'POST', headers: restHeaders(),
+              body: JSON.stringify({ name, emoji, color, sort_order: nextSort }),
+            });
+            const created = await res.json();
+            if (!res.ok || !Array.isArray(created) || !created.length) {
+              throw new Error('Adding was rejected — sign in again and retry.');
+            }
+            const cat = {
+              id: created[0].id, name, sort: nextSort,
+              emoji: emoji || '', color,
+              slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              sections: [],
+            };
+            MENU.push(cat);
+            form.remove();
+            root.insertBefore(makeCategory(cat), addCatWrap);
+            flashNote('Added ✓');
+          },
+        });
+        addCatWrap.appendChild(form);
+      });
+      addCatWrap.appendChild(addCatBtn);
+      root.appendChild(addCatWrap);
 
       summaryEl.innerHTML =
         `<span class="stat"><b>${data.length}</b> categories</span>`
@@ -1324,12 +1768,42 @@
           }
           delete body.dataset.dirty;
         }
+        for (const catBox of [...document.querySelectorAll('.category[data-dirty-secs]')]) {
+          const secs = [...catBox.querySelectorAll(':scope > .section')];
+          for (let i = 0; i < secs.length; i++) {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/sections?id=eq.${secs[i].dataset.id}`, {
+              method: 'PATCH', headers: restHeaders(),
+              body: JSON.stringify({ sort_order: (i + 1) * 10 }),
+            });
+            const updated = await res.json();
+            if (!res.ok || !Array.isArray(updated) || !updated.length) {
+              throw new Error('Update was rejected — sign in again and retry.');
+            }
+          }
+          delete catBox.dataset.dirtySecs;
+        }
+        if (root.dataset.dirtyCats) {
+          const cats = [...root.querySelectorAll(':scope > .category')];
+          for (let i = 0; i < cats.length; i++) {
+            await ensureFreshToken();
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/categories?id=eq.${cats[i].dataset.id}`, {
+              method: 'PATCH', headers: restHeaders(),
+              body: JSON.stringify({ sort_order: (i + 1) * 10 }),
+            });
+            const updated = await res.json();
+            if (!res.ok || !Array.isArray(updated) || !updated.length) {
+              throw new Error('Update was rejected — sign in again and retry.');
+            }
+          }
+          delete root.dataset.dirtyCats;
+        }
         saveBtn.classList.remove('show');
         saveNote.classList.add('show');
         setTimeout(() => saveNote.classList.remove('show'), 3000);
       } catch (err) {
         console.error('[admin] save failed:', err);
-        alert(err.message || 'Saving failed — please try again.');
+        toast(err.message || 'Saving failed — please try again.', 'err');
       } finally {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save order';
@@ -1347,6 +1821,7 @@
       loginOverlay.classList.remove('show');
       signoutBtn.hidden = false;
       summaryEl.textContent = 'Loading menu…';
+      renderSkeleton();
       loadMenu()
         .then(render)
         .catch(err => {

@@ -52,8 +52,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
   let html = '';
   let totalItems = 0;
+  const renderedCats = [];
   cats.sort(bySort).forEach(cat => {
     const catSlug = CAT_SLUGS[cat.name] || slugify(cat.name);
+    const catHadItems = totalItems;
     (cat.sections || []).sort(bySort).forEach(sec => {
       const secSlug = slugify(sec.name);
       const subNames = new Map((sec.subsections || []).map(s => [s.id, s]));
@@ -80,7 +82,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         rows += `<li class="menu-item"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span><span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
       });
 
-      html += `<div class="menu-accordion-item" data-cat="${esc(catSlug)}" data-box="${esc(secSlug)}">`
+        const tintCls = cat.color ? ' has-tint' : '';
+      const tintStyle = cat.color ? ` style="--cat-tint:${esc(cat.color)}"` : '';
+      html += `<div class="menu-accordion-item${tintCls}"${tintStyle} data-cat="${esc(catSlug)}" data-box="${esc(secSlug)}">`
         + `<button type="button" class="menu-accordion-head" aria-expanded="false" aria-controls="acc-${esc(secSlug)}">`
         + `<span class="acc-icon">${sec.icon || THUMB_PH}</span>`
         + `<span class="acc-title">${esc(sec.name)}</span>`
@@ -90,10 +94,37 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         + `<div class="menu-accordion-body" id="acc-${esc(secSlug)}"><ul class="menu-list menu-list--thumbs">${rows}</ul></div>`
         + `</div>`;
     });
+    if (totalItems > catHadItems) renderedCats.push({ name: cat.name, slug: catSlug, emoji: cat.emoji });
   });
   if (!totalItems) { menuDone(); return; }
 
   accordion.innerHTML = html;
+
+  // rebuild the category tabs so admin-made categories appear on the site
+  const allTab = document.querySelector('.menu-tabs .menu-tab[data-cat="all"]');
+  if (allTab) {
+    const TAB_EMOJI = {
+      'Coffee Base': '☕',
+      'Tea & Matcha': '🍵',
+      'Cold & Refreshing': '🧊',
+      'Bites': '🥐',
+      'Fit': '💪',
+    };
+    document.querySelectorAll('.menu-tabs .menu-tab:not([data-cat="all"])').forEach(t => t.remove());
+    let anchor = allTab;
+    renderedCats.forEach(cat => {
+      const b = document.createElement('button');
+      b.className = 'menu-tab';
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', 'false');
+      b.dataset.cat = cat.slug;
+      b.dataset.label = cat.name;
+      b.innerHTML = `<span class="tab-ico" aria-hidden="true">${esc(cat.emoji || TAB_EMOJI[cat.name] || '🍽️')}</span>${esc(cat.name)}`;
+      anchor.after(b);
+      anchor = b;
+    });
+  }
 
   // keep the "82 items, all prices in OMR" subtitle honest
   const subtitle = document.querySelector('#menu .section-heading p:not(.eyebrow)');

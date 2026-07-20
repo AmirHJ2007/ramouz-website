@@ -207,11 +207,12 @@ document.querySelectorAll('[data-menu-accordion]').forEach(accordion => {
   });
 });
 
-const menuTabs = document.querySelectorAll('.menu-tab');
+const getMenuTabs = () => document.querySelectorAll('.menu-tab');
 const getMenuBoxes = () => document.querySelectorAll('.menu-accordion-item');
 const menuPanelCount = document.querySelector('.menu-book .panel-count');
 const menuPanelTitle = document.querySelector('.menu-book .panel-title');
 const menuTitleByCat = { all: 'Full menu', 'coffee-base': 'Coffee Base', 'tea-matcha': 'Tea & Matcha', cold: 'Cold & Refreshing', bites: 'Bites', fit: 'Fit' };
+const tabTitle = (tab) => tab?.dataset.label || menuTitleByCat[tab?.dataset.cat] || 'Full menu';
 
 function applyMenuFilter(filter) {
   document.querySelectorAll('.menu-accordion-item.open').forEach(closeAccordionItem);
@@ -234,28 +235,28 @@ function applyMenuFilter(filter) {
   if (menuPanelTitle) {
     menuPanelTitle.style.animation = 'none';
     void menuPanelTitle.offsetWidth;
-    menuPanelTitle.textContent = menuTitleByCat[filter] || 'Full menu';
+    menuPanelTitle.textContent = filter === 'all' ? 'Full menu' : tabTitle(document.querySelector('.menu-tab.active'));
     if (!reducedMotion) menuPanelTitle.style.animation = 'menuTitleIn .4s ease';
   }
 }
 
-menuTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    if (tab.classList.contains('active')) return;
-    menuTabs.forEach(t => {
-      const on = t === tab;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    applyMenuFilter(tab.dataset.cat);
+// Delegated so tabs keep working after being re-rendered from Supabase
+document.querySelector('.menu-tabs')?.addEventListener('click', (e) => {
+  const tab = e.target.closest('.menu-tab');
+  if (!tab || tab.classList.contains('active')) return;
+  getMenuTabs().forEach(t => {
+    const on = t === tab;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
   });
+  applyMenuFilter(tab.dataset.cat);
 });
 
 const menuSearchInput = document.querySelector('[data-menu-search]');
 const menuSearchClear = document.querySelector('[data-search-clear]');
 const menuEmpty = document.querySelector('[data-menu-empty]');
 const menuEmptyQuery = document.querySelector('[data-menu-empty-query]');
-if (menuSearchInput && menuSearchClear && menuTabs.length && getMenuBoxes().length) {
+if (menuSearchInput && menuSearchClear && getMenuTabs().length && getMenuBoxes().length) {
   let preSearchTab = null;
 
   const openBoxForSearch = (item) => {
@@ -267,12 +268,12 @@ if (menuSearchInput && menuSearchClear && menuTabs.length && getMenuBoxes().leng
   };
 
   const setActiveTab = (tab) => {
-    menuTabs.forEach(t => {
+    getMenuTabs().forEach(t => {
       const on = t === tab;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
-    if (menuPanelTitle && tab) menuPanelTitle.textContent = menuTitleByCat[tab.dataset.cat] || 'Full menu';
+    if (menuPanelTitle && tab) menuPanelTitle.textContent = tabTitle(tab);
   };
 
   const runSearch = (raw) => {

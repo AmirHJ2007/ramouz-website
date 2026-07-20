@@ -13,6 +13,7 @@
   --radius:12px;
   /* layered dark-theme tokens (navy = default) */
   --bg-0:#0b1020;
+  --cream-page:#f8eedd;
   --bg-mid:#0b1020;
   --bg-deep:#0b1020;
   --bg-deep-2:#0b1020;
@@ -417,9 +418,11 @@ body.js .about-slide .slide-text>*{opacity:0;transform:translateY(16px)}body.js 
 
 /* --- Marquee: gold-framed ticker band bridging hero and menu --- */
 .marquee{
-  background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-mid) 100%);
+  background:var(--bg-0);
   border:0;
-  padding:46px clamp(16px,3vw,44px) 12px;
+  padding:0 clamp(16px,3vw,44px);
+  margin:0 calc(0px - max(24px,(100vw - 1180px)/2)) 56px;
+  overflow:visible;
 }
 .marquee::before,.marquee::after{content:none}
 .marquee-band{
@@ -443,7 +446,7 @@ body.js .about-slide .slide-text>*{opacity:0;transform:translateY(16px)}body.js 
 .marquee span{color:var(--ink)}
 .marquee span:nth-child(even){color:#a3652e}
 @media (max-width:620px){
-  .marquee{padding:30px 16px 28px}
+  .marquee{margin:0 -18px 42px;padding:0 16px}
   .marquee-band{padding:16px 0;outline-offset:5px}
 }
 
@@ -900,13 +903,14 @@ body{overflow-x:clip}
 }
 
 /* --- Warm paper behind the About card (matches gallery/contact tones) --- */
-main{background:#f8eedd}
+main{background:var(--cream-page)}
 
 /* --- One continuous paper surface: gallery, About surround, contact --- */
 .gallery-section{
   background:
-    radial-gradient(820px 460px at 12% 12%,rgba(209,155,100,.12),transparent 62%),
-    radial-gradient(900px 520px at 90% 88%,rgba(240,195,141,.14),transparent 62%);
+    radial-gradient(820px 460px at 12% 30%,rgba(209,155,100,.12),transparent 62%),
+    radial-gradient(900px 520px at 90% 88%,rgba(240,195,141,.14),transparent 62%),
+    var(--cream-page);
 }
 .visit{
   background:
@@ -925,7 +929,7 @@ main{background:#f8eedd}
   position:absolute;left:0;right:0;bottom:-2px;width:100%;height:90px;
   pointer-events:none;z-index:0;display:block;
 }
-.menu-paint path{fill:#f8eedd}
+.menu-paint path{fill:var(--cream-page)}
 .menu-paint path[fill-opacity]{fill-opacity:.45}
 .menu-paint path.tear-rim{fill:none}
 #menu{padding-bottom:130px}
@@ -986,3 +990,16 @@ body.menu-ready [data-menu-accordion]{opacity:1;transition:opacity .45s ease}
 /* --- Contact link lands a bit deeper into the section --- */
 #contact{scroll-margin-top:60px}
 @media (max-width:620px){#contact{scroll-margin-top:44px}}
+
+/* --- Category-colored section icons driven by the database (--cat-tint) --- */
+.signatures .menu-accordion-item.has-tint .acc-icon{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--cat-tint) 28%,transparent),color-mix(in srgb,var(--cat-tint) 12%,transparent));
+  border-color:color-mix(in srgb,var(--cat-tint) 42%,transparent);
+  color:color-mix(in srgb,var(--cat-tint) 60%,#fff8ef);
+}
+.signatures .menu-accordion-item.has-tint.open .acc-icon{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--cat-tint) 80%,#fff),color-mix(in srgb,var(--cat-tint) 78%,#000));
+  border-color:color-mix(in srgb,var(--cat-tint) 55%,#fff);
+  color:#0b1020;
+  box-shadow:0 0 26px color-mix(in srgb,var(--cat-tint) 45%,transparent);
+}
