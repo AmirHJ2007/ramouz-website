@@ -249,6 +249,10 @@
     .edit-btn:active{transform:scale(.94)}
     .edit-btn svg{width:13px;height:13px}
     .del-btn:hover{color:#e08f8f;border-color:rgba(224,110,110,.5);background:rgba(224,110,110,.08)}
+    .avail-btn{color:#7fd68a;border-color:rgba(127,214,138,.35)}
+    .avail-btn:hover{color:#7fd68a;border-color:#7fd68a;background:rgba(127,214,138,.1)}
+    .avail-btn.avail-off{color:#e08f8f;border-color:rgba(224,110,110,.35)}
+    .avail-btn.avail-off:hover{color:#e08f8f;border-color:#e08f8f;background:rgba(224,110,110,.08)}
     .sec-edit{margin-left:2px}
 
     /* ============ forms ============ */
@@ -683,6 +687,8 @@
     /* ---------- item rows: display + inline edit ---------- */
     const EDIT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>';
     const TRASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+    const EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+    const EYE_OFF_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61C3.06 8.9 1 12 1 12s4 7 11 7a9.26 9.26 0 0 0 5.39-1.61"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>';
 
     const TOKEN_KEY = 'ramouz_admin_token';
     const REFRESH_KEY = 'ramouz_admin_refresh';
@@ -996,7 +1002,7 @@
       const availIn = el('input');
       availIn.type = 'checkbox'; availIn.checked = true;
       checkWrap.appendChild(availIn);
-      checkWrap.appendChild(document.createTextNode('Show on the website'));
+      checkWrap.appendChild(document.createTextNode('Available (uncheck to tag as unavailable)'));
 
       const rowLine = el('div', 'rf-line');
       rowLine.appendChild(nameIn);
@@ -1103,7 +1109,13 @@
       top.appendChild(el('span', 'item-name', item.name));
       top.appendChild(el('span', 'dots'));
       top.appendChild(el('span', 'price', item.price));
-      if (!item.available) top.appendChild(el('span', 'chip chip-off', 'hidden'));
+      if (!item.available) top.appendChild(el('span', 'chip chip-off', 'unavailable'));
+      const availBtn = el('button', 'edit-btn avail-btn' + (item.available ? '' : ' avail-off'));
+      availBtn.type = 'button';
+      availBtn.title = item.available ? 'Available — click to mark unavailable' : 'Unavailable — click to mark available';
+      availBtn.innerHTML = item.available ? EYE_SVG : EYE_OFF_SVG;
+      availBtn.addEventListener('click', () => toggleAvailability(item, row, availBtn));
+      top.appendChild(availBtn);
       const editBtn = el('button', 'edit-btn');
       editBtn.type = 'button';
       editBtn.title = 'Edit item';
@@ -1126,6 +1138,31 @@
       return main;
     }
 
+    async function toggleAvailability(item, row, btn) {
+      const next = !item.available;
+      btn.disabled = true;
+      try {
+        await ensureFreshToken();
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/items?id=eq.${item.id}`, {
+          method: 'PATCH',
+          headers: restHeaders(),
+          body: JSON.stringify({ is_available: next }),
+        });
+        const updated = await res.json();
+        if (!res.ok || !Array.isArray(updated) || !updated.length) {
+          throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
+        }
+        item.available = next;
+        row.classList.toggle('row-off', !item.available);
+        row.querySelector('.row-main').replaceWith(buildMain(item, row));
+        flashNote(item.available ? 'Available ✓' : 'Marked unavailable ✓');
+      } catch (err) {
+        console.error('[admin] availability toggle failed:', err);
+        toast(err.message || 'Update failed — please try again.', 'err');
+        btn.disabled = false;
+      }
+    }
+
     function enterEdit(item, row) {
       const main = row.querySelector('.row-main');
       const form = el('form', 'row-main row-form');
@@ -1142,7 +1179,7 @@
       const availIn = el('input');
       availIn.type = 'checkbox'; availIn.checked = item.available;
       checkWrap.appendChild(availIn);
-      checkWrap.appendChild(document.createTextNode('Show on the website'));
+      checkWrap.appendChild(document.createTextNode('Available (uncheck to tag as unavailable)'));
 
       const rowLine = el('div', 'rf-line');
       rowLine.appendChild(nameIn);

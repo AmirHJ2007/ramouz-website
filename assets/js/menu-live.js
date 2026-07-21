@@ -59,7 +59,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
     (cat.sections || []).sort(bySort).forEach(sec => {
       const secSlug = slugify(sec.name);
       const subNames = new Map((sec.subsections || []).map(s => [s.id, s]));
-      const items = (sec.items || []).filter(i => i.is_available !== false).sort(bySort);
+      const items = (sec.items || []).sort(bySort);
       if (!items.length) return;
       totalItems += items.length;
 
@@ -79,7 +79,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
           ? `<span class="mi-picker"><select class="mi-select" aria-label="${esc(item.name)} options">${variants.map(v => `<option>${esc(v.name)}</option>`).join('')}</select>${CHEVRON}</span>`
           : '';
         const price = Number(item.price).toFixed(3);
-        rows += `<li class="menu-item"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span><span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
+        const unavailable = item.is_available === false;
+        const liCls = unavailable ? 'menu-item menu-item--unavail' : 'menu-item';
+        const unavailTag = unavailable ? '<span class="mi-tag-unavail">Unavailable</span>' : '';
+        rows += `<li class="${liCls}"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span>${unavailTag}<span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
       });
 
         const tintCls = cat.color ? ' has-tint' : '';
