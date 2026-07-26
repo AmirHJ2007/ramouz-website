@@ -130,7 +130,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
   }
 
   // keep the "82 items, all prices in OMR" subtitle honest
-  const subtitle = document.querySelector('#menu .section-heading p:not(.eyebrow)');
+  const subtitle = document.querySelector('#menu p:not(.eyebrow)');
   if (subtitle) subtitle.textContent = subtitle.textContent.replace(/^\d+/, String(totalItems));
   menuDone();
 })();

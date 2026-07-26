@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Quicksand:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=2" />
 </head>
 <body>
   <div class="cursor-glow" aria-hidden="true"></div>
@@ -89,7 +89,7 @@
       </svg>
     </section>
 
-    <section class="section signatures" id="menu">
+    <section class="section signatures" id="news-ticker">
       <div class="marquee" aria-label="Ramouz services">
         <div class="marquee-band">
         <div class="marquee-track">
@@ -98,7 +98,7 @@
         </div>
         </div>
       </div>
-      <div class="section-heading centered reveal">
+      <div class="section-heading centered reveal" id="menu">
         <p class="eyebrow">Our menu</p>
         <h2>Made to taste good and <em>look even better</em>.</h2>
         <svg class="heading-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11"/></svg>
@@ -490,6 +490,14 @@
     <p class="lightbox-cap"></p>
   </div>
 
+  <div class="mi-lightbox" data-mi-lightbox aria-hidden="true">
+    <button data-close-mi-lightbox aria-label="Close item preview">×</button>
+    <div class="mi-lightbox-card">
+      <img alt="" />
+      <span class="mi-lightbox-name"></span>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-brand">
@@ -545,7 +553,7 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/menu-live.js"></script>
+  <script src="assets/js/main.js?v=2"></script>
+  <script src="assets/js/menu-live.js?v=2"></script>
 </body>
 </html>

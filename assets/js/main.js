@@ -531,6 +531,41 @@ function closeLightbox(){
   window.addEventListener('scroll', () => preview.classList.remove('show'), { passive: true });
 })();
 
+/* ===== Touch devices: tap a menu item for the same big photo, with a close button ===== */
+(() => {
+  const canHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const book = document.querySelector('[data-menu-book]');
+  const lb = document.querySelector('[data-mi-lightbox]');
+  if (!book || !lb || canHover) return;
+
+  const lbImg = lb.querySelector('img');
+  const lbName = lb.querySelector('.mi-lightbox-name');
+  const lbClose = lb.querySelector('[data-close-mi-lightbox]');
+
+  const openLb = (item) => {
+    const thumb = item.querySelector('.mi-thumb img');
+    if (!thumb || (!thumb.currentSrc && !thumb.src)) return;
+    lbImg.src = thumb.currentSrc || thumb.src;
+    lbName.textContent = item.querySelector('.mi-name')?.textContent.trim() || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+  };
+  const closeLb = () => {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+  };
+
+  book.addEventListener('click', (e) => {
+    if (e.target.closest('.mi-picker')) return;
+    const item = e.target.closest('.menu-item');
+    if (!item || !book.contains(item)) return;
+    openLb(item);
+  });
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+})();
+
 /* ===== Expand all / Collapse all ===== */
 (() => {
   const btn = document.querySelector('[data-expand-all]');
@@ -564,7 +599,7 @@ function closeLightbox(){
     refresh();
   });
 
-  document.querySelector('#menu')?.addEventListener('click', () => requestAnimationFrame(refresh));
+  document.querySelector('#news-ticker')?.addEventListener('click', () => requestAnimationFrame(refresh));
   refresh();
 })();
 
