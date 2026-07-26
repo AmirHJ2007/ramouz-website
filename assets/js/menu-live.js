@@ -50,6 +50,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
   }
   if (!Array.isArray(cats) || !cats.length) { menuDone(); return; }
 
+  // start pulling every item photo into the browser cache now, while the loader is
+  // still showing, so opening a section later shows images instantly instead of
+  // a visible download flash (the <img> tags below stay loading="lazy")
+  const photoUrls = new Set();
+  cats.forEach(cat => (cat.sections || []).forEach(sec => (sec.items || []).forEach(item => {
+    if (item.image_url) photoUrls.add(item.image_url);
+  })));
+  photoUrls.forEach(url => { const im = new Image(); im.src = url; });
+
   let html = '';
   let totalItems = 0;
   const renderedCats = [];
