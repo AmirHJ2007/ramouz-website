@@ -45,7 +45,7 @@
 
     /* ============ top bar ============ */
     .topbar{
-      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;row-gap:8px;flex-wrap:wrap;
       padding:14px clamp(16px,4vw,40px);
       background:rgba(11,16,32,.78);backdrop-filter:blur(20px) saturate(1.3);
       border-bottom:1px solid transparent;
@@ -63,7 +63,7 @@
       color:var(--bg-0);background:linear-gradient(135deg,var(--sand),var(--gold));
       padding:5px 11px;border-radius:999px;box-shadow:0 4px 14px rgba(209,155,100,.35);
     }
-    .topbar .spacer{margin-left:auto}
+    .topbar-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
     .save-btn{
       display:none;align-items:center;gap:8px;border:0;cursor:pointer;
       font-weight:800;font-size:13px;color:var(--bg-0);
@@ -107,9 +107,10 @@
       display:flex;align-items:center;gap:14px;margin:0 0 16px;
       font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:900;color:var(--sand);
     }
-    .cat-head::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--sand)}
+    .cat-head::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--sand);flex:none}
     .cat-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
-    .cat-head .n{color:var(--dim-2);letter-spacing:.05em;font-weight:700;text-transform:none;font-size:12px}
+    .cat-head .n{color:var(--dim-2);letter-spacing:.05em;font-weight:700;text-transform:none;font-size:12px;flex:none}
+    .cat-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
     /* ============ section cards ============ */
     .section{
@@ -160,8 +161,8 @@
     .cat-fit.section.open .sec-icon{
       background:linear-gradient(135deg,#7dbfa8,#3d8069);color:#0b1a14;box-shadow:0 0 24px rgba(87,164,136,.4);
     }
-    .sec-title{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:20px;letter-spacing:-.01em}
-    .sec-count{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim-2)}
+    .sec-title{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:20px;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sec-count{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim-2);flex:none}
     .sec-chev{
       width:28px;height:28px;display:grid;place-items:center;border-radius:50%;flex:none;
       border:1px solid var(--line);color:var(--gold);
@@ -223,7 +224,7 @@
     .thumb-brand img{object-fit:contain;padding:6px}
     .row-main{flex:1;min-width:0}
     .row-top{display:flex;align-items:baseline;gap:10px}
-    .item-name{font-weight:800;font-size:14.5px;transition:color .25s ease}
+    .item-name{font-weight:800;font-size:14.5px;transition:color .25s ease;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .row:hover .item-name{color:var(--gold-hi)}
     .dots{flex:1;min-width:0;border-bottom:1px dotted rgba(240,195,141,.28);transform:translateY(-3px);transition:border-color .25s ease}
     .row:hover .dots{border-color:rgba(240,195,141,.6)}
@@ -430,11 +431,23 @@
     }
     .login-back:hover{color:var(--gold)}
 
-    @media (max-width:420px){
+    @media (max-width:480px){
       .rf-line{grid-template-columns:1fr 92px}
-      .topbar{gap:8px}
-      .topbar .brand{font-size:23px}
+      .topbar{gap:8px;padding:12px 16px}
+      .topbar .brand{font-size:22px}
+      .topbar-actions{gap:8px}
+      .topbar a.back,.signout-btn{padding:7px 13px;font-size:12.5px}
       .thumb{width:44px;height:44px}
+      .grip{width:22px}
+      .row{padding:10px 12px 10px 6px;gap:8px}
+      .row-top{gap:8px;flex-wrap:wrap;row-gap:6px}
+      .item-name{flex:1 1 100%;white-space:normal;overflow:visible;text-overflow:clip}
+      .dots{display:none}
+      .cat-head,.sec-head{gap:9px}
+      .cat-head{letter-spacing:.13em}
+      .sec-head{padding:14px 12px}
+      .sec-title{font-size:17px}
+      .cat-head .n,.sec-count{display:none}
     }
     /* ============ toolbar: search + expand all ============ */
     .admin-toolbar{display:flex;gap:10px;margin:0 0 26px;animation:fadeUp .5s var(--ease) both}
@@ -507,11 +520,12 @@
   <header class="topbar">
     <span class="brand">Ramouz</span>
     <span class="tag">Admin</span>
-    <span class="spacer"></span>
-    <span class="save-note" data-save-note>Saved ✓</span>
-    <button type="button" class="save-btn" data-save-btn>Save order</button>
-    <button type="button" class="signout-btn" data-signout hidden>Sign out</button>
-    <a class="back" href="index.html">&larr; Back to site</a>
+    <div class="topbar-actions">
+      <span class="save-note" data-save-note>Saved ✓</span>
+      <button type="button" class="save-btn" data-save-btn>Save order</button>
+      <button type="button" class="signout-btn" data-signout hidden>Sign out</button>
+      <a class="back" href="index.html">&larr; Back to site</a>
+    </div>
   </header>
 
   <div class="login-overlay" data-login>
