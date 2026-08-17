@@ -1,0 +1,18 @@
+# Ramouz Café
+
+> Specialty coffee café on the Muscat waterfront, Oman — beans roasted in-house, fresh bakery, and desserts.
+
+Ramouz Café is a specialty coffee shop in Muscat, Oman. We import and roast our own beans, bake everything in-house, and serve coffee, tea and matcha, cold and refreshing drinks, bites, and fit options. Prices are in Omani Rial (OMR).
+
+## Details
+- Location: Muscat, Oman
+- Phone: +968 7844 9000
+- Hours: Sun–Wed 6:30 AM–12:30 AM; Thu 6:30 AM–1:30 AM; Fri 8:00 AM–1:30 AM; Sat 8:00 AM–12:30 AM
+- Instagram: https://instagram.com/ramouz_oman
+
+## Menu
+- [Full menu](https://amirhj2007.github.io/ramouz-website/#menu): 85 items across Coffee Base, Tea & Matcha, Cold & Refreshing, Bites, and Fit. Full machine-readable menu (names, sections, descriptions, prices) is embedded on the homepage as Schema.org Menu structured data.
+
+## Links
+- [Website](https://amirhj2007.github.io/ramouz-website/)
+- [Directions / Google Maps](https://www.google.com/maps/place/?q=place_id:ChIJjeAjZQD_kT4R6l3hc6sXThM)
