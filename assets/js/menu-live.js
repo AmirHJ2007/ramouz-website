@@ -94,7 +94,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         const unavailable = item.is_available === false;
         const liCls = unavailable ? 'menu-item menu-item--unavail' : 'menu-item';
         const unavailTag = unavailable ? '<span class="mi-tag-unavail">Unavailable</span>' : '';
-        rows += `<li class="${liCls}"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span>${unavailTag}<span class="mi-dots"></span><span class="mi-price">${price}</span></div>${picker}${desc}</div></li>`;
+        rows += `<li class="${liCls}"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span>${unavailTag}<span class="mi-dots"></span><span class="mi-price">${price} <span class="mi-cur">OMR</span></span></div>${picker}${desc}</div></li>`;
       });
 
         const tintCls = cat.color ? ' has-tint' : '';
