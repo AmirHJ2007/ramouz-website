@@ -22,37 +22,1116 @@
 
   <!-- Structured data (Schema.org) so search engines and AI can read the business -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CafeOrCoffeeShop",
-    "name": "Ramouz Café",
-    "description": "Specialty coffee roasted in-house, fresh bakery, and desserts on the Muscat waterfront.",
-    "url": "https://amirhj2007.github.io/ramouz-website/",
-    "image": "https://amirhj2007.github.io/ramouz-website/assets/images/homw.jpg",
-    "logo": "https://amirhj2007.github.io/ramouz-website/assets/images/logo.png",
-    "telephone": "+96878449000",
-    "servesCuisine": ["Coffee", "Café", "Bakery", "Desserts"],
-    "priceRange": "$$",
-    "currenciesAccepted": "OMR",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Muscat",
-      "addressCountry": "OM"
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "Ramouz Café",
+  "description": "Specialty coffee roasted in-house, fresh bakery, and desserts on the Muscat waterfront.",
+  "url": "https://amirhj2007.github.io/ramouz-website/",
+  "image": "https://amirhj2007.github.io/ramouz-website/assets/images/homw.jpg",
+  "logo": "https://amirhj2007.github.io/ramouz-website/assets/images/logo.png",
+  "telephone": "+96878449000",
+  "servesCuisine": [
+    "Coffee",
+    "Café",
+    "Bakery",
+    "Desserts"
+  ],
+  "priceRange": "$",
+  "currenciesAccepted": "OMR",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Muscat",
+    "addressCountry": "OM"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 23.6129115,
+    "longitude": 58.4536845
+  },
+  "sameAs": [
+    "https://instagram.com/ramouz_oman"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday"
+      ],
+      "opens": "06:30",
+      "closes": "00:30"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 23.6129115,
-      "longitude": 58.4536845
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Thursday",
+      "opens": "06:30",
+      "closes": "01:30"
     },
-    "sameAs": ["https://instagram.com/ramouz_oman"],
-    "hasMenu": "https://amirhj2007.github.io/ramouz-website/#menu",
-    "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday"], "opens": "06:30", "closes": "00:30" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "06:30", "closes": "01:30" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "01:30" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "00:30" }
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "08:00",
+      "closes": "01:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "08:00",
+      "closes": "00:30"
+    }
+  ],
+  "hasMenu": {
+    "@type": "Menu",
+    "name": "Ramouz Café Menu",
+    "hasMenuSection": [
+      {
+        "@type": "MenuSection",
+        "name": "Espresso Bar",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Espresso",
+            "description": "Double shot",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506477273-36yv6b.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Americano",
+            "description": "Hot or iced",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506494299-5lxo1q.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.300",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cortado",
+            "description": "80 ml — equal parts espresso and milk",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506523666-ugzmdn.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cappuccino",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506536482-9dddsr.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Flat White",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506549081-zti6if.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Affogato",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506562966-gi3tpp.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Signature Lattes",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Coffee Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506601315-hno3ch.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mocha",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506629131-k2ixgy.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Spanish Latte",
+            "description": "Condensed milk, sweet and rich",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506640319-ya6duo.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Salted Caramel Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506655381-kdt3xl.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cinnamon Roll Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506673101-qxmqg0.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cheesecake Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506685646-nm5qv2.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Hazelnut Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506700895-fqlosj.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.800",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Saffron Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506712228-lnrxwv.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Date Latte",
+            "description": "Local dates, blended",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506726247-a4oalp.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Tiramisu Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506737561-a3ow5t.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Brew Bar",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Classic V60",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506756361-rgmysp.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Premium V60",
+            "description": "Colombian, specialty grade 85+",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506768865-9h0141.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Signature Cold Brew",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785002497939-u0kjco.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Golden Lime Cold Brew",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785002569332-nji5op.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cold Brew",
+            "description": "250 ml, Ethiopian specialty beans",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506789902-n8gcke.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.200",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Hot Tea",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Black / Green Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506896860-aekbyn.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.300",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Lemongrass Ginger",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506919291-3hac0f.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Queen Berry",
+            "description": "Hibiscus, strawberry, cranberry, barberry",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506934407-jwwydt.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Royal Jasmine",
+            "description": "Green tea and jasmine blossoms",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506960908-39bi7v.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "English Breakfast",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506979641-ao86xw.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Earl Grey",
+            "description": "Bergamot-scented black tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506995706-ol99jq.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Moroccan Mint",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507017973-z6na8u.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Caramel Dream",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507037856-h1gr9f.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Indian Summer",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507055392-rbtuv6.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Iced Tea",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Peach Ice Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003452961-05nze7.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mango Passion Ice Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003451138-pt0zhm.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "MixBerry Ice Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003441985-29kr28.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pineapple Ice Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003475535-rn7cct.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pomegranate Coconut Ice Tea",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003497565-32cpe9.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Matcha",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Matcha Latte",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507129870-8as1dm.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Spanish Matcha",
+            "description": "Condensed milk",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003640020-j0b9ka.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Creamy Strawberry",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507145886-9uvltj.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Creamy Mango",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507162769-aw8odw.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Creamy Peach",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507178337-pg6oax.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Creamy Pineapple",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507196454-36t81z.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Passion Fruit",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507221352-44xy9w.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pistachio",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507237453-xj1auv.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "White Mocha",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507251901-m0gfvw.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Matcha Milkshake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507263037-6ny2lr.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Mocktails",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Coco Pine",
+            "description": "Pineapple and coconut, iced",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507780990-pm2zd0.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Hibiscus",
+            "description": "Signature hibiscus with ginger and rose",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507790146-6yyqyz.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mojito",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507802264-ujgs91.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Piña Colada",
+            "description": "Signature mix of pineapple and coconut",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507836738-twjx4u.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Black Magic",
+            "description": "Fizzy, strawberry base",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507848840-7ns3ah.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Passionpresso",
+            "description": "Fizzy, passion fruit and espresso",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507861052-q0t4zk.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Redbull Mojito",
+            "description": "Mojito with an energy shot",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507871475-4v77si.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Milkshakes",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Mixed Berry",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507889666-jz5nxg.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Lotus",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507901211-xoiz73.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Oreo",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507910797-x9jfci.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Caramel",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507928633-1rp1d1.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Nutella",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507940133-scr2da.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Peanut Butter & Banana",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507948896-e2ibwg.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Croissants",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Plain",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507545011-7849sp.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Chocolate",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507558662-ulmftg.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.500",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Nutella",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785004499696-0hgj6c.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Nutella Strawberry",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785004443090-0kr0gv.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Peanut Butter Banana",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785004409221-e5a4yg.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mortadella",
+            "description": "Lettuce, cheddar, tomato, cucumber, mushroom",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507572995-1alb63.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.700",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Grilled Halloumi",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507614016-eqg8rj.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Smoked Turkey",
+            "description": "Smoked turkey breast, lettuce, cheddar, tomato, cucumber, mushroom",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507625077-og7sed.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.000",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cheese Za'atar",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785004115864-m6agj2.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.700",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Desserts",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Passionfruit Cheesecake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507680559-q5hbvh.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mixed Berry Cheesecake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507692792-czo225.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pistachio Cheese Cake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003815294-wbrbsw.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.100",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Tiramisu",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507709358-aupetj.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "San Sebastián",
+            "description": "Burnt Basque cheesecake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507729224-a9owd1.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Brownie",
+            "description": "Served hot with a scoop of vanilla ice cream",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507739486-kb4tyy.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.700",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Marble Brownie",
+            "description": "Served hot with a scoop of vanilla ice cream",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507751524-j4dsmn.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Açaí",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Açaí Smoothie",
+            "description": "Organic açaí purée, strawberry, blueberry, banana, peanut butter, coconut water and honey",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003862557-stk4o0.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.200",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Açaí Bowl",
+            "description": "Organic açaí purée, strawberry, blueberry, banana, granola, peanut butter, chia seeds and honey",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507417800-fuwqtw.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "3.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Fit Bites",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Pro Mug Cake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507448318-bx3dc0.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Power Brownie",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507460147-hzyx17.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Cheese and Tomato Rice Cake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507475664-ld6oq6.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Peanut Butter Strawberry Rice Cake",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507488413-gfd00u.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Tiramisu Rice Cake",
+            "description": "Rice cake soaked in espresso, Greek yogurt, protein whey, cacao powder",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507502613-y7w3yq.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Tuna Salad",
+            "description": "Tuna, lettuce, cherry tomato, cucumber, corn, olive oil, salt and pepper",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507512364-jrn1pq.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Fit Drinks",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Fit Latte",
+            "description": "Coffee Latte + Protein Whey",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507358654-azovss.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.400",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Bulk Fuel",
+            "description": "Protein Whey, Banana, Dates, Cacao Powder",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784507380681-0mvhtg.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "2.900",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Mango Passion Ice tea",
+            "description": "Sugar free",
+            "image": "https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1785003940269-d97pdh.jpg",
+            "offers": {
+              "@type": "Offer",
+              "price": "1.600",
+              "priceCurrency": "OMR",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      }
     ]
   }
+}
   </script>
 
   <link rel="icon" href="favicon.png" type="image/png" />
