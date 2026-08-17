@@ -12,7 +12,7 @@ window.MENU_DATA = [
             "name": "Espresso",
             "price": "1.100",
             "desc": "Double shot",
-            "img": "assets/menu/Espresso%20Bar/Espresso%20%28Double%20shot%29.jpg",
+            "img": "assets/menu/Espresso%20Bar/Espresso%20%28Double%20shot%29.webp",
             "subsection": null,
             "variants": []
           },
@@ -20,7 +20,7 @@ window.MENU_DATA = [
             "name": "Americano",
             "price": "1.300",
             "desc": "Hot or iced",
-            "img": "assets/menu/Espresso%20Bar/Americano.jpg",
+            "img": "assets/menu/Espresso%20Bar/Americano.webp",
             "subsection": null,
             "variants": []
           },
@@ -28,7 +28,7 @@ window.MENU_DATA = [
             "name": "Cortado",
             "price": "1.400",
             "desc": "80 ml — equal parts espresso and milk",
-            "img": "assets/menu/Espresso%20Bar/Cortado.jpg",
+            "img": "assets/menu/Espresso%20Bar/Cortado.webp",
             "subsection": null,
             "variants": []
           },
@@ -36,7 +36,7 @@ window.MENU_DATA = [
             "name": "Cappuccino",
             "price": "1.500",
             "desc": null,
-            "img": "assets/menu/Espresso%20Bar/Capuccino.jpg",
+            "img": "assets/menu/Espresso%20Bar/Capuccino.webp",
             "subsection": null,
             "variants": []
           },
@@ -44,7 +44,7 @@ window.MENU_DATA = [
             "name": "Flat White",
             "price": "1.500",
             "desc": null,
-            "img": "assets/menu/Espresso%20Bar/Flat%20White.jpg",
+            "img": "assets/menu/Espresso%20Bar/Flat%20White.webp",
             "subsection": null,
             "variants": []
           },
@@ -52,7 +52,7 @@ window.MENU_DATA = [
             "name": "Affogato",
             "price": "1.600",
             "desc": null,
-            "img": "assets/menu/Espresso%20Bar/Affogato.jpg",
+            "img": "assets/menu/Espresso%20Bar/Affogato.webp",
             "subsection": null,
             "variants": []
           }
@@ -67,7 +67,7 @@ window.MENU_DATA = [
             "name": "Coffee Latte",
             "price": "1.600",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Coffee%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Coffee%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -75,7 +75,7 @@ window.MENU_DATA = [
             "name": "Mocha",
             "price": "1.800",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Mocha.jpg",
+            "img": "assets/menu/Signature%20Lattes/Mocha.webp",
             "subsection": null,
             "variants": []
           },
@@ -83,7 +83,7 @@ window.MENU_DATA = [
             "name": "Spanish Latte",
             "price": "1.800",
             "desc": "Condensed milk, sweet and rich",
-            "img": "assets/menu/Signature%20Lattes/Spanish%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Spanish%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -91,7 +91,7 @@ window.MENU_DATA = [
             "name": "Salted Caramel Latte",
             "price": "1.800",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Salted%20Caramel%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Salted%20Caramel%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -99,7 +99,7 @@ window.MENU_DATA = [
             "name": "Cinnamon Roll Latte",
             "price": "1.800",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Cinnamon%20Roll%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Cinnamon%20Roll%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -107,7 +107,7 @@ window.MENU_DATA = [
             "name": "Cheesecake Latte",
             "price": "1.800",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/CheeseCake%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/CheeseCake%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -115,7 +115,7 @@ window.MENU_DATA = [
             "name": "Hazelnut Latte",
             "price": "1.800",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Hazelnut%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Hazelnut%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -123,7 +123,7 @@ window.MENU_DATA = [
             "name": "Saffron Latte",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Saffron%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Saffron%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -131,7 +131,7 @@ window.MENU_DATA = [
             "name": "Date Latte",
             "price": "2.400",
             "desc": "Local dates, blended",
-            "img": "assets/menu/Signature%20Lattes/Date%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Date%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -139,7 +139,7 @@ window.MENU_DATA = [
             "name": "Tiramisu Latte",
             "price": "2.900",
             "desc": null,
-            "img": "assets/menu/Signature%20Lattes/Tiramisu%20Latte.jpg",
+            "img": "assets/menu/Signature%20Lattes/Tiramisu%20Latte.webp",
             "subsection": null,
             "variants": []
           }
@@ -154,7 +154,7 @@ window.MENU_DATA = [
             "name": "Classic V60",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Brew%20Bar/Classic%20V60.jpg",
+            "img": "assets/menu/Brew%20Bar/Classic%20V60.webp",
             "subsection": null,
             "variants": []
           },
@@ -162,7 +162,7 @@ window.MENU_DATA = [
             "name": "Premium V60",
             "price": "3.500",
             "desc": "Colombian, specialty grade 85+",
-            "img": "assets/menu/Brew%20Bar/Premium%20V60.jpg",
+            "img": "assets/menu/Brew%20Bar/Premium%20V60.webp",
             "subsection": null,
             "variants": []
           },
@@ -170,7 +170,7 @@ window.MENU_DATA = [
             "name": "Cold Brew",
             "price": "2.200",
             "desc": "250 ml, Ethiopian specialty beans",
-            "img": "assets/menu/Brew%20Bar/Cold%20Brew.jpg",
+            "img": "assets/menu/Brew%20Bar/Cold%20Brew.webp",
             "subsection": null,
             "variants": []
           }
@@ -191,7 +191,7 @@ window.MENU_DATA = [
             "name": "Black / Green Tea",
             "price": "1.300",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Black%3AGreen%20Tea.jpg",
+            "img": "assets/menu/Hot%20Tea/Black%3AGreen%20Tea.webp",
             "subsection": null,
             "variants": []
           },
@@ -199,7 +199,7 @@ window.MENU_DATA = [
             "name": "Lemongrass Ginger",
             "price": "1.600",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Lemongrass%20Ginger.jpg",
+            "img": "assets/menu/Hot%20Tea/Lemongrass%20Ginger.webp",
             "subsection": null,
             "variants": []
           },
@@ -207,7 +207,7 @@ window.MENU_DATA = [
             "name": "Queen Berry",
             "price": "1.600",
             "desc": "Hibiscus, strawberry, cranberry, barberry",
-            "img": "assets/menu/Hot%20Tea/Queen%20Berry.jpg",
+            "img": "assets/menu/Hot%20Tea/Queen%20Berry.webp",
             "subsection": null,
             "variants": []
           },
@@ -215,7 +215,7 @@ window.MENU_DATA = [
             "name": "Royal Jasmine",
             "price": "1.600",
             "desc": "Green tea and jasmine blossoms",
-            "img": "assets/menu/Hot%20Tea/Royal%20Jasmin.jpg",
+            "img": "assets/menu/Hot%20Tea/Royal%20Jasmin.webp",
             "subsection": null,
             "variants": []
           },
@@ -223,7 +223,7 @@ window.MENU_DATA = [
             "name": "English Breakfast",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/English%20Breakfast.jpg",
+            "img": "assets/menu/Hot%20Tea/English%20Breakfast.webp",
             "subsection": null,
             "variants": []
           },
@@ -231,7 +231,7 @@ window.MENU_DATA = [
             "name": "Earl Grey",
             "price": "2.000",
             "desc": "Bergamot-scented black tea",
-            "img": "assets/menu/Hot%20Tea/Earl%20Gray.jpg",
+            "img": "assets/menu/Hot%20Tea/Earl%20Gray.webp",
             "subsection": null,
             "variants": []
           },
@@ -239,7 +239,7 @@ window.MENU_DATA = [
             "name": "Moroccan Mint",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Moroccan%20Mint.jpg",
+            "img": "assets/menu/Hot%20Tea/Moroccan%20Mint.webp",
             "subsection": null,
             "variants": []
           },
@@ -247,7 +247,7 @@ window.MENU_DATA = [
             "name": "Caramel Dream",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Caramel%20Dream.jpg",
+            "img": "assets/menu/Hot%20Tea/Caramel%20Dream.webp",
             "subsection": null,
             "variants": []
           },
@@ -255,7 +255,7 @@ window.MENU_DATA = [
             "name": "Indian Summer",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Indian%20Summer.jpg",
+            "img": "assets/menu/Hot%20Tea/Indian%20Summer.webp",
             "subsection": null,
             "variants": []
           },
@@ -263,7 +263,7 @@ window.MENU_DATA = [
             "name": "Caribbean Cocktail",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Hot%20Tea/Caribbean%20Cocktail.jpg",
+            "img": "assets/menu/Hot%20Tea/Caribbean%20Cocktail.webp",
             "subsection": null,
             "variants": []
           }
@@ -278,7 +278,7 @@ window.MENU_DATA = [
             "name": "Peach Ice Tea",
             "price": "1.600",
             "desc": null,
-            "img": "assets/menu/Ice%20Tea/Peach%20Ice%20Tea.jpg",
+            "img": "assets/menu/Ice%20Tea/Peach%20Ice%20Tea.webp",
             "subsection": null,
             "variants": []
           },
@@ -286,7 +286,7 @@ window.MENU_DATA = [
             "name": "Mango Passion Ice Tea",
             "price": "1.600",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": null,
             "variants": []
           },
@@ -294,7 +294,7 @@ window.MENU_DATA = [
             "name": "MixBerry Ice Tea",
             "price": "1.600",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": null,
             "variants": []
           },
@@ -302,7 +302,7 @@ window.MENU_DATA = [
             "name": "Pineapple Ice Tea",
             "price": "1.600",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": null,
             "variants": []
           },
@@ -310,7 +310,7 @@ window.MENU_DATA = [
             "name": "Pomegranate Coconut Ice Tea",
             "price": "1.600",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": null,
             "variants": []
           }
@@ -325,7 +325,7 @@ window.MENU_DATA = [
             "name": "Matcha Latte",
             "price": "2.100",
             "desc": null,
-            "img": "assets/menu/Matcha/Matcha%20Latte.jpg",
+            "img": "assets/menu/Matcha/Matcha%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -333,7 +333,7 @@ window.MENU_DATA = [
             "name": "Spanish Matcha",
             "price": "2.400",
             "desc": "Condensed milk",
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": null,
             "variants": []
           },
@@ -341,7 +341,7 @@ window.MENU_DATA = [
             "name": "Creamy Strawberry",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Creamy%20Strawberry%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Creamy%20Strawberry%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -349,7 +349,7 @@ window.MENU_DATA = [
             "name": "Creamy Mango",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Creamy%20Mango%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Creamy%20Mango%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -357,7 +357,7 @@ window.MENU_DATA = [
             "name": "Creamy Peach",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Creamy%20Peach%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Creamy%20Peach%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -365,7 +365,7 @@ window.MENU_DATA = [
             "name": "Creamy Pineapple",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Creamy%20Pineapple%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Creamy%20Pineapple%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -373,7 +373,7 @@ window.MENU_DATA = [
             "name": "Passion Fruit",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Passion%20Fruit%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Passion%20Fruit%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -381,7 +381,7 @@ window.MENU_DATA = [
             "name": "Pistachio",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Pistachio%20Matcha.jpg",
+            "img": "assets/menu/Matcha/Pistachio%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -389,7 +389,7 @@ window.MENU_DATA = [
             "name": "White Mocha",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/White%20Mocha%20Matcha.jpg",
+            "img": "assets/menu/Matcha/White%20Mocha%20Matcha.webp",
             "subsection": null,
             "variants": []
           },
@@ -397,7 +397,7 @@ window.MENU_DATA = [
             "name": "Matcha Milkshake",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Matcha/Matcha%20MilkShake.jpg",
+            "img": "assets/menu/Matcha/Matcha%20MilkShake.webp",
             "subsection": null,
             "variants": []
           }
@@ -418,7 +418,7 @@ window.MENU_DATA = [
             "name": "Coco Pine",
             "price": "2.000",
             "desc": "Pineapple and coconut, iced",
-            "img": "assets/menu/Mocktails/Coco%20Pine.jpg",
+            "img": "assets/menu/Mocktails/Coco%20Pine.webp",
             "subsection": null,
             "variants": []
           },
@@ -426,7 +426,7 @@ window.MENU_DATA = [
             "name": "Hibiscus",
             "price": "2.000",
             "desc": "Signature hibiscus with ginger and rose",
-            "img": "assets/menu/Mocktails/Hibiscus.jpg",
+            "img": "assets/menu/Mocktails/Hibiscus.webp",
             "subsection": null,
             "variants": []
           },
@@ -434,7 +434,7 @@ window.MENU_DATA = [
             "name": "Mojito",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Mocktails/Mojito.jpg",
+            "img": "assets/menu/Mocktails/Mojito.webp",
             "subsection": null,
             "variants": [
               "Classic",
@@ -448,7 +448,7 @@ window.MENU_DATA = [
             "name": "Piña Colada",
             "price": "2.500",
             "desc": "Signature mix of pineapple and coconut",
-            "img": "assets/menu/Mocktails/Pinacolada.jpg",
+            "img": "assets/menu/Mocktails/Pinacolada.webp",
             "subsection": null,
             "variants": []
           },
@@ -456,7 +456,7 @@ window.MENU_DATA = [
             "name": "Black Magic",
             "price": "2.500",
             "desc": "Fizzy, strawberry base",
-            "img": "assets/menu/Mocktails/Black%20Majic.jpg",
+            "img": "assets/menu/Mocktails/Black%20Majic.webp",
             "subsection": null,
             "variants": []
           },
@@ -464,7 +464,7 @@ window.MENU_DATA = [
             "name": "Passionpresso",
             "price": "2.500",
             "desc": "Fizzy, passion fruit and espresso",
-            "img": "assets/menu/Mocktails/Passionpresso.jpg",
+            "img": "assets/menu/Mocktails/Passionpresso.webp",
             "subsection": null,
             "variants": []
           },
@@ -472,7 +472,7 @@ window.MENU_DATA = [
             "name": "Redbull Mojito",
             "price": "2.900",
             "desc": "Mojito with an energy shot",
-            "img": "assets/menu/Mocktails/Redbull%20Mojito.jpg",
+            "img": "assets/menu/Mocktails/Redbull%20Mojito.webp",
             "subsection": null,
             "variants": []
           }
@@ -487,7 +487,7 @@ window.MENU_DATA = [
             "name": "Mixed Berry",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/MixBerry%20MilkShake.jpg",
+            "img": "assets/menu/Milk%20Shakes/MixBerry%20MilkShake.webp",
             "subsection": null,
             "variants": []
           },
@@ -495,7 +495,7 @@ window.MENU_DATA = [
             "name": "Lotus",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/Lotus%20Milk%20Shake.jpg",
+            "img": "assets/menu/Milk%20Shakes/Lotus%20Milk%20Shake.webp",
             "subsection": null,
             "variants": []
           },
@@ -503,7 +503,7 @@ window.MENU_DATA = [
             "name": "Oreo",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/Oreo%20Milk%20Shake.jpg",
+            "img": "assets/menu/Milk%20Shakes/Oreo%20Milk%20Shake.webp",
             "subsection": null,
             "variants": []
           },
@@ -511,7 +511,7 @@ window.MENU_DATA = [
             "name": "Caramel",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/Caramel%20MilkShake.jpg",
+            "img": "assets/menu/Milk%20Shakes/Caramel%20MilkShake.webp",
             "subsection": null,
             "variants": []
           },
@@ -519,7 +519,7 @@ window.MENU_DATA = [
             "name": "Nutella",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/Nutella%20Milk%20Shake.jpg",
+            "img": "assets/menu/Milk%20Shakes/Nutella%20Milk%20Shake.webp",
             "subsection": null,
             "variants": []
           },
@@ -527,7 +527,7 @@ window.MENU_DATA = [
             "name": "Peanut Butter & Banana",
             "price": "2.500",
             "desc": null,
-            "img": "assets/menu/Milk%20Shakes/Peanut%20Butter%20and%20Banana%20Milk%20Shake.jpg",
+            "img": "assets/menu/Milk%20Shakes/Peanut%20Butter%20and%20Banana%20Milk%20Shake.webp",
             "subsection": null,
             "variants": []
           }
@@ -548,7 +548,7 @@ window.MENU_DATA = [
             "name": "Plain",
             "price": "1.100",
             "desc": null,
-            "img": "assets/menu/Croissant/Plain%20Croissant.jpg",
+            "img": "assets/menu/Croissant/Plain%20Croissant.webp",
             "subsection": "Sweet",
             "variants": []
           },
@@ -556,7 +556,7 @@ window.MENU_DATA = [
             "name": "Chocolate",
             "price": "1.500",
             "desc": null,
-            "img": "assets/menu/Croissant/Chocolate%20Croissant.jpg",
+            "img": "assets/menu/Croissant/Chocolate%20Croissant.webp",
             "subsection": "Sweet",
             "variants": []
           },
@@ -564,7 +564,7 @@ window.MENU_DATA = [
             "name": "Nutella",
             "price": "1.600",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": "Sweet",
             "variants": []
           },
@@ -572,7 +572,7 @@ window.MENU_DATA = [
             "name": "Nutella Strawberry",
             "price": "2.000",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": "Sweet",
             "variants": []
           },
@@ -580,7 +580,7 @@ window.MENU_DATA = [
             "name": "Peanut Butter Banana",
             "price": "2.000",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": "Sweet",
             "variants": []
           },
@@ -588,7 +588,7 @@ window.MENU_DATA = [
             "name": "Cheese Za'atar",
             "price": "1.700",
             "desc": null,
-            "img": "assets/images/logo.png",
+            "img": "assets/images/logo.webp",
             "subsection": "Savoury",
             "variants": []
           },
@@ -596,7 +596,7 @@ window.MENU_DATA = [
             "name": "Mortadella",
             "price": "1.700",
             "desc": "Lettuce, cheddar, tomato, cucumber, mushroom",
-            "img": "assets/menu/Croissant/Martadella.jpg",
+            "img": "assets/menu/Croissant/Martadella.webp",
             "subsection": "Savoury",
             "variants": []
           },
@@ -604,7 +604,7 @@ window.MENU_DATA = [
             "name": "Grilled Halloumi",
             "price": "2.000",
             "desc": null,
-            "img": "assets/menu/Croissant/Grilled%20Halloumi.jpg",
+            "img": "assets/menu/Croissant/Grilled%20Halloumi.webp",
             "subsection": "Savoury",
             "variants": []
           },
@@ -612,7 +612,7 @@ window.MENU_DATA = [
             "name": "Smoked Turkey",
             "price": "2.000",
             "desc": "Smoked turkey breast, lettuce, cheddar, tomato, cucumber, mushroom",
-            "img": "assets/menu/Croissant/Smoked%20Turkey.jpg",
+            "img": "assets/menu/Croissant/Smoked%20Turkey.webp",
             "subsection": "Savoury",
             "variants": []
           }
@@ -627,7 +627,7 @@ window.MENU_DATA = [
             "name": "Passion Mango Cheesecake",
             "price": "2.100",
             "desc": null,
-            "img": "assets/menu/Desserts/Passion%20Mango%20CheeseCake.jpg",
+            "img": "assets/menu/Desserts/Passion%20Mango%20CheeseCake.webp",
             "subsection": null,
             "variants": []
           },
@@ -635,7 +635,7 @@ window.MENU_DATA = [
             "name": "Mixed Berry Cheesecake",
             "price": "2.100",
             "desc": null,
-            "img": "assets/menu/Desserts/Mix%20Berries%20Cheese%20Cake.jpg",
+            "img": "assets/menu/Desserts/Mix%20Berries%20Cheese%20Cake.webp",
             "subsection": null,
             "variants": []
           },
@@ -643,7 +643,7 @@ window.MENU_DATA = [
             "name": "Tiramisu",
             "price": "2.400",
             "desc": null,
-            "img": "assets/menu/Desserts/Tiramisu.jpg",
+            "img": "assets/menu/Desserts/Tiramisu.webp",
             "subsection": null,
             "variants": []
           },
@@ -651,7 +651,7 @@ window.MENU_DATA = [
             "name": "San Sebastián",
             "price": "2.400",
             "desc": "Burnt Basque cheesecake",
-            "img": "assets/menu/Desserts/San%20Sebastian.jpg",
+            "img": "assets/menu/Desserts/San%20Sebastian.webp",
             "subsection": null,
             "variants": []
           },
@@ -659,7 +659,7 @@ window.MENU_DATA = [
             "name": "Brownie",
             "price": "2.700",
             "desc": "Served hot with a scoop of vanilla ice cream",
-            "img": "assets/menu/Desserts/Brownie.jpg",
+            "img": "assets/menu/Desserts/Brownie.webp",
             "subsection": null,
             "variants": []
           },
@@ -667,7 +667,7 @@ window.MENU_DATA = [
             "name": "Marble Brownie",
             "price": "2.900",
             "desc": "Served hot with a scoop of vanilla ice cream",
-            "img": "assets/menu/Desserts/Marble%20Brownie.jpg",
+            "img": "assets/menu/Desserts/Marble%20Brownie.webp",
             "subsection": null,
             "variants": []
           }
@@ -688,7 +688,7 @@ window.MENU_DATA = [
             "name": "Açaí Smoothie",
             "price": "3.200",
             "desc": "Organic açaí purée, strawberry, blueberry, banana, peanut butter, coconut water and honey",
-            "img": "assets/menu/Acai/Acai%20Smoothie.jpg",
+            "img": "assets/menu/Acai/Acai%20Smoothie.webp",
             "subsection": null,
             "variants": []
           },
@@ -696,7 +696,7 @@ window.MENU_DATA = [
             "name": "Açaí Bowl",
             "price": "3.900",
             "desc": "Organic açaí purée, strawberry, blueberry, banana, granola, peanut butter, chia seeds and honey",
-            "img": "assets/menu/Acai/Acai%20Bowl.jpg",
+            "img": "assets/menu/Acai/Acai%20Bowl.webp",
             "subsection": null,
             "variants": []
           }
@@ -711,7 +711,7 @@ window.MENU_DATA = [
             "name": "Pro Mug Cake",
             "price": "2.400",
             "desc": null,
-            "img": "assets/menu/Fit%20Bites/Pro%20Mug%20Cake.jpg",
+            "img": "assets/menu/Fit%20Bites/Pro%20Mug%20Cake.webp",
             "subsection": null,
             "variants": []
           },
@@ -719,7 +719,7 @@ window.MENU_DATA = [
             "name": "Power Brownie",
             "price": "2.900",
             "desc": null,
-            "img": "assets/menu/Fit%20Bites/Power%20Brownie.jpg",
+            "img": "assets/menu/Fit%20Bites/Power%20Brownie.webp",
             "subsection": null,
             "variants": []
           },
@@ -727,7 +727,7 @@ window.MENU_DATA = [
             "name": "Cheese and Tomato Rice Cake",
             "price": "2.400",
             "desc": null,
-            "img": "assets/menu/Fit%20Bites/Cheese%20and%20Tomato%20Rice%20Cake.jpg",
+            "img": "assets/menu/Fit%20Bites/Cheese%20and%20Tomato%20Rice%20Cake.webp",
             "subsection": null,
             "variants": []
           },
@@ -735,7 +735,7 @@ window.MENU_DATA = [
             "name": "Peanut Butter Strawberry Rice Cake",
             "price": "2.400",
             "desc": null,
-            "img": "assets/menu/Fit%20Bites/Peanut%20butter%20Strawberry%20Rice%20Cake.jpg",
+            "img": "assets/menu/Fit%20Bites/Peanut%20butter%20Strawberry%20Rice%20Cake.webp",
             "subsection": null,
             "variants": []
           },
@@ -743,7 +743,7 @@ window.MENU_DATA = [
             "name": "Tiramisu Rice Cake",
             "price": "2.900",
             "desc": "Rice cake soaked in espresso, Greek yogurt, protein whey, cacao powder",
-            "img": "assets/menu/Fit%20Bites/Tiramisu%20Rice%20Cake.jpg",
+            "img": "assets/menu/Fit%20Bites/Tiramisu%20Rice%20Cake.webp",
             "subsection": null,
             "variants": []
           },
@@ -751,7 +751,7 @@ window.MENU_DATA = [
             "name": "Tuna Salad",
             "price": "2.400",
             "desc": "Tuna, lettuce, cherry tomato, cucumber, corn, olive oil, salt and pepper",
-            "img": "assets/menu/Fit%20Bites/Tuna%20Salad.jpg",
+            "img": "assets/menu/Fit%20Bites/Tuna%20Salad.webp",
             "subsection": null,
             "variants": []
           }
@@ -766,7 +766,7 @@ window.MENU_DATA = [
             "name": "Fit Latte",
             "price": "2.400",
             "desc": "Coffee Latte + Protein Whey",
-            "img": "assets/menu/Fit%20Drinks/Fit%20Latte.jpg",
+            "img": "assets/menu/Fit%20Drinks/Fit%20Latte.webp",
             "subsection": null,
             "variants": []
           },
@@ -774,7 +774,7 @@ window.MENU_DATA = [
             "name": "Bulk Fuel",
             "price": "2.900",
             "desc": "Protein Whey, Banana, Dates, Cacao Powder",
-            "img": "assets/menu/Fit%20Drinks/Bulk%20Fuel.jpg",
+            "img": "assets/menu/Fit%20Drinks/Bulk%20Fuel.webp",
             "subsection": null,
             "variants": []
           }

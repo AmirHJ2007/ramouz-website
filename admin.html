@@ -756,7 +756,7 @@
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
-        const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', quality));
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/webp', quality));
         if (blob) return blob;
       } catch (e) { /* fall through: upload the original file */ }
       return file;
@@ -765,13 +765,13 @@
     async function uploadImage(file) {
       await ensureFreshToken();
       const blob = await compressImage(file);
-      const key = `items/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+      const key = `items/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${key}`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_ANON_KEY,
           Authorization: `Bearer ${sessionStorage.getItem(TOKEN_KEY) || SUPABASE_ANON_KEY}`,
-          'Content-Type': 'image/jpeg',
+          'Content-Type': 'image/webp',
           'x-upsert': 'true',
         },
         body: blob,
@@ -888,7 +888,7 @@
               -tx / scale, -ty / scale, V / scale, V / scale,
               0, 0, OUT, OUT
             );
-            canvas.toBlob((blob) => close(blob || file), 'image/jpeg', 0.88);
+            canvas.toBlob((blob) => close(blob || file), 'image/webp', 0.85);
           });
         };
         img.src = url;
@@ -1107,7 +1107,7 @@
 
       const thumb = el('span', 'thumb' + (item.img ? '' : ' thumb-brand'));
       const img = document.createElement('img');
-      img.src = item.img || 'assets/images/logo.png';
+      img.src = item.img || 'assets/images/logo.webp';
       img.alt = ''; img.loading = 'lazy';
       img.onerror = () => img.remove();
       thumb.appendChild(img);

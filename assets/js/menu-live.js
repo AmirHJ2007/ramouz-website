@@ -50,14 +50,17 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
   }
   if (!Array.isArray(cats) || !cats.length) { menuDone(); return; }
 
-  // start pulling every item photo into the browser cache now, while the loader is
-  // still showing, so opening a section later shows images instantly instead of
-  // a visible download flash (the <img> tags below stay loading="lazy")
+  // NOTE: eager photo preload disabled — it flooded the connection on first load
+  // and starved the hero image (blew up LCP). The <img> tags below are
+  // loading="lazy", so photos now load when a section is actually opened.
+  // To restore instant section images, uncomment the block below.
+  /*
   const photoUrls = new Set();
   cats.forEach(cat => (cat.sections || []).forEach(sec => (sec.items || []).forEach(item => {
     if (item.image_url) photoUrls.add(item.image_url);
   })));
   photoUrls.forEach(url => { const im = new Image(); im.src = url; });
+  */
 
   let html = '';
   let totalItems = 0;
@@ -80,14 +83,14 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
           rows += `<li class="menu-subhead">${esc(sub.name)}</li>`;
           lastSub = sub.name;
         }
-        const img = `<img src="${esc(item.image_url || 'assets/images/logo.png')}" alt="${esc(item.name)}" width="56" height="56" loading="lazy" onerror="this.remove()">`;
+        const img = `<img src="${esc(item.image_url || 'assets/images/logo.webp')}" alt="${esc(item.name)}" width="56" height="56" loading="lazy" onerror="this.remove()">`;
         const thumbCls = item.image_url ? 'mi-thumb' : 'mi-thumb mi-thumb--brand';
         const desc = item.description ? `<p class="mi-desc">${esc(item.description)}</p>` : '';
         const variants = (item.variants || []).sort(bySort);
         const picker = variants.length
           ? `<span class="mi-picker"><select class="mi-select" aria-label="${esc(item.name)} options">${variants.map(v => `<option>${esc(v.name)}</option>`).join('')}</select>${CHEVRON}</span>`
           : '';
-        const price = Number(item.price).toFixed(3);
+        const price = Number(item.price).toFixed(1);
         const unavailable = item.is_available === false;
         const liCls = unavailable ? 'menu-item menu-item--unavail' : 'menu-item';
         const unavailTag = unavailable ? '<span class="mi-tag-unavail">Unavailable</span>' : '';

@@ -10,6 +10,16 @@ const scrollCue = document.querySelector('.scroll-cue');
 const progressBar = document.querySelector('.scroll-progress');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Loader removed: reveal the hero immediately instead of waiting on window.load
+// + the video + the live menu (which delayed first paint / LCP). The menu still
+// reveals itself via menu-live.js (menu-ready class).
+document.body.classList.add('hero-in');
+// also make sure the menu shows even if menu-live.js never signals
+setTimeout(() => { document.body.classList.add('menu-ready'); }, 4000);
+
+/* ---- LOADING SCREEN DISABLED (kept for later) ----
+   To restore: uncomment this block AND the .loader div in index.html,
+   and remove the two lines above.
 const loaderVideo = loader?.querySelector('video');
 let pageReady = false;
 let videoDone = !loaderVideo;
@@ -57,6 +67,7 @@ if (loaderVideo) {
 }
 // hard safety: never trap the visitor on the loader
 setTimeout(() => { pageReady = true; videoDone = true; startHero(); }, 8000);
+---- end loading screen ---- */
 
 window.addEventListener('scroll', () => {
   header?.classList.toggle('scrolled', window.scrollY > 28);
