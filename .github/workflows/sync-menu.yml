@@ -1,0 +1,44 @@
+name: Sync menu (static HTML + schema)
+
+# Regenerates the static menu and the JSON-LD from Supabase so they can never
+# drift from the live data. Runs on push, on a daily schedule, and on demand.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * *'   # daily at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-menu
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate menu artifacts from Supabase
+        run: node build_menu.mjs
+
+      - name: Verify static HTML, JSON-LD, and llms.txt agree
+        run: node verify_menu.mjs
+
+      - name: Commit changes if the menu drifted
+        run: |
+          if [ -n "$(git status --porcelain index.html llms.txt)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html llms.txt
+            git commit -m "chore: sync menu from Supabase [skip ci]"
+            git push
+          else
+            echo "Menu already in sync — nothing to commit."
+          fi

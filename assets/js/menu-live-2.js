@@ -115,6 +115,40 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
   accordion.innerHTML = html;
 
+  // Keep the JSON-LD hasMenu in sync with what we just rendered, so JS-rendering
+  // crawlers (e.g. Googlebot) never see schema that disagrees with the visible
+  // menu. Committed schema is regenerated at build time by build_menu.mjs; this
+  // covers Supabase changes made since the last build.
+  try {
+    const ldEl = document.querySelector('script[type="application/ld+json"]');
+    if (ldEl) {
+      const data = JSON.parse(ldEl.textContent);
+      const sections = [];
+      cats.sort(bySort).forEach(cat => (cat.sections || []).sort(bySort).forEach(sec => {
+        const secItems = (sec.items || []).sort(bySort);
+        if (!secItems.length) return;
+        sections.push({
+          '@type': 'MenuSection',
+          name: sec.name,
+          hasMenuItem: secItems.map(it => {
+            const si = { '@type': 'MenuItem', name: it.name };
+            if (it.description) si.description = it.description;
+            if (it.image_url) si.image = it.image_url;
+            si.offers = {
+              '@type': 'Offer',
+              price: Number(it.price).toFixed(3),
+              priceCurrency: 'OMR',
+              availability: it.is_available === false ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
+            };
+            return si;
+          }),
+        });
+      }));
+      data.hasMenu = { '@type': 'Menu', name: 'Ramouz Café Menu', hasMenuSection: sections };
+      ldEl.textContent = JSON.stringify(data);
+    }
+  } catch (e) { console.warn('[menu-live] could not sync JSON-LD:', e); }
+
   // rebuild the category tabs so admin-made categories appear on the site
   const allTab = document.querySelector('.menu-tabs .menu-tab[data-cat="all"]');
   if (allTab) {
