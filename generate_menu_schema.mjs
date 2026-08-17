@@ -32,7 +32,11 @@ const business = {
   currenciesAccepted: 'OMR',
   address: { '@type': 'PostalAddress', addressLocality: 'Muscat', addressCountry: 'OM' },
   geo: { '@type': 'GeoCoordinates', latitude: 23.6129115, longitude: 58.4536845 },
-  sameAs: ['https://instagram.com/ramouz_oman'],
+  sameAs: [
+    'https://instagram.com/ramouz_oman',
+    'https://www.google.com/maps/place/?q=place_id:ChIJjeAjZQD_kT4R6l3hc6sXThM',
+  ],
+  hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJjeAjZQD_kT4R6l3hc6sXThM',
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday'], opens: '06:30', closes: '00:30' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Thursday', opens: '06:30', closes: '01:30' },
