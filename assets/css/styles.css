@@ -270,6 +270,17 @@ body.js .about-slide .slide-text>*{opacity:0;transform:translateY(16px)}body.js 
   -webkit-background-clip:text;background-clip:text;
   color:transparent;-webkit-text-fill-color:transparent;
 }
+/* .mi-cur (the "OMR" label) is a nested span inside .mi-price. WebKit
+   (Safari, and every iOS browser incl. Chrome-for-iOS, which is WebKit
+   under the hood) does not extend a parent's clipped gradient background
+   to a child element's own text box, so it inherits color:transparent
+   with nothing behind it and disappears. Blink/Chrome happens to paint it
+   anyway, which is why it only showed up there. Give it its own solid,
+   non-clipped color so it renders the same everywhere. */
+.signatures .mi-cur{
+  background:none;-webkit-background-clip:initial;background-clip:initial;
+  color:#e0ad71;-webkit-text-fill-color:#e0ad71;
+}
 .signatures .menu-item:hover .mi-price{
   transform:scale(1.12);
   animation:goldShimmer 1.6s ease-in-out infinite;
