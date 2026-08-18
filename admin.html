@@ -582,6 +582,7 @@
       return cats.sort(bySort).map(cat => ({
         id: cat.id,
         name: cat.name,
+        name_ar: cat.name_ar || '',
         sort: cat.sort_order ?? 0,
         emoji: cat.emoji || '',
         color: cat.color || null,
@@ -591,13 +592,16 @@
           return {
             id: sec.id,
             name: sec.name,
+            name_ar: sec.name_ar || '',
             icon: sec.icon,
             sort: sec.sort_order ?? 0,
             items: (sec.items || []).sort(bySort).map(item => ({
               id: item.id,
               name: item.name,
+              name_ar: item.name_ar || '',
               price: Number(item.price).toFixed(3),
               desc: item.description,
+              desc_ar: item.description_ar || '',
               img: item.image_url,
               sort: item.sort_order ?? 0,
               subsection: item.subsection_id != null ? subs.get(item.subsection_id) : null,
@@ -1006,11 +1010,15 @@
 
       const nameIn = el('input');
       nameIn.required = true; nameIn.placeholder = 'Name';
+      const nameArIn = el('input', 'cat-name-ar');
+      nameArIn.required = true; nameArIn.placeholder = 'Arabic name'; nameArIn.dir = 'rtl';
       const priceIn = el('input');
       priceIn.type = 'number'; priceIn.step = '0.001'; priceIn.min = '0';
       priceIn.required = true; priceIn.placeholder = 'Price (OMR)';
       const descIn = el('textarea');
       descIn.rows = 2; descIn.placeholder = 'Description (optional)';
+      const descArIn = el('textarea');
+      descArIn.rows = 2; descArIn.placeholder = 'Arabic description (optional)'; descArIn.dir = 'rtl';
 
       const checkWrap = el('label', 'rf-check');
       const availIn = el('input');
@@ -1022,7 +1030,9 @@
       rowLine.appendChild(nameIn);
       rowLine.appendChild(priceIn);
       form.appendChild(rowLine);
+      form.appendChild(nameArIn);
       form.appendChild(descIn);
+      form.appendChild(descArIn);
       const photo = photoField(null);
       form.appendChild(photo.wrap);
       form.appendChild(checkWrap);
@@ -1040,14 +1050,16 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const price = parseFloat(priceIn.value);
-        if (!nameIn.value.trim() || !(price >= 0)) return;
+        if (!nameIn.value.trim() || !nameArIn.value.trim() || !(price >= 0)) return;
         saveB.disabled = true; saveB.textContent = 'Adding…';
         try {
           const nextSort = Math.max(0, ...sec.items.map(i => i.sort || 0)) + 10;
           const payload = {
             section_id: sec.id,
             name: nameIn.value.trim(),
+            name_ar: nameArIn.value.trim(),
             description: descIn.value.trim() || null,
+            description_ar: descArIn.value.trim() || null,
             price: price,
             is_available: availIn.checked,
             sort_order: nextSort,
@@ -1068,8 +1080,10 @@
           const item = {
             id: created[0].id,
             name: payload.name,
+            name_ar: payload.name_ar,
             price: price.toFixed(3),
             desc: payload.description,
+            desc_ar: payload.description_ar,
             img: payload.image_url || null,
             sort: nextSort,
             subsection: null,
@@ -1183,11 +1197,15 @@
 
       const nameIn = el('input');
       nameIn.value = item.name; nameIn.required = true; nameIn.placeholder = 'Name';
+      const nameArIn = el('input', 'cat-name-ar');
+      nameArIn.value = item.name_ar || ''; nameArIn.required = true; nameArIn.placeholder = 'Arabic name'; nameArIn.dir = 'rtl';
       const priceIn = el('input');
       priceIn.type = 'number'; priceIn.step = '0.001'; priceIn.min = '0';
       priceIn.value = item.price; priceIn.required = true; priceIn.placeholder = 'Price (OMR)';
       const descIn = el('textarea');
       descIn.value = item.desc || ''; descIn.rows = 2; descIn.placeholder = 'Description (optional)';
+      const descArIn = el('textarea');
+      descArIn.value = item.desc_ar || ''; descArIn.rows = 2; descArIn.placeholder = 'Arabic description (optional)'; descArIn.dir = 'rtl';
 
       const checkWrap = el('label', 'rf-check');
       const availIn = el('input');
@@ -1199,7 +1217,9 @@
       rowLine.appendChild(nameIn);
       rowLine.appendChild(priceIn);
       form.appendChild(rowLine);
+      form.appendChild(nameArIn);
       form.appendChild(descIn);
+      form.appendChild(descArIn);
       const photo = photoField(item.img);
       form.appendChild(photo.wrap);
       form.appendChild(checkWrap);
@@ -1217,12 +1237,14 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const price = parseFloat(priceIn.value);
-        if (!nameIn.value.trim() || !(price >= 0)) return;
+        if (!nameIn.value.trim() || !nameArIn.value.trim() || !(price >= 0)) return;
         saveB.disabled = true; saveB.textContent = 'Saving…';
         try {
           const payload = {
             name: nameIn.value.trim(),
+            name_ar: nameArIn.value.trim(),
             description: descIn.value.trim() || null,
+            description_ar: descArIn.value.trim() || null,
             price: price,
             is_available: availIn.checked,
           };
@@ -1242,7 +1264,9 @@
             throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
           }
           item.name = payload.name;
+          item.name_ar = payload.name_ar;
           item.desc = payload.description;
+          item.desc_ar = payload.description_ar;
           row.dataset.search = `${item.name} ${item.desc || ''}`.toLowerCase();
           item.price = price.toFixed(3);
           item.available = payload.is_available;
@@ -1312,6 +1336,11 @@
       nameIn.required = true; nameIn.placeholder = 'Section name';
       nameIn.value = initial?.name || '';
       form.appendChild(nameIn);
+      const nameArIn = el('input', 'cat-name-ar');
+      nameArIn.required = true; nameArIn.placeholder = 'Arabic name';
+      nameArIn.dir = 'rtl';
+      nameArIn.value = initial?.name_ar || '';
+      form.appendChild(nameArIn);
       const picker = iconPicker(initial?.icon);
       form.appendChild(picker.grid);
       const actions = el('div', 'rf-actions');
@@ -1325,10 +1354,10 @@
       form.appendChild(actions);
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (!nameIn.value.trim()) return;
+        if (!nameIn.value.trim() || !nameArIn.value.trim()) return;
         saveB.disabled = true; saveB.textContent = 'Saving…';
         try {
-          await onSubmit({ name: nameIn.value.trim(), icon: picker.value });
+          await onSubmit({ name: nameIn.value.trim(), name_ar: nameArIn.value.trim(), icon: picker.value });
         } catch (err) {
           console.error('[admin] section save failed:', err);
           toast(err.message || 'Saving failed — please try again.', 'err');
@@ -1375,16 +1404,17 @@
           initial: sec,
           submitLabel: 'Save',
           onCancel: () => form.remove(),
-          onSubmit: async ({ name, icon }) => {
+          onSubmit: async ({ name, name_ar, icon }) => {
             await ensureFreshToken();
             const res = await fetch(`${SUPABASE_URL}/rest/v1/sections?id=eq.${sec.id}`, {
-              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, icon }),
+              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, name_ar, icon }),
             });
             const updated = await res.json();
             if (!res.ok || !Array.isArray(updated) || !updated.length) {
               throw new Error('Update was rejected — did you run the policy SQL in Supabase?');
             }
             sec.name = name;
+            sec.name_ar = name_ar;
             sec.icon = icon;
             titleEl.textContent = name;
             ico.innerHTML = icon;
@@ -1501,6 +1531,11 @@
       nameIn.required = true; nameIn.placeholder = 'Category name';
       nameIn.value = initial?.name || '';
       form.appendChild(nameIn);
+      const nameArIn = el('input', 'cat-name-ar');
+      nameArIn.required = true; nameArIn.placeholder = 'Arabic name';
+      nameArIn.dir = 'rtl';
+      nameArIn.value = initial?.name_ar || '';
+      form.appendChild(nameArIn);
       const emoji = emojiPicker(initial?.emoji || '');
       form.appendChild(emoji.grid);
 
@@ -1527,11 +1562,12 @@
       form.appendChild(actions);
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (!nameIn.value.trim()) return;
+        if (!nameIn.value.trim() || !nameArIn.value.trim()) return;
         saveB.disabled = true; saveB.textContent = 'Saving…';
         try {
           await onSubmit({
             name: nameIn.value.trim(),
+            name_ar: nameArIn.value.trim(),
             emoji: emoji.value,
             color: colorOn.checked ? colorIn.value : null,
           });
@@ -1571,16 +1607,17 @@
           initial: cat,
           submitLabel: 'Save',
           onCancel: () => form.remove(),
-          onSubmit: async ({ name, emoji, color }) => {
+          onSubmit: async ({ name, name_ar, emoji, color }) => {
             await ensureFreshToken();
             const res = await fetch(`${SUPABASE_URL}/rest/v1/categories?id=eq.${cat.id}`, {
-              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, emoji, color }),
+              method: 'PATCH', headers: restHeaders(), body: JSON.stringify({ name, name_ar, emoji, color }),
             });
             const updated = await res.json();
             if (!res.ok || !Array.isArray(updated) || !updated.length) {
               throw new Error('Update was rejected — sign in again and retry.');
             }
             cat.name = name;
+            cat.name_ar = name_ar || '';
             cat.emoji = emoji || '';
             cat.color = color;
             catBox.replaceWith(makeCategory(cat));
@@ -1654,18 +1691,18 @@
           initial: null,
           submitLabel: 'Add section',
           onCancel: () => form.remove(),
-          onSubmit: async ({ name, icon }) => {
+          onSubmit: async ({ name, name_ar, icon }) => {
             const nextSort = Math.max(0, ...cat.sections.map(s => s.sort || 0)) + 10;
             await ensureFreshToken();
             const res = await fetch(`${SUPABASE_URL}/rest/v1/sections`, {
               method: 'POST', headers: restHeaders(),
-              body: JSON.stringify({ category_id: cat.id, name, icon, sort_order: nextSort }),
+              body: JSON.stringify({ category_id: cat.id, name, name_ar, icon, sort_order: nextSort }),
             });
             const created = await res.json();
             if (!res.ok || !Array.isArray(created) || !created.length) {
               throw new Error('Adding was rejected — did you run the policy SQL in Supabase?');
             }
-            const sec = { id: created[0].id, name, icon, sort: nextSort, items: [] };
+            const sec = { id: created[0].id, name, name_ar, icon, sort: nextSort, items: [] };
             cat.sections.push(sec);
             form.remove();
             catBox.insertBefore(makeSection(cat, sec), addSecWrap);
@@ -1762,19 +1799,19 @@
           initial: null,
           submitLabel: 'Add category',
           onCancel: () => form.remove(),
-          onSubmit: async ({ name, emoji, color }) => {
+          onSubmit: async ({ name, name_ar, emoji, color }) => {
             const nextSort = Math.max(0, ...MENU.map(c => c.sort || 0)) + 10;
             await ensureFreshToken();
             const res = await fetch(`${SUPABASE_URL}/rest/v1/categories`, {
               method: 'POST', headers: restHeaders(),
-              body: JSON.stringify({ name, emoji, color, sort_order: nextSort }),
+              body: JSON.stringify({ name, name_ar, emoji, color, sort_order: nextSort }),
             });
             const created = await res.json();
             if (!res.ok || !Array.isArray(created) || !created.length) {
               throw new Error('Adding was rejected — sign in again and retry.');
             }
             const cat = {
-              id: created[0].id, name, sort: nextSort,
+              id: created[0].id, name, name_ar: name_ar || '', sort: nextSort,
               emoji: emoji || '', color,
               slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
               sections: [],
