@@ -1040,6 +1040,12 @@ body.menu-ready [data-menu-accordion]{opacity:1;transition:opacity .45s ease}
 [dir="rtl"] .brand{
   letter-spacing:normal;
 }
+@media (max-width:980px){
+  [dir="rtl"] .brand{
+    margin-right:0;
+    margin-left:auto;
+  }
+}
 [dir="rtl"] .lang-menu{
   right:auto;
   left:0;
