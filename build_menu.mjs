@@ -174,8 +174,8 @@ async function main() {
   if (!ldRe.test(html)) throw new Error('JSON-LD block not found in index.html');
   html = html.replace(ldRe, `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n  </script>`);
 
-  // subtitle count: "<N> items, search or filter…"
-  html = html.replace(/(<p>)\d+( items, search or filter)/, `$1${built.itemCount}$2`);
+  // subtitle count: "<N> items, search or filter…" (tag now carries data-i18n attrs for the Arabic build)
+  html = html.replace(/(<p[^>]*>)\d+( items, search or filter)/, `$1${built.itemCount}$2`);
 
   await writeFile('index.html', html);
 

@@ -1146,9 +1146,26 @@
   <link rel="apple-touch-icon" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Language variants -->
+  <link rel="alternate" hreflang="en" href="https://amirhj2007.github.io/ramouz-website/" />
+  <link rel="alternate" hreflang="ar" href="https://amirhj2007.github.io/ramouz-website/?lang=ar" />
+  <link rel="alternate" hreflang="x-default" href="https://amirhj2007.github.io/ramouz-website/" />
+
+  <!-- Set lang/dir before first paint so RTL layout never flashes -->
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var fromUrl = params.get('lang');
+      var lang = fromUrl === 'ar' || fromUrl === 'en' ? fromUrl : (localStorage.getItem('ramouz:lang') || 'en');
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    })();
+  </script>
+
   <!-- Fonts loaded non-render-blocking: apply once downloaded instead of blocking first paint -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Quicksand:wght@500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Quicksand:wght@500;600&display=swap" rel="stylesheet" /></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Quicksand:wght@500;600&family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Quicksand:wght@500;600&family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="assets/css/styles.css?v=7" />
 </head>
 <body>
@@ -1169,29 +1186,29 @@
   -->
 
   <header class="site-header" data-header>
-    <a class="brand" href="#home" aria-label="Ramouz home">
+    <a class="brand" href="#home" data-i18n-attr='{"aria-label":"brand.home"}' aria-label="Ramouz home">
       <img class="brand-logo" src="assets/images/logo.webp" alt="" aria-hidden="true" />
-      <span class="brand-word">Ramouz</span>
+      <span class="brand-word" data-i18n="brand.word">Ramouz</span>
     </a>
     <nav class="nav" data-nav>
-      <a href="#home">Home</a>
-      <a href="#menu">Menu</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#menu" data-i18n="nav.menu">Menu</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
     <div class="lang-select" data-lang-select>
-      <button type="button" class="lang-current" data-lang-trigger aria-haspopup="listbox" aria-expanded="false" aria-label="Change language (demo)">
+      <button type="button" class="lang-current" data-lang-trigger aria-haspopup="listbox" aria-expanded="false" data-i18n-attr='{"aria-label":"lang.trigger_label"}' aria-label="Change language">
         <span class="lang-flag" aria-hidden="true">🇬🇧</span>
         <span>English</span>
         <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <ul class="lang-menu" role="listbox" aria-label="Language (demo)" data-lang-menu>
+      <ul class="lang-menu" role="listbox" data-i18n-attr='{"aria-label":"lang.menu_label"}' aria-label="Language" data-lang-menu>
         <li role="option" aria-selected="true"><button type="button" class="active" data-lang="en"><span class="lang-flag" aria-hidden="true">🇬🇧</span><span>English</span></button></li>
         <li role="option" aria-selected="false"><button type="button" data-lang="ar"><span class="lang-flag" aria-hidden="true">🇴🇲</span><span>العربية</span></button></li>
       </ul>
     </div>
-    <button class="menu-toggle" data-menu-toggle aria-label="Open menu"><span></span><span></span></button>
+    <button class="menu-toggle" data-menu-toggle data-i18n-attr='{"aria-label":"menu_toggle.aria"}' aria-label="Open menu"><span></span><span></span></button>
   </header>
 
   <svg class="svg-sprite" aria-hidden="true">
@@ -1206,24 +1223,24 @@
   </svg>
 
   <main id="home">
-    <section class="hero" aria-label="Ramouz hero">
+    <section class="hero" data-i18n-attr='{"aria-label":"hero.aria_label"}' aria-label="Ramouz hero">
       <img class="hero-video hero-image" src="assets/images/homw.webp" alt="" aria-hidden="true" fetchpriority="high" width="1170" height="648" />
       <div class="hero-shade"></div>
       <div class="hero-noise"></div>
       <div class="hero-embers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-content">
-        <p class="eyebrow">Est. Mashhad, now Muscat</p>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Est. Mashhad, now Muscat</p>
         <h1>
-          <span class="hero-line"><span>Every day with</span></span>
-          <span class="hero-line l2"><span class="hero-brand"><img class="hero-logo" src="assets/images/logo.webp" alt="" />Ramouz Cafe<svg class="brand-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11" pathLength="100"/></svg></span></span>
+          <span class="hero-line"><span data-i18n="hero.line1">Every day with</span></span>
+          <span class="hero-line l2"><span class="hero-brand"><img class="hero-logo" src="assets/images/logo.webp" alt="" /><span data-i18n="hero.brand_name">Ramouz Cafe</span><svg class="brand-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11" pathLength="100"/></svg></span></span>
         </h1>
-        <p class="hero-copy">Our beans, our ovens, our machines, your morning.</p>
+        <p class="hero-copy" data-i18n="hero.copy">Our beans, our ovens, our machines, your morning.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="#menu">Explore our menu</a>
-          <a class="btn ghost" href="#gallery">See the gallery</a>
+          <a class="btn primary" href="#menu" data-i18n="hero.cta_menu">Explore our menu</a>
+          <a class="btn ghost" href="#gallery" data-i18n="hero.cta_gallery">See the gallery</a>
         </div>
       </div>
-      <a class="scroll-cue" href="#menu" aria-label="Scroll down to the menu"><span></span></a>
+      <a class="scroll-cue" href="#menu" data-i18n-attr='{"aria-label":"hero.scroll_cue"}' aria-label="Scroll down to the menu"><span></span></a>
       <svg class="hero-paint" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
         <defs><filter id="tearShadow" color-interpolation-filters="sRGB" x="-2%" y="-60%" width="104%" height="220%"><feDropShadow dx="0" dy="-4" stdDeviation="5" flood-color="#000" flood-opacity=".38"/></filter><linearGradient id="tearGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e0ad71" stop-opacity=".15"/><stop offset=".3" stop-color="#f6d9ac"/><stop offset=".55" stop-color="#e0ad71"/><stop offset=".8" stop-color="#f6d9ac"/><stop offset="1" stop-color="#e0ad71" stop-opacity=".15"/></linearGradient></defs>
         <path fill="#0b1020" fill-opacity=".55" d="M0 90 L0 49 L13 53 L23 42 L40 57 L56 41 L61 51 L83 36 L97 60 L109 46 L128 50 L134 39 L157 63 L175 44 L182 55 L204 40 L217 67 L234 47 L250 52 L259 38 L280 58 L297 43 L305 54 L329 39 L342 64 L358 45 L377 50 L385 37 L406 61 L422 44 L429 56 L454 40 L467 68 L483 46 L499 51 L508 38 L530 59 L546 43 L555 53 L579 39 L592 65 L608 47 L626 52 L633 37 L656 57 L672 42 L681 55 L705 40 L718 69 L733 45 L751 50 L759 38 L781 60 L798 44 L806 54 L831 39 L844 63 L860 46 L877 51 L885 37 L908 58 L924 43 L933 53 L957 40 L970 66 L986 47 L1003 52 L1011 38 L1035 59 L1050 44 L1059 55 L1083 39 L1096 64 L1112 46 L1129 50 L1137 37 L1161 61 L1176 43 L1185 54 L1209 40 L1222 67 L1238 46 L1255 51 L1263 38 L1287 58 L1302 44 L1311 55 L1335 39 L1348 63 L1364 47 L1381 52 L1389 37 L1411 60 L1427 44 L1440 51 L1440 90 Z"/>
@@ -1232,40 +1249,40 @@
     </section>
 
     <section class="section signatures" id="news-ticker">
-      <div class="marquee" aria-label="Ramouz services">
+      <div class="marquee" data-i18n-attr='{"aria-label":"ticker.aria_label"}' aria-label="Ramouz services">
         <div class="marquee-band">
         <div class="marquee-track">
-          <span>Roasting since Mashhad</span><span>Baked before you woke up</span><span>The machines behind other counters</span><span>Nine branches, one recipe</span><span>Barista school in the back</span><span>Est. 2016, now Muscat</span>
-          <span aria-hidden="true">Roasting since Mashhad</span><span aria-hidden="true">Baked before you woke up</span><span aria-hidden="true">The machines behind other counters</span><span aria-hidden="true">Nine branches, one recipe</span><span aria-hidden="true">Barista school in the back</span><span aria-hidden="true">Est. 2016, now Muscat</span>
+          <span data-i18n="ticker.1">Roasting since Mashhad</span><span data-i18n="ticker.2">Baked before you woke up</span><span data-i18n="ticker.3">The machines behind other counters</span><span data-i18n="ticker.4">Nine branches, one recipe</span><span data-i18n="ticker.5">Barista school in the back</span><span data-i18n="ticker.6">Est. 2016, now Muscat</span>
+          <span aria-hidden="true" data-i18n="ticker.1">Roasting since Mashhad</span><span aria-hidden="true" data-i18n="ticker.2">Baked before you woke up</span><span aria-hidden="true" data-i18n="ticker.3">The machines behind other counters</span><span aria-hidden="true" data-i18n="ticker.4">Nine branches, one recipe</span><span aria-hidden="true" data-i18n="ticker.5">Barista school in the back</span><span aria-hidden="true" data-i18n="ticker.6">Est. 2016, now Muscat</span>
         </div>
         </div>
       </div>
       <div class="section-heading centered reveal" id="menu">
-        <p class="eyebrow">Our menu</p>
-        <h2>Made to taste good and <em>look even better</em>.</h2>
+        <p class="eyebrow" data-i18n="menu.eyebrow">Our menu</p>
+        <h2><span data-i18n="menu.heading1">Made to taste good and </span><em data-i18n="menu.heading_em">look even better</em>.</h2>
         <svg class="heading-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11"/></svg>
-        <p>85 items, search or filter to jump straight to yours.</p>
+        <p data-i18n="menu.subtitle" data-i18n-count>85 items, search or filter to jump straight to yours.</p>
       </div>
       <div class="menu-search reveal" data-menu-search-wrap>
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-        <label for="menu-search-input" class="sr-only">Search the menu</label>
-        <input type="text" inputmode="search" enterkeyhint="search" id="menu-search-input" class="menu-search-input" placeholder="Search espresso, black tea, tiramisu…" autocomplete="off" aria-label="Search the menu" data-menu-search />
-        <button type="button" class="search-clear" data-search-clear aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <label for="menu-search-input" class="sr-only" data-i18n="menu.search_label">Search the menu</label>
+        <input type="text" inputmode="search" enterkeyhint="search" id="menu-search-input" class="menu-search-input" placeholder="Search espresso, black tea, tiramisu…" autocomplete="off" aria-label="Search the menu" data-menu-search data-i18n-attr='{"placeholder":"menu.search_placeholder","aria-label":"menu.search_label"}' />
+        <button type="button" class="search-clear" data-search-clear data-i18n-attr='{"aria-label":"menu.search_clear"}' aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
       <div class="menu-tabs reveal">
-        <div class="menu-tab-group" role="tablist" aria-label="Menu categories">
-        <button class="menu-tab active" type="button" role="tab" aria-selected="true" data-cat="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>All</button>
-        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="coffee-base"><span class="tab-ico" aria-hidden="true">☕</span>Coffee Base</button>
-        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="tea-matcha"><span class="tab-ico" aria-hidden="true">🍵</span>Tea &amp; Matcha</button>
-        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="cold"><span class="tab-ico" aria-hidden="true">🧊</span>Cold &amp; Refreshing</button>
-        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="bites"><span class="tab-ico" aria-hidden="true">🥐</span>Bites</button>
-        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="fit"><span class="tab-ico" aria-hidden="true">💪</span>Fit</button>
+        <div class="menu-tab-group" role="tablist" data-i18n-attr='{"aria-label":"menu.tabs_aria"}' aria-label="Menu categories">
+        <button class="menu-tab active" type="button" role="tab" aria-selected="true" data-cat="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-i18n="menu.cat.all">All</span></button>
+        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="coffee-base"><span class="tab-ico" aria-hidden="true">☕</span><span data-i18n="menu.cat.coffee-base">Coffee Base</span></button>
+        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="tea-matcha"><span class="tab-ico" aria-hidden="true">🍵</span><span data-i18n="menu.cat.tea-matcha">Tea &amp; Matcha</span></button>
+        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="cold"><span class="tab-ico" aria-hidden="true">🧊</span><span data-i18n="menu.cat.cold">Cold &amp; Refreshing</span></button>
+        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="bites"><span class="tab-ico" aria-hidden="true">🥐</span><span data-i18n="menu.cat.bites">Bites</span></button>
+        <button class="menu-tab" type="button" role="tab" aria-selected="false" data-cat="fit"><span class="tab-ico" aria-hidden="true">💪</span><span data-i18n="menu.cat.fit">Fit</span></button>
         </div>
-        <button class="menu-expand-all" type="button" data-expand-all aria-label="Expand all categories"><svg class="ea-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 6 5 5 5-5"/><path d="m7 13 5 5 5-5"/></svg><svg class="ea-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 11 5-5 5 5"/><path d="m7 18 5-5 5 5"/></svg><span data-expand-label>Expand all</span></button>
+        <button class="menu-expand-all" type="button" data-expand-all data-i18n-attr='{"aria-label":"menu.expand_all_aria"}' aria-label="Expand all categories"><svg class="ea-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 6 5 5 5-5"/><path d="m7 13 5 5 5-5"/></svg><svg class="ea-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 11 5-5 5 5"/><path d="m7 18 5-5 5 5"/></svg><span data-expand-label data-i18n="menu.expand_all">Expand all</span></button>
       </div>
       <div class="menu-book reveal" data-menu-book>
-        <div class="panel-head" aria-hidden="true"><span class="panel-title">Full menu</span><span class="panel-rule"></span><span class="panel-count"></span></div>
-        <p class="menu-empty" data-menu-empty hidden>No items match &ldquo;<span data-menu-empty-query></span>&rdquo;. Try coffee, tea, or croissant.</p>
+        <div class="panel-head" aria-hidden="true"><span class="panel-title" data-i18n="menu.panel_full">Full menu</span><span class="panel-rule"></span><span class="panel-count"></span></div>
+        <p class="menu-empty" data-menu-empty hidden><span data-i18n="menu.empty_prefix">No items match &ldquo;</span><span data-menu-empty-query></span><span data-i18n="menu.empty_suffix">&rdquo;. Try coffee, tea, or croissant.</span></p>
         <div class="menu-accordion" data-menu-accordion>
           <!-- MENU:START (auto-generated by build_menu.mjs — do not edit by hand) -->
           <div class="menu-accordion-item" data-cat="coffee-base" data-box="espresso-bar"><button type="button" class="menu-accordion-head" aria-expanded="false" aria-controls="acc-espresso-bar"><span class="acc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg></span><span class="acc-title">Espresso Bar</span><span class="acc-count">6 items</span><span class="acc-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></button><div class="menu-accordion-body" id="acc-espresso-bar"><ul class="menu-list menu-list--thumbs"><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506477273-36yv6b.jpg" alt="Espresso" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Espresso</span><span class="mi-dots"></span><span class="mi-price">1.1 <span class="mi-cur">OMR</span></span></div><p class="mi-desc">Double shot</p></div></li><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506494299-5lxo1q.jpg" alt="Americano" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Americano</span><span class="mi-dots"></span><span class="mi-price">1.3 <span class="mi-cur">OMR</span></span></div><p class="mi-desc">Hot or iced</p></div></li><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506523666-ugzmdn.jpg" alt="Cortado" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Cortado</span><span class="mi-dots"></span><span class="mi-price">1.4 <span class="mi-cur">OMR</span></span></div><p class="mi-desc">80 ml — equal parts espresso and milk</p></div></li><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506536482-9dddsr.jpg" alt="Cappuccino" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Cappuccino</span><span class="mi-dots"></span><span class="mi-price">1.5 <span class="mi-cur">OMR</span></span></div></div></li><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506549081-zti6if.jpg" alt="Flat White" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Flat White</span><span class="mi-dots"></span><span class="mi-price">1.5 <span class="mi-cur">OMR</span></span></div></div></li><li class="menu-item"><span class="mi-thumb"><svg class="mi-thumb-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg><img src="https://waibybqjhzddpfhzrisx.supabase.co/storage/v1/object/public/menu-images/items/1784506562966-gi3tpp.jpg" alt="Affogato" width="56" height="56" loading="lazy" onerror="this.remove()"></span><div class="mi-main"><div class="mi-head"><span class="mi-name">Affogato</span><span class="mi-dots"></span><span class="mi-price">1.6 <span class="mi-cur">OMR</span></span></div></div></li></ul></div></div>
@@ -1289,115 +1306,115 @@
 
     <section class="section gallery-section" id="gallery">
       <div class="section-heading centered reveal">
-        <p class="eyebrow">Gallery</p>
-        <h2>Shot on the waterfront, <em>moments with Ramouz</em>.</h2>
+        <p class="eyebrow" data-i18n="gallery.eyebrow">Gallery</p>
+        <h2><span data-i18n="gallery.heading1">Shot on the waterfront, </span><em data-i18n="gallery.heading_em">moments with Ramouz</em>.</h2>
         <svg class="heading-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11"/></svg>
       </div>
       <div class="gallery-grid" data-gallery>
-        <button class="gallery-item tall reveal" data-type="drinks moments" data-src="assets/gallary/IMG_0432.webp"><img src="assets/gallary/IMG_0432.webp" alt="Takeaway tray with matcha and iced coffee, dressed with flowers" loading="lazy"/><span><i>Drinks</i>Takeaway, dressed up</span></button>
-        <button class="gallery-item tall reveal" data-type="drinks" data-src="assets/gallary/IMG_0434.webp"><img src="assets/gallary/IMG_0434.webp" alt="Stay Bold campaign shot with a splashing berry drink" loading="lazy"/><span><i>Drinks</i>Stay bold</span></button>
-        <button class="gallery-item tall reveal" data-type="drinks" data-src="assets/gallary/IMG_0435.webp"><img src="assets/gallary/IMG_0435.webp" alt="Caramel milkshake held up against the palm trees" loading="lazy"/><span><i>Drinks</i>Caramel under palms</span></button>
-        <button class="gallery-item tall reveal" data-type="space" data-src="assets/gallary/IMG_0436.webp"><img src="assets/gallary/IMG_0436.webp" alt="Warm beige lounge interior with the bakery counter" loading="lazy"/><span><i>The Space</i>The lounge</span></button>
-        <button class="gallery-item wide reveal" data-type="space" data-src="assets/gallary/IMG_0437.webp"><img src="assets/gallary/IMG_0437.webp" alt="White stone bar with syrups, grinders and a warm lamp" loading="lazy"/><span><i>The Space</i>The stone bar</span></button>
-        <button class="gallery-item wide reveal" data-type="space" data-src="assets/gallary/IMG_0439.webp"><img src="assets/gallary/IMG_0439.webp" alt="Italian XLVI espresso machine on the stone counter" loading="lazy"/><span><i>The Craft</i>The XLVI machine</span></button>
-        <button class="gallery-item tall reveal" data-type="space" data-src="assets/gallary/IMG_0438.webp"><img src="assets/gallary/IMG_0438.webp" alt="Window seats with a palm tree view" loading="lazy"/><span><i>The Space</i>Window to the palms</span></button>
-        <button class="gallery-item tall reveal" data-type="space moments" data-src="assets/gallary/IMG_0441.webp"><img src="assets/gallary/IMG_0441.webp" alt="Terrace tables at golden hour under the palms" loading="lazy"/><span><i>Moments</i>Golden hour terrace</span></button>
-        <button class="gallery-item tall reveal" data-type="moments" data-src="assets/gallary/IMG_0440.webp"><img src="assets/gallary/IMG_0440.webp" alt="Espresso cup on marble under the glowing Ramouz sign" loading="lazy"/><span><i>Moments</i>Espresso at the sign</span></button>
-        <button class="gallery-item tall reveal" data-type="space moments" data-src="assets/gallary/IMG_0442.webp"><img src="assets/gallary/IMG_0442.webp" alt="Ramouz storefront glowing at night with Arabic signage" loading="lazy"/><span><i>The Space</i>Waterfront at night</span></button>
+        <button class="gallery-item tall reveal" data-type="drinks moments" data-src="assets/gallary/IMG_0432.webp"><img src="assets/gallary/IMG_0432.webp" alt="Takeaway tray with matcha and iced coffee, dressed with flowers" data-i18n-attr='{"alt":"gallery.1.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.drinks">Drinks</i><span data-i18n="gallery.1.cap">Takeaway, dressed up</span></span></button>
+        <button class="gallery-item tall reveal" data-type="drinks" data-src="assets/gallary/IMG_0434.webp"><img src="assets/gallary/IMG_0434.webp" alt="Stay Bold campaign shot with a splashing berry drink" data-i18n-attr='{"alt":"gallery.2.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.drinks">Drinks</i><span data-i18n="gallery.2.cap">Stay bold</span></span></button>
+        <button class="gallery-item tall reveal" data-type="drinks" data-src="assets/gallary/IMG_0435.webp"><img src="assets/gallary/IMG_0435.webp" alt="Caramel milkshake held up against the palm trees" data-i18n-attr='{"alt":"gallery.3.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.drinks">Drinks</i><span data-i18n="gallery.3.cap">Caramel under palms</span></span></button>
+        <button class="gallery-item tall reveal" data-type="space" data-src="assets/gallary/IMG_0436.webp"><img src="assets/gallary/IMG_0436.webp" alt="Warm beige lounge interior with the bakery counter" data-i18n-attr='{"alt":"gallery.4.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.space">The Space</i><span data-i18n="gallery.4.cap">The lounge</span></span></button>
+        <button class="gallery-item wide reveal" data-type="space" data-src="assets/gallary/IMG_0437.webp"><img src="assets/gallary/IMG_0437.webp" alt="White stone bar with syrups, grinders and a warm lamp" data-i18n-attr='{"alt":"gallery.5.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.space">The Space</i><span data-i18n="gallery.5.cap">The stone bar</span></span></button>
+        <button class="gallery-item wide reveal" data-type="space" data-src="assets/gallary/IMG_0439.webp"><img src="assets/gallary/IMG_0439.webp" alt="Italian XLVI espresso machine on the stone counter" data-i18n-attr='{"alt":"gallery.6.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.craft">The Craft</i><span data-i18n="gallery.6.cap">The XLVI machine</span></span></button>
+        <button class="gallery-item tall reveal" data-type="space" data-src="assets/gallary/IMG_0438.webp"><img src="assets/gallary/IMG_0438.webp" alt="Window seats with a palm tree view" data-i18n-attr='{"alt":"gallery.7.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.space">The Space</i><span data-i18n="gallery.7.cap">Window to the palms</span></span></button>
+        <button class="gallery-item tall reveal" data-type="space moments" data-src="assets/gallary/IMG_0441.webp"><img src="assets/gallary/IMG_0441.webp" alt="Terrace tables at golden hour under the palms" data-i18n-attr='{"alt":"gallery.8.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.moments">Moments</i><span data-i18n="gallery.8.cap">Golden hour terrace</span></span></button>
+        <button class="gallery-item tall reveal" data-type="moments" data-src="assets/gallary/IMG_0440.webp"><img src="assets/gallary/IMG_0440.webp" alt="Espresso cup on marble under the glowing Ramouz sign" data-i18n-attr='{"alt":"gallery.9.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.moments">Moments</i><span data-i18n="gallery.9.cap">Espresso at the sign</span></span></button>
+        <button class="gallery-item tall reveal" data-type="space moments" data-src="assets/gallary/IMG_0442.webp"><img src="assets/gallary/IMG_0442.webp" alt="Ramouz storefront glowing at night with Arabic signage" data-i18n-attr='{"alt":"gallery.10.alt"}' loading="lazy"/><span><i data-i18n="gallery.cat.space">The Space</i><span data-i18n="gallery.10.cap">Waterfront at night</span></span></button>
       </div>
     </section>
 
     <section class="section video-section" id="about">
       <div class="about-head centered reveal">
-        <p class="eyebrow">About us</p>
-        <h2>The story behind <em>Ramouz</em>.</h2>
+        <p class="eyebrow" data-i18n="about.eyebrow">About us</p>
+        <h2><span data-i18n="about.heading1">The story behind </span><em data-i18n="brand.word">Ramouz</em>.</h2>
         <svg class="heading-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11"/></svg>
       </div>
-      <div class="about-slider reveal" data-slider role="region" aria-roledescription="carousel" aria-label="The Ramouz story" tabindex="0">
+      <div class="about-slider reveal" data-slider role="region" aria-roledescription="carousel" data-i18n-attr='{"aria-label":"about.slider_aria"}' aria-label="The Ramouz story" tabindex="0">
         <div class="slide-stage">
           <article class="about-slide is-active" data-slide>
-            <div class="slide-media portrait"><img src="assets/images/branches.webp" alt="Illustrated map of all Ramouz branches, from Mashhad to Muscat" loading="lazy" draggable="false" /><img class="sign-shot" src="assets/images/first1.webp" alt="Glowing Ramouz Café Bakery signboard at night" loading="lazy" draggable="false" /><img class="day-shot" src="assets/images/first.webp" alt="Blue Ramouz Café cat sign on the storefront" loading="lazy" draggable="false" /></div>
+            <div class="slide-media portrait"><img src="assets/images/branches.webp" alt="Illustrated map of all Ramouz branches, from Mashhad to Muscat" data-i18n-attr='{"alt":"about.1.img1_alt"}' loading="lazy" draggable="false" /><img class="sign-shot" src="assets/images/first1.webp" alt="Glowing Ramouz Café Bakery signboard at night" data-i18n-attr='{"alt":"about.1.img2_alt"}' loading="lazy" draggable="false" /><img class="day-shot" src="assets/images/first.webp" alt="Blue Ramouz Café cat sign on the storefront" data-i18n-attr='{"alt":"about.1.img3_alt"}' loading="lazy" draggable="false" /></div>
             <div class="slide-text">
-              <span class="slide-num" aria-hidden="true">01</span>
-              <span class="slide-kicker">The story</span>
-              <h3>Two brothers, <em>one idea</em></h3>
-              <p>Ten years ago, two brothers opened a small café in Mashhad. Nine more followed. The tenth is here, on the Muscat waterfront.</p>
+              <span class="slide-num" aria-hidden="true" data-i18n-digits>01</span>
+              <span class="slide-kicker" data-i18n="about.1.kicker">The story</span>
+              <h3><span data-i18n="about.1.h3_1">Two brothers, </span><em data-i18n="about.1.h3_em">one idea</em></h3>
+              <p data-i18n="about.1.p">Ten years ago, two brothers opened a small café in Mashhad. Nine more followed. The tenth is here, on the Muscat waterfront.</p>
             </div>
           </article>
           <article class="about-slide" data-slide>
             <div class="slide-media collage">
-              <figure class="collage-photo one"><img src="assets/images/second1.webp" alt="Ramouz baker holding a tray of fresh brownies" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo two"><img src="assets/images/second2.webp" alt="Tray of chocolate cupcakes and cookies from the Ramouz bakery" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo main"><img src="assets/images/second.webp" alt="Ramouz coffee bean bags, imported and roasted under our own brand" loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo one"><img src="assets/images/second1.webp" alt="Ramouz baker holding a tray of fresh brownies" data-i18n-attr='{"alt":"about.2.img1_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo two"><img src="assets/images/second2.webp" alt="Tray of chocolate cupcakes and cookies from the Ramouz bakery" data-i18n-attr='{"alt":"about.2.img2_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo main"><img src="assets/images/second.webp" alt="Ramouz coffee bean bags, imported and roasted under our own brand" data-i18n-attr='{"alt":"about.2.img3_alt"}' loading="lazy" draggable="false" /></figure>
             </div>
             <div class="slide-text">
-              <span class="slide-num" aria-hidden="true">02</span>
-              <span class="slide-kicker">The craft</span>
-              <h3>Roasted by us, <em>baked with love</em></h3>
-              <p>We started out pouring Lavazza. Now we import the beans, roast them under our own name, and bake everything in the case ourselves.</p>
+              <span class="slide-num" aria-hidden="true" data-i18n-digits>02</span>
+              <span class="slide-kicker" data-i18n="about.2.kicker">The craft</span>
+              <h3><span data-i18n="about.2.h3_1">Roasted by us, </span><em data-i18n="about.2.h3_em">baked with love</em></h3>
+              <p data-i18n="about.2.p">We started out pouring Lavazza. Now we import the beans, roast them under our own name, and bake everything in the case ourselves.</p>
             </div>
           </article>
           <article class="about-slide" data-slide>
             <div class="slide-media collage v2">
-              <figure class="collage-photo one"><img src="assets/images/third1.webp" alt="Ramouz showroom shelves stocked with barista accessories" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo two"><img src="assets/images/third3.webp" alt="Close-up of an XLVI espresso machine group head" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo main"><img src="assets/images/third.webp" alt="Italian XLVI espresso machine arriving on its shipping crate" loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo one"><img src="assets/images/third1.webp" alt="Ramouz showroom shelves stocked with barista accessories" data-i18n-attr='{"alt":"about.3.img1_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo two"><img src="assets/images/third3.webp" alt="Close-up of an XLVI espresso machine group head" data-i18n-attr='{"alt":"about.3.img2_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo main"><img src="assets/images/third.webp" alt="Italian XLVI espresso machine arriving on its shipping crate" data-i18n-attr='{"alt":"about.3.img3_alt"}' loading="lazy" draggable="false" /></figure>
             </div>
             <div class="slide-text">
-              <span class="slide-num" aria-hidden="true">03</span>
-              <span class="slide-kicker">The company</span>
-              <h3>More than <em>a café</em></h3>
-              <p>We supply Italian espresso machines and barista gear to cafés across Iran. We just kept the best of it for ourselves.</p>
+              <span class="slide-num" aria-hidden="true" data-i18n-digits>03</span>
+              <span class="slide-kicker" data-i18n="about.3.kicker">The company</span>
+              <h3><span data-i18n="about.3.h3_1">More than </span><em data-i18n="about.3.h3_em">a café</em></h3>
+              <p data-i18n="about.3.p">We supply Italian espresso machines and barista gear to cafés across Iran. We just kept the best of it for ourselves.</p>
             </div>
           </article>
           <article class="about-slide" data-slide>
             <div class="slide-media collage v3">
-              <figure class="collage-photo one"><img src="assets/images/fourth1.webp" alt="Students in a Ramouz School barista class" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo two"><img src="assets/images/fourth5.webp" alt="Ramouz School student practicing a milk pour" loading="lazy" draggable="false" /></figure>
-              <figure class="collage-photo main"><img src="assets/images/fourth4.webp" alt="Barista wearing the Ramouz School apron" loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo one"><img src="assets/images/fourth1.webp" alt="Students in a Ramouz School barista class" data-i18n-attr='{"alt":"about.4.img1_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo two"><img src="assets/images/fourth5.webp" alt="Ramouz School student practicing a milk pour" data-i18n-attr='{"alt":"about.4.img2_alt"}' loading="lazy" draggable="false" /></figure>
+              <figure class="collage-photo main"><img src="assets/images/fourth4.webp" alt="Barista wearing the Ramouz School apron" data-i18n-attr='{"alt":"about.4.img3_alt"}' loading="lazy" draggable="false" /></figure>
             </div>
             <div class="slide-text">
-              <span class="slide-num" aria-hidden="true">04</span>
-              <span class="slide-kicker">The school</span>
-              <h3>Ramouz <em>School</em></h3>
-              <p>Coffee is a craft, and we teach it. From your first pour to your first shift behind a real bar — hands-on classes, real machines, and a certificate signed by the people who trained you.</p>
+              <span class="slide-num" aria-hidden="true" data-i18n-digits>04</span>
+              <span class="slide-kicker" data-i18n="about.4.kicker">The school</span>
+              <h3><span data-i18n="brand.word">Ramouz</span> <em data-i18n="about.4.h3_em">School</em></h3>
+              <p data-i18n="about.4.p">Coffee is a craft, and we teach it. From your first pour to your first shift behind a real bar — hands-on classes, real machines, and a certificate signed by the people who trained you.</p>
             </div>
           </article>
         </div>
         <div class="slider-controls">
-          <button class="slider-arrow" type="button" data-prev aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="slider-arrow" type="button" data-prev data-i18n-attr='{"aria-label":"about.prev_slide"}' aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
           <div class="slider-dots" data-dots></div>
-          <button class="slider-arrow" type="button" data-next aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
-          <span class="slider-count"><span class="cur" data-count-current>01</span> / 04</span>
+          <button class="slider-arrow" type="button" data-next data-i18n-attr='{"aria-label":"about.next_slide"}' aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <span class="slider-count"><span class="cur" data-count-current data-i18n-digits>01</span> / <span data-i18n-digits>04</span></span>
         </div>
       </div>
     </section>
 
     <section class="section visit" id="contact">
       <div class="section-heading centered reveal">
-        <p class="eyebrow">Contact us</p>
-        <h2>Come find us <em>on the waterfront</em>.</h2>
+        <p class="eyebrow" data-i18n="contact.eyebrow">Contact us</p>
+        <h2><span data-i18n="contact.heading1">Come find us </span><em data-i18n="contact.heading_em">on the waterfront</em>.</h2>
         <svg class="heading-swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 84 23, 210 3, 294 11"/></svg>
       </div>
       <div class="contact-layout">
         <div class="contact-grid">
           <a class="contact-tile tile-phone reveal" href="tel:+96878449000">
-            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg></span>Phone</span><span class="tile-value">+968 7844 9000</span><span class="tile-cta">Tap to call →</span></span>
+            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg></span><span data-i18n="contact.phone_label">Phone</span></span><span class="tile-value" dir="ltr" data-i18n="contact.phone_value">+968 7844 9000</span><span class="tile-cta" data-i18n="contact.phone_cta">Tap to call →</span></span>
           </a>
           <a class="contact-tile accent reveal" href="https://instagram.com/ramouz_oman" target="_blank" rel="noopener">
-            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><line x1="17.3" y1="6.7" x2="17.31" y2="6.7" stroke-width="2.8"/></svg></span>Instagram</span><span class="tile-value">@ramouz_oman</span><span class="tile-cta">Tap to follow →</span></span>
+            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><line x1="17.3" y1="6.7" x2="17.31" y2="6.7" stroke-width="2.8"/></svg></span><span data-i18n="contact.instagram_label">Instagram</span></span><span class="tile-value" dir="ltr">@ramouz_oman</span><span class="tile-cta" data-i18n="contact.instagram_cta">Tap to follow →</span></span>
             <img class="tile-cat" src="assets/images/logo.webp" alt="" aria-hidden="true" />
           </a>
           <a class="contact-tile tile-location reveal" href="https://www.google.com/maps/place/?q=place_id:ChIJjeAjZQD_kT4R6l3hc6sXThM" target="_blank" rel="noopener">
-            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Location</span><span class="tile-value">Water-front Ramouz, Muscat, Oman</span><span class="tile-cta">Get Directions →</span></span>
+            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span data-i18n="contact.location_label">Location</span></span><span class="tile-value" data-i18n="contact.location_value">Water-front Ramouz, Muscat, Oman</span><span class="tile-cta" data-i18n="contact.location_cta">Get Directions →</span></span>
           </a>
           <div class="contact-tile tile-hours reveal">
-            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><polyline points="12 6.5 12 12 15.5 14"/></svg></span>Working hours</span><span class="tile-value tile-value-hours">Sun–Wed: 6:30 AM–12:30 AM<br>Thu: 6:30 AM–1:30 AM<br>Fri: 8 AM–1:30 AM<br>Sat: 8 AM–12:30 AM</span></span>
+            <span class="tile-text"><span class="tile-label"><span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><polyline points="12 6.5 12 12 15.5 14"/></svg></span><span data-i18n="contact.hours_label">Working hours</span></span><span class="tile-value tile-value-hours"><span data-i18n="contact.hours.1">Sun–Wed: 6:30 AM–12:30 AM</span><br><span data-i18n="contact.hours.2">Thu: 6:30 AM–1:30 AM</span><br><span data-i18n="contact.hours.3">Fri: 8 AM–1:30 AM</span><br><span data-i18n="contact.hours.4">Sat: 8 AM–12:30 AM</span></span></span>
           </div>
         </div>
         <div class="contact-map reveal">
-          <iframe src="https://www.google.com/maps?q=23.6129115,58.4536845&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ramouz Cafe location map" allowfullscreen></iframe>
-          <span class="map-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Water-front Ramouz, Muscat, Oman</span>
+          <iframe src="https://www.google.com/maps?q=23.6129115,58.4536845&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ramouz Cafe location map" data-i18n-attr='{"title":"contact.map_title"}' allowfullscreen></iframe>
+          <span class="map-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="contact.location_value">Water-front Ramouz, Muscat, Oman</span></span>
         </div>
       </div>
     </section>
@@ -1420,58 +1437,59 @@
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-brand">
-        <img class="footer-logo" src="assets/images/logo.webp" alt="Ramouz Cafe" />
+        <img class="footer-logo" src="assets/images/logo.webp" alt="Ramouz Cafe" data-i18n-attr='{"alt":"footer.logo_alt"}' />
         <div class="footer-brand-text">
-          <span class="brand-word">Ramouz</span>
-          <p class="footer-tag">Café, bakery, roastery, school, and the company behind the machines. Est. Mashhad ten years ago, now on the Muscat waterfront.</p>
+          <span class="brand-word" data-i18n="brand.word">Ramouz</span>
+          <p class="footer-tag" data-i18n="footer.tag">Café, bakery, roastery, school, and the company behind the machines. Est. Mashhad ten years ago, now on the Muscat waterfront.</p>
         </div>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <span class="footer-col-title">Explore</span>
-          <nav class="footer-nav" aria-label="Footer">
-            <a href="#home">Home</a>
-            <a href="#menu">Menu</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+          <span class="footer-col-title" data-i18n="footer.explore">Explore</span>
+          <nav class="footer-nav" data-i18n-attr='{"aria-label":"footer.nav_aria"}' aria-label="Footer">
+            <a href="#home" data-i18n="nav.home">Home</a>
+            <a href="#menu" data-i18n="nav.menu">Menu</a>
+            <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
           </nav>
         </div>
         <div class="footer-col">
-          <span class="footer-col-title">Our craft</span>
+          <span class="footer-col-title" data-i18n="footer.craft_title">Our craft</span>
           <div class="footer-craft">
-            <span>Specialty Coffee</span>
-            <span>Fresh Bakery</span>
-            <span>In-house Roastery</span>
-            <span>Ramouz Barista School</span>
-            <span>Espresso Machines &amp; Gear</span>
+            <span data-i18n="footer.craft.1">Specialty Coffee</span>
+            <span data-i18n="footer.craft.2">Fresh Bakery</span>
+            <span data-i18n="footer.craft.3">In-house Roastery</span>
+            <span data-i18n="footer.craft.4">Ramouz Barista School</span>
+            <span data-i18n="footer.craft.5">Espresso Machines &amp; Gear</span>
           </div>
         </div>
         <div class="footer-col">
-          <span class="footer-col-title">Visit us</span>
+          <span class="footer-col-title" data-i18n="footer.visit_title">Visit us</span>
           <div class="footer-contact">
-            <a href="tel:+96878449000">+968 7844 9000</a>
-            <a href="https://instagram.com/ramouz_oman" target="_blank" rel="noopener">@ramouz_oman</a>
-            <span>Water-front Ramouz, Muscat, Oman</span>
-            <span>Sun–Wed: 6:30 AM–12:30 AM<br>Thu: 6:30 AM–1:30 AM<br>Fri: 8 AM–1:30 AM<br>Sat: 8 AM–12:30 AM</span>
+            <a href="tel:+96878449000" dir="ltr" data-i18n="contact.phone_value">+968 7844 9000</a>
+            <a href="https://instagram.com/ramouz_oman" target="_blank" rel="noopener" dir="ltr">@ramouz_oman</a>
+            <span data-i18n="contact.location_value">Water-front Ramouz, Muscat, Oman</span>
+            <span><span data-i18n="contact.hours.1">Sun–Wed: 6:30 AM–12:30 AM</span><br><span data-i18n="contact.hours.2">Thu: 6:30 AM–1:30 AM</span><br><span data-i18n="contact.hours.3">Fri: 8 AM–1:30 AM</span><br><span data-i18n="contact.hours.4">Sat: 8 AM–12:30 AM</span></span>
           </div>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-note">© <span data-year>2026</span> Ramouz Café. All rights reserved. <a class="footer-admin" href="admin.html">For admins</a></p>
+      <p class="footer-note">© <span data-year>2026</span> <span data-i18n="footer.rights">Ramouz Café. All rights reserved.</span> <a class="footer-admin" href="admin.html" data-i18n="footer.admin_link">For admins</a></p>
       <div class="footer-bottom-right">
-        <span class="footer-est"><i aria-hidden="true"></i>Est. Mashhad, now Muscat</span>
-        <a class="footer-social" href="https://instagram.com/ramouz_oman" target="_blank" rel="noopener" aria-label="Ramouz Cafe on Instagram">
+        <span class="footer-est"><i aria-hidden="true"></i><span data-i18n="hero.eyebrow">Est. Mashhad, now Muscat</span></span>
+        <a class="footer-social" href="https://instagram.com/ramouz_oman" target="_blank" rel="noopener" data-i18n-attr='{"aria-label":"footer.instagram_aria"}' aria-label="Ramouz Cafe on Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><line x1="17.3" y1="6.7" x2="17.31" y2="6.7" stroke-width="2.8"/></svg>
         </a>
-        <a class="footer-social footer-top-btn" href="#home" aria-label="Back to top">
+        <a class="footer-social footer-top-btn" href="#home" data-i18n-attr='{"aria-label":"footer.back_to_top"}' aria-label="Back to top">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
         </a>
       </div>
     </div>
   </footer>
 
+  <script src="assets/js/i18n.js?v=1"></script>
   <script src="assets/js/main.js?v=3"></script>
   <script src="assets/js/menu-live-2.js"></script>
 </body>

@@ -62,6 +62,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
   photoUrls.forEach(url => { const im = new Image(); im.src = url; });
   */
 
+  const isArabic = window.RamouzI18n?.lang === 'ar';
   let html = '';
   let totalItems = 0;
   const renderedCats = [];
@@ -83,33 +84,41 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
           rows += `<li class="menu-subhead">${esc(sub.name)}</li>`;
           lastSub = sub.name;
         }
-        const img = `<img src="${esc(item.image_url || 'assets/images/logo.webp')}" alt="${esc(item.name)}" width="56" height="56" loading="lazy" onerror="this.remove()">`;
+        const itemName = (isArabic && item.name_ar) || item.name;
+        const itemDesc = (isArabic && item.description_ar) || item.description;
+        const img = `<img src="${esc(item.image_url || 'assets/images/logo.webp')}" alt="${esc(itemName)}" width="56" height="56" loading="lazy" onerror="this.remove()">`;
         const thumbCls = item.image_url ? 'mi-thumb' : 'mi-thumb mi-thumb--brand';
-        const desc = item.description ? `<p class="mi-desc">${esc(item.description)}</p>` : '';
+        const desc = itemDesc ? `<p class="mi-desc">${esc(itemDesc)}</p>` : '';
         const variants = (item.variants || []).sort(bySort);
         const picker = variants.length
-          ? `<span class="mi-picker"><select class="mi-select" aria-label="${esc(item.name)} options">${variants.map(v => `<option>${esc(v.name)}</option>`).join('')}</select>${CHEVRON}</span>`
+          ? `<span class="mi-picker"><select class="mi-select" aria-label="${esc(itemName)} options">${variants.map(v => `<option>${esc((isArabic && v.name_ar) || v.name)}</option>`).join('')}</select>${CHEVRON}</span>`
           : '';
-        const price = Number(item.price).toFixed(1);
+        const priceNum = Number(item.price).toFixed(1);
+        const price = window.RamouzI18n ? window.RamouzI18n.digits(priceNum) : priceNum;
+        const currency = isArabic ? 'ريال' : 'OMR';
         const unavailable = item.is_available === false;
         const liCls = unavailable ? 'menu-item menu-item--unavail' : 'menu-item';
-        const unavailTag = unavailable ? '<span class="mi-tag-unavail">Unavailable</span>' : '';
-        rows += `<li class="${liCls}"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(item.name)}</span>${unavailTag}<span class="mi-dots"></span><span class="mi-price">${price} <span class="mi-cur">OMR</span></span></div>${picker}${desc}</div></li>`;
+        const unavailLabel = window.RamouzI18n ? window.RamouzI18n.t('menu.unavailable') : 'Unavailable';
+        const unavailTag = unavailable ? `<span class="mi-tag-unavail">${esc(unavailLabel)}</span>` : '';
+        rows += `<li class="${liCls}"><span class="${thumbCls}">${THUMB_PH}${img}</span><div class="mi-main"><div class="mi-head"><span class="mi-name">${esc(itemName)}</span>${unavailTag}<span class="mi-dots"></span><span class="mi-price">${price} <span class="mi-cur">${currency}</span></span></div>${picker}${desc}</div></li>`;
       });
 
         const tintCls = cat.color ? ' has-tint' : '';
       const tintStyle = cat.color ? ` style="--cat-tint:${esc(cat.color)}"` : '';
+      const countLabel = isArabic
+        ? `${window.RamouzI18n.digits(String(items.length))} ${items.length === 1 ? 'صنف' : 'أصناف'}`
+        : `${items.length} item${items.length === 1 ? '' : 's'}`;
       html += `<div class="menu-accordion-item${tintCls}"${tintStyle} data-cat="${esc(catSlug)}" data-box="${esc(secSlug)}">`
         + `<button type="button" class="menu-accordion-head" aria-expanded="false" aria-controls="acc-${esc(secSlug)}">`
         + `<span class="acc-icon">${sec.icon || THUMB_PH}</span>`
-        + `<span class="acc-title">${esc(sec.name)}</span>`
-        + `<span class="acc-count">${items.length} item${items.length === 1 ? '' : 's'}</span>`
+        + `<span class="acc-title">${esc((isArabic && sec.name_ar) || sec.name)}</span>`
+        + `<span class="acc-count">${esc(countLabel)}</span>`
         + `<span class="acc-chevron" aria-hidden="true">${CHEVRON}</span>`
         + `</button>`
         + `<div class="menu-accordion-body" id="acc-${esc(secSlug)}"><ul class="menu-list menu-list--thumbs">${rows}</ul></div>`
         + `</div>`;
     });
-    if (totalItems > catHadItems) renderedCats.push({ name: cat.name, slug: catSlug, emoji: cat.emoji });
+    if (totalItems > catHadItems) renderedCats.push({ name: cat.name, name_ar: cat.name_ar, slug: catSlug, emoji: cat.emoji });
   });
   if (!totalItems) { menuDone(); return; }
 
@@ -162,14 +171,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
     document.querySelectorAll('.menu-tabs .menu-tab:not([data-cat="all"])').forEach(t => t.remove());
     let anchor = allTab;
     renderedCats.forEach(cat => {
+      const label = (isArabic && cat.name_ar) || cat.name;
       const b = document.createElement('button');
       b.className = 'menu-tab';
       b.type = 'button';
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-selected', 'false');
       b.dataset.cat = cat.slug;
-      b.dataset.label = cat.name;
-      b.innerHTML = `<span class="tab-ico" aria-hidden="true">${esc(cat.emoji || TAB_EMOJI[cat.name] || '🍽️')}</span>${esc(cat.name)}`;
+      b.dataset.label = label;
+      b.innerHTML = `<span class="tab-ico" aria-hidden="true">${esc(cat.emoji || TAB_EMOJI[cat.name] || '🍽️')}</span>${esc(label)}`;
       anchor.after(b);
       anchor = b;
     });
@@ -177,6 +187,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
   // keep the "82 items, all prices in OMR" subtitle honest
   const subtitle = document.querySelector('#menu p:not(.eyebrow)');
-  if (subtitle) subtitle.textContent = subtitle.textContent.replace(/^\d+/, String(totalItems));
+  if (subtitle) {
+    const count = window.RamouzI18n ? window.RamouzI18n.digits(String(totalItems)) : String(totalItems);
+    subtitle.textContent = subtitle.textContent.replace(/^[\d٠-٩]+/, count);
+  }
   menuDone();
 })();

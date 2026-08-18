@@ -129,53 +129,7 @@ document.addEventListener('click', e => {
   history.pushState(null, '', link.getAttribute('href'));
 });
 
-const langSelect = document.querySelector('[data-lang-select]');
-const langTrigger = document.querySelector('[data-lang-trigger]');
-const langMenu = document.querySelector('[data-lang-menu]');
-if (langSelect && langTrigger && langMenu) {
-  const langOptions = [...langMenu.querySelectorAll('button[data-lang]')];
-  const triggerFlag = langTrigger.querySelector('.lang-flag');
-  const triggerLabel = langTrigger.querySelector('span:not(.lang-flag)');
-  const flagByLang = { en: '🇬🇧', ar: '🇴🇲' };
-  const labelByLang = { en: 'English', ar: 'العربية' };
-
-  const closeLangMenu = () => {
-    langSelect.classList.remove('open');
-    langTrigger.setAttribute('aria-expanded', 'false');
-  };
-
-  langTrigger.addEventListener('click', () => {
-    const willOpen = !langSelect.classList.contains('open');
-    langSelect.classList.toggle('open', willOpen);
-    langTrigger.setAttribute('aria-expanded', String(willOpen));
-  });
-
-  langOptions.forEach(opt => {
-    opt.addEventListener('click', () => {
-      langOptions.forEach(o => {
-        const on = o === opt;
-        o.classList.toggle('active', on);
-        o.closest('li')?.setAttribute('aria-selected', String(on));
-      });
-      const lang = opt.dataset.lang;
-      if (triggerFlag) triggerFlag.textContent = flagByLang[lang];
-      if (triggerLabel) triggerLabel.textContent = labelByLang[lang];
-      closeLangMenu();
-      langTrigger.focus();
-    });
-  });
-
-  document.addEventListener('click', e => {
-    if (!langSelect.contains(e.target)) closeLangMenu();
-  });
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && langSelect.classList.contains('open')) {
-      closeLangMenu();
-      langTrigger.focus();
-    }
-  });
-}
-
+// Language switcher (dropdown UI + translation apply) lives in i18n.js
 if (glow && window.matchMedia('(pointer:fine)').matches) {
   window.addEventListener('pointermove', e => {
     glow.style.left = `${e.clientX}px`;
@@ -222,8 +176,16 @@ const getMenuTabs = () => document.querySelectorAll('.menu-tab');
 const getMenuBoxes = () => document.querySelectorAll('.menu-accordion-item');
 const menuPanelCount = document.querySelector('.menu-book .panel-count');
 const menuPanelTitle = document.querySelector('.menu-book .panel-title');
-const menuTitleByCat = { all: 'Full menu', 'coffee-base': 'Coffee Base', 'tea-matcha': 'Tea & Matcha', cold: 'Cold & Refreshing', bites: 'Bites', fit: 'Fit' };
-const tabTitle = (tab) => tab?.dataset.label || menuTitleByCat[tab?.dataset.cat] || 'Full menu';
+const t = (key, fallback) => (window.RamouzI18n ? window.RamouzI18n.t(key) : fallback);
+const menuTitleByCat = {
+  all: () => t('menu.panel_full', 'Full menu'),
+  'coffee-base': () => t('menu.cat.coffee-base', 'Coffee Base'),
+  'tea-matcha': () => t('menu.cat.tea-matcha', 'Tea & Matcha'),
+  cold: () => t('menu.cat.cold', 'Cold & Refreshing'),
+  bites: () => t('menu.cat.bites', 'Bites'),
+  fit: () => t('menu.cat.fit', 'Fit'),
+};
+const tabTitle = (tab) => tab?.dataset.label || menuTitleByCat[tab?.dataset.cat]?.() || t('menu.panel_full', 'Full menu');
 
 function applyMenuFilter(filter) {
   document.querySelectorAll('.menu-accordion-item.open').forEach(closeAccordionItem);
@@ -242,11 +204,15 @@ function applyMenuFilter(filter) {
       shown++;
     }
   });
-  if (menuPanelCount) menuPanelCount.textContent = `${itemTotal} item${itemTotal === 1 ? '' : 's'}`;
+  if (menuPanelCount) {
+    menuPanelCount.textContent = window.RamouzI18n?.lang === 'ar'
+      ? `${itemTotal} ${itemTotal === 1 ? 'صنف' : 'أصناف'}`
+      : `${itemTotal} item${itemTotal === 1 ? '' : 's'}`;
+  }
   if (menuPanelTitle) {
     menuPanelTitle.style.animation = 'none';
     void menuPanelTitle.offsetWidth;
-    menuPanelTitle.textContent = filter === 'all' ? 'Full menu' : tabTitle(document.querySelector('.menu-tab.active'));
+    menuPanelTitle.textContent = filter === 'all' ? t('menu.panel_full', 'Full menu') : tabTitle(document.querySelector('.menu-tab.active'));
     if (!reducedMotion) menuPanelTitle.style.animation = 'menuTitleIn .4s ease';
   }
 }
@@ -399,7 +365,7 @@ if (slider) {
     inn.setAttribute('aria-hidden', 'false');
     dots.forEach((d, i) => d.classList.toggle('active', i === target));
     if (countCur) {
-      countCur.textContent = pad(target);
+      countCur.textContent = window.RamouzI18n ? window.RamouzI18n.digits(pad(target)) : pad(target);
       if (!reducedMotion) {
         countCur.style.animation = 'none';
         void countCur.offsetWidth;
@@ -599,8 +565,8 @@ function closeLightbox(){
     const items = visibleItems();
     const allOpen = items.length > 0 && items.every(it => it.classList.contains('open'));
     btn.classList.toggle('all-open', allOpen);
-    if (label) label.textContent = allOpen ? 'Collapse all' : 'Expand all';
-    btn.setAttribute('aria-label', allOpen ? 'Collapse all categories' : 'Expand all categories');
+    if (label) label.textContent = allOpen ? t('menu.collapse_all', 'Collapse all') : t('menu.expand_all', 'Expand all');
+    btn.setAttribute('aria-label', allOpen ? t('menu.collapse_all_aria', 'Collapse all categories') : t('menu.expand_all_aria', 'Expand all categories'));
   };
 
   btn.addEventListener('click', () => {
