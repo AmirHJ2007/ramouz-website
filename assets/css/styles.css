@@ -1098,6 +1098,23 @@ body.menu-ready [data-menu-accordion]{opacity:1;transition:opacity .45s ease}
   font-size:clamp(18px,4vw,40px);
   letter-spacing:normal;
 }
+/* Run the marquee's scroll machinery (flex order, track positioning, and
+   the leftward translate) exactly as in LTR so the duplicate-copy seamless
+   loop never leaves an empty gap. The Arabic text inside each span still
+   renders right-to-left on its own — only the conveyor belt is LTR. */
+[dir="rtl"] .marquee{
+  direction:ltr;
+}
+/* Reverse the scroll to travel left-to-right for Arabic. A dedicated
+   -50%→0 keyframe (not animation-direction:reverse, which stutters on
+   WebKit) keeps the duplicate-copy loop seamless. */
+[dir="rtl"] .marquee-track{
+  animation-name:marquee-rtl;
+}
+@keyframes marquee-rtl{
+  from{transform:translate3d(-50%,0,0)}
+  to{transform:translate3d(0,0,0)}
+}
 [dir="rtl"] .slider-arrow svg{
   transform:scaleX(-1);
 }
